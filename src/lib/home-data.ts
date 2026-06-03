@@ -1,14 +1,15 @@
 export const tickerItems = [
-  "Topstep • Up to $150K Funding",
-  "Apex Trader • 90% Profit Split",
-  "TradeDay • No Daily Drawdown",
-  "Earn2Trade • Flexible Rules",
+  "Apex Trader Funding • Up to $300K Funding",
+  "Lucid Trading • Same-Day Payouts",
+  "FundedNext Futures • 90% Profit Split",
+  "Take Profit Trader • 1-Step Evaluation",
+  "Tradeify • Flexible Drawdown",
+  "Legends Trading • Pro Trader Program",
   "MyFundedFutures • $0 Activation",
-  "Bulenox • 2-Step Evaluation",
-  "FundedNext • Up to $200K",
-  "Take Profit Trader • 1-Step Eval",
-  "Leeloo • Trailing Drawdown",
-  "Uprofit • Same Day Payouts",
+  "Funded Futures Network • Scalable Accounts",
+  "DayTraders.com • Trusted Veteran Firm",
+  "Bluenox • 2-Step Evaluation",
+  "TradeDay • No Daily Drawdown",
 ];
 
 export type Firm = {
@@ -22,60 +23,17 @@ export type Firm = {
 };
 
 export const featuredFirms: Firm[] = [
-  {
-    name: "Topstep",
-    rating: 4.8,
-    maxFunding: "$150K",
-    split: "90%",
-    fee: "$49/mo",
-    badge: "Editor's Pick",
-    badgeColor: "purple",
-  },
-  {
-    name: "Apex Trader",
-    rating: 4.6,
-    maxFunding: "$300K",
-    split: "90%",
-    fee: "$137/mo",
-    badge: "Best Value",
-    badgeColor: "pink",
-  },
-  {
-    name: "TradeDay",
-    rating: 4.5,
-    maxFunding: "$100K",
-    split: "85%",
-    fee: "$99/mo",
-    badge: "Best for Beginners",
-    badgeColor: "green",
-  },
-  {
-    name: "MyFundedFutures",
-    rating: 4.4,
-    maxFunding: "$150K",
-    split: "90%",
-    fee: "$80/mo",
-    badge: "Fast Payouts",
-    badgeColor: "purple",
-  },
-  {
-    name: "Bulenox",
-    rating: 4.3,
-    maxFunding: "$250K",
-    split: "90%",
-    fee: "$115/mo",
-    badge: "Flexible Rules",
-    badgeColor: "pink",
-  },
-  {
-    name: "Take Profit Trader",
-    rating: 4.2,
-    maxFunding: "$150K",
-    split: "80%",
-    fee: "$150/mo",
-    badge: "1-Step Eval",
-    badgeColor: "green",
-  },
+  { name: "Apex Trader Funding", rating: 4.8, maxFunding: "$300K", split: "90%", fee: "$137/mo", badge: "Editor's Pick", badgeColor: "purple" },
+  { name: "MyFundedFutures", rating: 4.7, maxFunding: "$150K", split: "90%", fee: "$80/mo", badge: "Fast Payouts", badgeColor: "pink" },
+  { name: "TradeDay", rating: 4.6, maxFunding: "$100K", split: "85%", fee: "$99/mo", badge: "Best for Beginners", badgeColor: "green" },
+  { name: "Take Profit Trader", rating: 4.5, maxFunding: "$150K", split: "90%", fee: "$150/mo", badge: "1-Step Eval", badgeColor: "purple" },
+  { name: "FundedNext Futures", rating: 4.5, maxFunding: "$200K", split: "90%", fee: "$99/mo", badge: "New & Trusted", badgeColor: "pink" },
+  { name: "Tradeify", rating: 4.4, maxFunding: "$100K", split: "90%", fee: "$107/mo", badge: "Flexible Rules", badgeColor: "green" },
+  { name: "Bluenox", rating: 4.3, maxFunding: "$250K", split: "90%", fee: "$115/mo", badge: "Best Value", badgeColor: "purple" },
+  { name: "Funded Futures Network", rating: 4.3, maxFunding: "$100K", split: "90%", fee: "$97/mo", badge: "Community Pick", badgeColor: "pink" },
+  { name: "Lucid Trading", rating: 4.2, maxFunding: "$150K", split: "90%", fee: "$125/mo", badge: "Fast Funding", badgeColor: "green" },
+  { name: "Legends Trading", rating: 4.1, maxFunding: "$150K", split: "85%", fee: "$130/mo", badge: "Pro Program", badgeColor: "purple" },
+  { name: "DayTraders.com", rating: 4.0, maxFunding: "$100K", split: "80%", fee: "$99/mo", badge: "Veteran Firm", badgeColor: "pink" },
 ];
 
 export type ComparisonRow = {
@@ -89,11 +47,11 @@ export type ComparisonRow = {
 };
 
 export const comparisonRows: ComparisonRow[] = [
-  { firm: "Topstep", maxAccount: "$150K", split: "90%", drawdown: "Trailing", futures: "Yes", rating: "4.8 / 5", highlight: true },
-  { firm: "Apex Trader", maxAccount: "$300K", split: "90%", drawdown: "Trailing", futures: "Yes", rating: "4.6 / 5" },
-  { firm: "TradeDay", maxAccount: "$100K", split: "85%", drawdown: "End of Day", futures: "Yes", rating: "4.5 / 5" },
-  { firm: "MyFundedFutures", maxAccount: "$150K", split: "90%", drawdown: "Intraday", futures: "Yes", rating: "4.4 / 5" },
-  { firm: "Bulenox", maxAccount: "$250K", split: "90%", drawdown: "Trailing", futures: "Yes", rating: "4.3 / 5" },
+  { firm: "Apex Trader Funding", maxAccount: "$300K", split: "90%", drawdown: "Trailing", futures: "Yes", rating: "4.8 / 5", highlight: true },
+  { firm: "MyFundedFutures", maxAccount: "$150K", split: "90%", drawdown: "Intraday", futures: "Yes", rating: "4.7 / 5" },
+  { firm: "TradeDay", maxAccount: "$100K", split: "85%", drawdown: "End of Day", futures: "Yes", rating: "4.6 / 5" },
+  { firm: "Take Profit Trader", maxAccount: "$150K", split: "90%", drawdown: "Static", futures: "Yes", rating: "4.5 / 5" },
+  { firm: "FundedNext Futures", maxAccount: "$200K", split: "90%", drawdown: "Trailing", futures: "Yes", rating: "4.5 / 5" },
 ];
 
 export const newsItems = [
