@@ -1,29 +1,43 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Navbar } from "@/components/home/Navbar";
+import { Hero } from "@/components/home/Hero";
+import { TrustBar } from "@/components/home/TrustBar";
+import { FeaturedFirms } from "@/components/home/FeaturedFirms";
+import { HowItWorks } from "@/components/home/HowItWorks";
+import { ComparisonTable } from "@/components/home/ComparisonTable";
+import { MarketNews } from "@/components/home/MarketNews";
+import { CouponsBanner } from "@/components/home/CouponsBanner";
+import { WhyTrustUs } from "@/components/home/WhyTrustUs";
+import { DiscordCTA } from "@/components/home/DiscordCTA";
+import { Footer } from "@/components/home/Footer";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Your App" },
-      { name: "description", content: "Replace this with a one-sentence description of your app." },
-      { property: "og:title", content: "Your App" },
-      { property: "og:description", content: "Replace this with a one-sentence description of your app." },
+      { title: "Trading With Prop Firms — Find Your Edge. Get Funded." },
+      { name: "description", content: "Unbiased reviews, real comparisons and exclusive discounts on the top prop firms for futures traders." },
+      { property: "og:title", content: "Trading With Prop Firms — Find Your Edge. Get Funded." },
+      { property: "og:description", content: "Unbiased reviews, real comparisons and exclusive discounts on the top prop firms for futures traders." },
+      { property: "og:type", content: "website" },
     ],
   }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <main className="bg-background text-foreground min-h-screen">
+      <Navbar />
+      <Hero />
+      <TrustBar />
+      <FeaturedFirms />
+      <HowItWorks />
+      <ComparisonTable />
+      <MarketNews />
+      <CouponsBanner />
+      <WhyTrustUs />
+      <DiscordCTA />
+      <Footer />
+    </main>
   );
 }
