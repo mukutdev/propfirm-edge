@@ -22,6 +22,15 @@ export type Firm = {
   badgeColor: "purple" | "pink" | "green";
 };
 
+export type ReviewFirm = Firm & {
+  description: string;
+  markets: string[];
+  categories: ("Futures" | "Forex" | "Crypto" | "Stocks")[];
+  feeNumeric: number;
+  fundingNumeric: number;
+  addedOrder: number; // higher = newer
+};
+
 export const featuredFirms: Firm[] = [
   { name: "Apex Trader Funding", rating: 4.8, maxFunding: "$300K", split: "90%", fee: "$137/mo", badge: "Editor's Pick", badgeColor: "purple" },
   { name: "MyFundedFutures", rating: 4.7, maxFunding: "$150K", split: "90%", fee: "$80/mo", badge: "Fast Payouts", badgeColor: "pink" },
