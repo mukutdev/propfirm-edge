@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ReviewsRouteImport } from './routes/reviews'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ReviewsSlugRouteImport } from './routes/reviews.$slug'
 
 const ReviewsRoute = ReviewsRouteImport.update({
   id: '/reviews',
@@ -22,31 +23,39 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReviewsSlugRoute = ReviewsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => ReviewsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/reviews': typeof ReviewsRoute
+  '/reviews': typeof ReviewsRouteWithChildren
+  '/reviews/$slug': typeof ReviewsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/reviews': typeof ReviewsRoute
+  '/reviews': typeof ReviewsRouteWithChildren
+  '/reviews/$slug': typeof ReviewsSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/reviews': typeof ReviewsRoute
+  '/reviews': typeof ReviewsRouteWithChildren
+  '/reviews/$slug': typeof ReviewsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/reviews'
+  fullPaths: '/' | '/reviews' | '/reviews/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/reviews'
-  id: '__root__' | '/' | '/reviews'
+  to: '/' | '/reviews' | '/reviews/$slug'
+  id: '__root__' | '/' | '/reviews' | '/reviews/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ReviewsRoute: typeof ReviewsRoute
+  ReviewsRoute: typeof ReviewsRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -65,13 +74,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reviews/$slug': {
+      id: '/reviews/$slug'
+      path: '/$slug'
+      fullPath: '/reviews/$slug'
+      preLoaderRoute: typeof ReviewsSlugRouteImport
+      parentRoute: typeof ReviewsRoute
+    }
   }
 }
 
+interface ReviewsRouteChildren {
+  ReviewsSlugRoute: typeof ReviewsSlugRoute
+}
+
+const ReviewsRouteChildren: ReviewsRouteChildren = {
+  ReviewsSlugRoute: ReviewsSlugRoute,
+}
+
+const ReviewsRouteWithChildren =
+  ReviewsRoute._addFileChildren(ReviewsRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ReviewsRoute: ReviewsRoute,
+  ReviewsRoute: ReviewsRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
