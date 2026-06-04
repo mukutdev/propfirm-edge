@@ -1,0 +1,35 @@
+import { Check } from "lucide-react";
+
+export function ForPropFirms() {
+  const items = [
+    "Honest independent review process",
+    "Real account testing before listing",
+    "High-intent futures trader audience",
+    "Monthly updated content",
+  ];
+  return (
+    <section className="py-12">
+      <div className="max-w-6xl mx-auto px-6">
+        <div className="bg-[#181818] border border-[#222] rounded-2xl p-8 md:p-12 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+          <div>
+            <h2 className="font-display font-bold text-3xl md:text-4xl tracking-tight">
+              Are You a <span className="bg-clip-text text-transparent" style={{ backgroundImage: "linear-gradient(135deg,#7C3AED,#EC4899)" }}>Prop Firm?</span>
+            </h2>
+            <p className="mt-4 text-[#bbb] leading-relaxed">We review prop firms honestly and publish affiliate links for firms that meet our quality standards.</p>
+            <a href="#contact-form" className="inline-block mt-6 px-6 py-3 rounded-full font-display font-bold text-sm text-white transition-all hover:shadow-[0_0_30px_rgba(236,72,153,0.5)]" style={{ background: "linear-gradient(135deg,#7C3AED,#EC4899)" }}>Discuss a Partnership →</a>
+          </div>
+          <ul className="space-y-3">
+            {items.map((i) => (
+              <li key={i} className="flex items-start gap-3 text-sm text-[#ddd]">
+                <span className="shrink-0 w-6 h-6 rounded-full flex items-center justify-center mt-0.5" style={{ background: "rgba(0,217,126,0.15)" }}>
+                  <Check size={14} className="text-[#00D97E]" strokeWidth={3} />
+                </span>
+                {i}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
+}
