@@ -10,7 +10,6 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ReviewsRouteImport } from './routes/reviews'
-import { Route as QuizRouteImport } from './routes/quiz'
 import { Route as NewsRouteImport } from './routes/news'
 import { Route as CouponsRouteImport } from './routes/coupons'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -23,11 +22,6 @@ import { Route as ReviewsSlugRouteImport } from './routes/reviews.$slug'
 const ReviewsRoute = ReviewsRouteImport.update({
   id: '/reviews',
   path: '/reviews',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const QuizRoute = QuizRouteImport.update({
-  id: '/quiz',
-  path: '/quiz',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NewsRoute = NewsRouteImport.update({
@@ -79,7 +73,6 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/coupons': typeof CouponsRoute
   '/news': typeof NewsRoute
-  '/quiz': typeof QuizRoute
   '/reviews': typeof ReviewsRouteWithChildren
   '/reviews/$slug': typeof ReviewsSlugRoute
 }
@@ -91,7 +84,6 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/coupons': typeof CouponsRoute
   '/news': typeof NewsRoute
-  '/quiz': typeof QuizRoute
   '/reviews': typeof ReviewsRouteWithChildren
   '/reviews/$slug': typeof ReviewsSlugRoute
 }
@@ -104,7 +96,6 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/coupons': typeof CouponsRoute
   '/news': typeof NewsRoute
-  '/quiz': typeof QuizRoute
   '/reviews': typeof ReviewsRouteWithChildren
   '/reviews/$slug': typeof ReviewsSlugRoute
 }
@@ -118,7 +109,6 @@ export interface FileRouteTypes {
     | '/contact'
     | '/coupons'
     | '/news'
-    | '/quiz'
     | '/reviews'
     | '/reviews/$slug'
   fileRoutesByTo: FileRoutesByTo
@@ -130,7 +120,6 @@ export interface FileRouteTypes {
     | '/contact'
     | '/coupons'
     | '/news'
-    | '/quiz'
     | '/reviews'
     | '/reviews/$slug'
   id:
@@ -142,7 +131,6 @@ export interface FileRouteTypes {
     | '/contact'
     | '/coupons'
     | '/news'
-    | '/quiz'
     | '/reviews'
     | '/reviews/$slug'
   fileRoutesById: FileRoutesById
@@ -155,7 +143,6 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   CouponsRoute: typeof CouponsRoute
   NewsRoute: typeof NewsRoute
-  QuizRoute: typeof QuizRoute
   ReviewsRoute: typeof ReviewsRouteWithChildren
 }
 
@@ -166,13 +153,6 @@ declare module '@tanstack/react-router' {
       path: '/reviews'
       fullPath: '/reviews'
       preLoaderRoute: typeof ReviewsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/quiz': {
-      id: '/quiz'
-      path: '/quiz'
-      fullPath: '/quiz'
-      preLoaderRoute: typeof QuizRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/news': {
@@ -253,9 +233,18 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   CouponsRoute: CouponsRoute,
   NewsRoute: NewsRoute,
-  QuizRoute: QuizRoute,
   ReviewsRoute: ReviewsRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
