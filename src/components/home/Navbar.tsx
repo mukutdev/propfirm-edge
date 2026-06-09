@@ -1,7 +1,17 @@
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 
-const links = ["Reviews", "Compare", "News", "Coupons", "Blog", "Discord"];
+const links: { label: string; to: string; external?: boolean }[] = [
+  { label: "Reviews", to: "/reviews" },
+  { label: "Compare", to: "/compare" },
+  { label: "News", to: "/news" },
+  { label: "Coupons", to: "/coupons" },
+  { label: "Blog", to: "/blog" },
+  { label: "Quiz", to: "/quiz" },
+  { label: "About", to: "/about" },
+  { label: "Contact", to: "/contact" },
+];
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -25,23 +35,27 @@ export function Navbar() {
       }`}
     >
       <nav className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        <a href="#" className="flex items-center gap-2" aria-label="Trading With Prop Firms home">
+        <Link to="/" className="flex items-center gap-2" aria-label="Trading With Prop Firms home">
           <div className="h-9 w-9 rounded-md bg-gradient-brand" />
           <span className="font-display font-bold text-base hidden sm:inline">TWPF</span>
-        </a>
+        </Link>
 
-        <ul className="hidden lg:flex items-center gap-8 text-sm text-white/80">
+        <ul className="hidden lg:flex items-center gap-6 text-sm text-white/80">
           {links.map((l) => (
-            <li key={l}>
-              <a href="#" className="hover:text-white transition-colors">
-                {l}
-              </a>
+            <li key={l.label}>
+              <Link
+                to={l.to}
+                className="hover:text-white transition-colors"
+                activeProps={{ className: "text-white font-semibold" }}
+              >
+                {l.label}
+              </Link>
             </li>
           ))}
         </ul>
 
         <div className="hidden lg:block">
-          <a href="#firms" className="btn-gradient text-sm">Find A Prop Firm</a>
+          <Link to="/quiz" className="btn-gradient text-sm">Find A Prop Firm</Link>
         </div>
 
         <button
@@ -57,18 +71,18 @@ export function Navbar() {
         <div className="lg:hidden fixed inset-0 top-16 bg-[#080808]/98 backdrop-blur-md z-40 animate-fade-in">
           <div className="flex flex-col gap-2 p-8">
             {links.map((l) => (
-              <a
-                key={l}
-                href="#"
+              <Link
+                key={l.label}
+                to={l.to}
                 onClick={() => setOpen(false)}
                 className="text-2xl font-display font-semibold py-3 border-b border-[#222]"
               >
-                {l}
-              </a>
+                {l.label}
+              </Link>
             ))}
-            <a href="#firms" onClick={() => setOpen(false)} className="btn-gradient mt-6 text-center">
+            <Link to="/quiz" onClick={() => setOpen(false)} className="btn-gradient mt-6 text-center">
               Find A Prop Firm
-            </a>
+            </Link>
           </div>
         </div>
       )}

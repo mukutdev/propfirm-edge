@@ -162,7 +162,8 @@ export function CompareTable() {
         </div>
       </div>
 
-      <section className="max-w-7xl mx-auto px-6 py-10">
+      <section id="compare-table" className="max-w-7xl mx-auto px-6 py-10 scroll-mt-24">
+        <p className="text-xs text-[#888] mb-3 md:hidden">Tip: swipe the table left to see more columns.</p>
         <div className="overflow-x-auto rounded-xl border border-[#222]">
           <table className="w-full text-sm border-collapse" style={{ minWidth: 200 + orderedCols.length * 130 + 140 }}>
             <thead>

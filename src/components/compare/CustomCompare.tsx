@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Star, ExternalLink } from "lucide-react";
+import { Star, ExternalLink, Zap, Trophy, Wallet } from "lucide-react";
 import { compareFirms } from "@/lib/compare-data";
 
 const slots = [0, 1, 2, 3] as const;
@@ -13,6 +13,14 @@ const statRows = [
   { label: "Trailing Stop", key: "trailingStop" as const },
   { label: "Min Trading Days", key: "minDays" as const },
   { label: "Payout Speed", key: "payoutSpeed" as const },
+];
+
+type Preset = { label: string; icon: typeof Zap; firms: string[] };
+
+const presets: Preset[] = [
+  { label: "Top 3 Rated", icon: Trophy, firms: ["Apex Trader Funding", "MyFundedFutures", "TradeDay"] },
+  { label: "Fastest Payouts", icon: Zap, firms: ["MyFundedFutures", "Lucid Trading", "Apex Trader Funding"] },
+  { label: "Cheapest Entry", icon: Wallet, firms: ["Tradeify", "Funded Futures Network", "TradeDay"] },
 ];
 
 export function CustomCompare() {
@@ -29,12 +37,37 @@ export function CustomCompare() {
     setSelected((prev) => prev.map((v, idx) => (idx === i ? name : v)));
   };
 
+  const applyPreset = (firms: string[]) => {
+    const next: (string | "")[] = ["", "", "", ""];
+    firms.slice(0, 4).forEach((f, i) => (next[i] = f));
+    setSelected(next);
+    setShowResults(true);
+    if (typeof window !== "undefined") {
+      document.getElementById("custom-compare-results")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  const filledCount = selected.filter(Boolean).length;
+
   return (
-    <section className="bg-[#0a0a0a] border-y border-[#222] py-20">
+    <section id="custom-compare" className="bg-[#0a0a0a] border-y border-[#222] py-20 scroll-mt-24">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-10">
           <h2 className="font-display font-bold text-3xl md:text-4xl">Build Your Own Comparison</h2>
-          <p className="mt-3 text-[#888]">Select up to 4 firms to compare head to head.</p>
+          <p className="mt-3 text-[#888]">Pick a preset or select up to 4 firms to compare head to head.</p>
+        </div>
+
+        <div className="flex flex-wrap justify-center gap-2 mb-8">
+          {presets.map((p) => (
+            <button
+              key={p.label}
+              onClick={() => applyPreset(p.firms)}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#2a2a2a] text-xs text-white/85 hover:border-[#7c3aed] hover:text-white transition"
+            >
+              <p.icon size={13} className="text-[#c4a8ff]" />
+              {p.label}
+            </button>
+          ))}
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -55,15 +88,26 @@ export function CustomCompare() {
           ))}
         </div>
 
-        <div className="flex flex-wrap justify-center gap-3 mt-8">
-          <button onClick={() => setShowResults(true)} className="btn-gradient text-sm">Compare Selected</button>
+        <div className="flex flex-wrap justify-center items-center gap-3 mt-8">
+          <span className="text-xs text-[#888]">{filledCount}/4 selected</span>
+          <button
+            onClick={() => setShowResults(true)}
+            disabled={filledCount < 2}
+            className="btn-gradient text-sm disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            Compare Selected
+          </button>
           <button onClick={() => { setSelected(["", "", "", ""]); setShowResults(false); }} className="btn-ghost text-sm">
             Clear Selection
           </button>
         </div>
 
+        {showResults && chosen.length < 2 && (
+          <p className="text-center text-sm text-[#888] mt-8">Select at least 2 firms to see the comparison.</p>
+        )}
+
         {showResults && chosen.length >= 2 && (
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4 animate-fade-in">
+          <div id="custom-compare-results" className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4 animate-fade-in scroll-mt-24">
             {chosen.map((firm) => {
               const isBest = firm.rating === maxRating;
               return (

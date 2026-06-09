@@ -1,9 +1,33 @@
 import { Youtube, MessageCircle, Twitter } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 
-const cols = [
-  { title: "Quick Links", items: ["Reviews", "Compare", "Coupons", "News"] },
-  { title: "Company", items: ["About", "Contact", "Advertise With Us"] },
-  { title: "Legal", items: ["Affiliate Disclaimer", "Privacy Policy", "Terms"] },
+const cols: { title: string; items: { label: string; to: string }[] }[] = [
+  {
+    title: "Quick Links",
+    items: [
+      { label: "Reviews", to: "/reviews" },
+      { label: "Compare", to: "/compare" },
+      { label: "Coupons", to: "/coupons" },
+      { label: "News", to: "/news" },
+      { label: "Blog", to: "/blog" },
+      { label: "Quiz", to: "/quiz" },
+    ],
+  },
+  {
+    title: "Company",
+    items: [
+      { label: "About", to: "/about" },
+      { label: "Contact", to: "/contact" },
+    ],
+  },
+  {
+    title: "Legal",
+    items: [
+      { label: "Affiliate Disclaimer", to: "/about" },
+      { label: "Privacy Policy", to: "/about" },
+      { label: "Terms", to: "/about" },
+    ],
+  },
 ];
 
 export function Footer() {
@@ -32,8 +56,8 @@ export function Footer() {
             <h4 className="font-display font-semibold text-sm uppercase tracking-wider text-white mb-4">{c.title}</h4>
             <ul className="space-y-2.5">
               {c.items.map((i) => (
-                <li key={i}>
-                  <a href="#" className="text-sm text-[#888] hover:text-white transition-colors">{i}</a>
+                <li key={i.label}>
+                  <Link to={i.to} className="text-sm text-[#888] hover:text-white transition-colors">{i.label}</Link>
                 </li>
               ))}
             </ul>
