@@ -3,7 +3,6 @@ import { Navbar } from "@/components/home/Navbar";
 import { Footer } from "@/components/home/Footer";
 import { ReviewsHero } from "@/components/reviews/ReviewsHero";
 import { ReviewsDirectory } from "@/components/reviews/ReviewsDirectory";
-import { QuizCTA } from "@/components/reviews/QuizCTA";
 
 export const Route = createFileRoute("/reviews")({
   head: () => ({
@@ -24,7 +23,6 @@ function ReviewsPage() {
       <Navbar />
       <ReviewsHero />
       <ReviewsDirectory />
-      <QuizCTA />
       <Footer />
     </main>
   );

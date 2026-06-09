@@ -10,7 +10,6 @@ const cols: { title: string; items: { label: string; to: string }[] }[] = [
       { label: "Coupons", to: "/coupons" },
       { label: "News", to: "/news" },
       { label: "Blog", to: "/blog" },
-      { label: "Quiz", to: "/quiz" },
     ],
   },
   {
