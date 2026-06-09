@@ -9,7 +9,7 @@ const criteria = [
 
 export function Methodology() {
   return (
-    <section className="py-20">
+    <section id="methodology" className="py-20 scroll-mt-24">
       <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-start">
         <div>
           <h2 className="font-display font-bold text-3xl md:text-4xl gradient-underline">How We Compare Prop Firms</h2>
