@@ -8,7 +8,6 @@ const links: { label: string; to: string; external?: boolean }[] = [
   { label: "News", to: "/news" },
   { label: "Coupons", to: "/coupons" },
   { label: "Blog", to: "/blog" },
-  { label: "Quiz", to: "/quiz" },
   { label: "About", to: "/about" },
   { label: "Contact", to: "/contact" },
 ];
@@ -55,7 +54,7 @@ export function Navbar() {
         </ul>
 
         <div className="hidden lg:block">
-          <Link to="/quiz" className="btn-gradient text-sm">Find A Prop Firm</Link>
+          <Link to="/reviews" className="btn-gradient text-sm">Find A Prop Firm</Link>
         </div>
 
         <button
@@ -80,7 +79,7 @@ export function Navbar() {
                 {l.label}
               </Link>
             ))}
-            <Link to="/quiz" onClick={() => setOpen(false)} className="btn-gradient mt-6 text-center">
+            <Link to="/reviews" onClick={() => setOpen(false)} className="btn-gradient mt-6 text-center">
               Find A Prop Firm
             </Link>
           </div>
