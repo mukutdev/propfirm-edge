@@ -164,3 +164,33 @@ export const newsCategories: ("All" | NewsCategory)[] = [
   "Stocks",
   "Economic Events",
 ];
+
+export const allNewsArticles: NewsArticle[] = [
+  featuredArticle,
+  ...topStories,
+  ...latestUpdates,
+  ...propFirmNews,
+];
+
+export function getNewsArticleBySlug(slug: string): NewsArticle | undefined {
+  return allNewsArticles.find((a) => a.id === slug);
+}
+
+export function getRelatedNewsArticles(article: NewsArticle, limit = 4): NewsArticle[] {
+  const seen = new Set<string>([article.id]);
+  const out: NewsArticle[] = [];
+  for (const a of allNewsArticles) {
+    if (seen.has(a.id)) continue;
+    if (a.category !== article.category) continue;
+    seen.add(a.id);
+    out.push(a);
+    if (out.length >= limit) break;
+  }
+  for (const a of allNewsArticles) {
+    if (out.length >= limit) break;
+    if (seen.has(a.id)) continue;
+    seen.add(a.id);
+    out.push(a);
+  }
+  return out;
+}

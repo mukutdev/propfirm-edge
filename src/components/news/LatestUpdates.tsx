@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { NewsArticle } from "@/lib/news-data";
+import { Link } from "@tanstack/react-router";
 
 export function LatestUpdates({ items }: { items: NewsArticle[] }) {
   const [limit, setLimit] = useState(6);
@@ -15,9 +16,10 @@ export function LatestUpdates({ items }: { items: NewsArticle[] }) {
       </div>
       <div className="overflow-hidden rounded-xl border border-[#222] bg-[#141414]">
         {visible.map((a, i) => (
-          <a
+          <Link
             key={a.id}
-            href="#"
+            to="/news/$slug"
+            params={{ slug: a.id }}
             className="group flex items-center gap-4 border-l-2 border-transparent border-b border-b-[#222] p-4 transition-all duration-200 last:border-b-0 hover:border-l-purple-500 hover:bg-white/[0.02]"
             style={{ animationDelay: `${i * 50}ms` }}
           >
@@ -42,7 +44,7 @@ export function LatestUpdates({ items }: { items: NewsArticle[] }) {
                 {a.title}
               </p>
             </div>
-          </a>
+          </Link>
         ))}
       </div>
       {limit < items.length && (

@@ -18,6 +18,8 @@ import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ReviewsSlugRouteImport } from './routes/reviews.$slug'
+import { Route as NewsSlugRouteImport } from './routes/news.$slug'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 
 const ReviewsRoute = ReviewsRouteImport.update({
   id: '/reviews',
@@ -64,39 +66,55 @@ const ReviewsSlugRoute = ReviewsSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => ReviewsRoute,
 } as any)
+const NewsSlugRoute = NewsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => NewsRoute,
+} as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => BlogRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/blog': typeof BlogRoute
+  '/blog': typeof BlogRouteWithChildren
   '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
   '/coupons': typeof CouponsRoute
-  '/news': typeof NewsRoute
+  '/news': typeof NewsRouteWithChildren
   '/reviews': typeof ReviewsRouteWithChildren
+  '/blog/$slug': typeof BlogSlugRoute
+  '/news/$slug': typeof NewsSlugRoute
   '/reviews/$slug': typeof ReviewsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/blog': typeof BlogRoute
+  '/blog': typeof BlogRouteWithChildren
   '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
   '/coupons': typeof CouponsRoute
-  '/news': typeof NewsRoute
+  '/news': typeof NewsRouteWithChildren
   '/reviews': typeof ReviewsRouteWithChildren
+  '/blog/$slug': typeof BlogSlugRoute
+  '/news/$slug': typeof NewsSlugRoute
   '/reviews/$slug': typeof ReviewsSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/blog': typeof BlogRoute
+  '/blog': typeof BlogRouteWithChildren
   '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
   '/coupons': typeof CouponsRoute
-  '/news': typeof NewsRoute
+  '/news': typeof NewsRouteWithChildren
   '/reviews': typeof ReviewsRouteWithChildren
+  '/blog/$slug': typeof BlogSlugRoute
+  '/news/$slug': typeof NewsSlugRoute
   '/reviews/$slug': typeof ReviewsSlugRoute
 }
 export interface FileRouteTypes {
@@ -110,6 +128,8 @@ export interface FileRouteTypes {
     | '/coupons'
     | '/news'
     | '/reviews'
+    | '/blog/$slug'
+    | '/news/$slug'
     | '/reviews/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -121,6 +141,8 @@ export interface FileRouteTypes {
     | '/coupons'
     | '/news'
     | '/reviews'
+    | '/blog/$slug'
+    | '/news/$slug'
     | '/reviews/$slug'
   id:
     | '__root__'
@@ -132,17 +154,19 @@ export interface FileRouteTypes {
     | '/coupons'
     | '/news'
     | '/reviews'
+    | '/blog/$slug'
+    | '/news/$slug'
     | '/reviews/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
-  BlogRoute: typeof BlogRoute
+  BlogRoute: typeof BlogRouteWithChildren
   CompareRoute: typeof CompareRoute
   ContactRoute: typeof ContactRoute
   CouponsRoute: typeof CouponsRoute
-  NewsRoute: typeof NewsRoute
+  NewsRoute: typeof NewsRouteWithChildren
   ReviewsRoute: typeof ReviewsRouteWithChildren
 }
 
@@ -211,8 +235,42 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReviewsSlugRouteImport
       parentRoute: typeof ReviewsRoute
     }
+    '/news/$slug': {
+      id: '/news/$slug'
+      path: '/$slug'
+      fullPath: '/news/$slug'
+      preLoaderRoute: typeof NewsSlugRouteImport
+      parentRoute: typeof NewsRoute
+    }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof BlogRoute
+    }
   }
 }
+
+interface BlogRouteChildren {
+  BlogSlugRoute: typeof BlogSlugRoute
+}
+
+const BlogRouteChildren: BlogRouteChildren = {
+  BlogSlugRoute: BlogSlugRoute,
+}
+
+const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
+
+interface NewsRouteChildren {
+  NewsSlugRoute: typeof NewsSlugRoute
+}
+
+const NewsRouteChildren: NewsRouteChildren = {
+  NewsSlugRoute: NewsSlugRoute,
+}
+
+const NewsRouteWithChildren = NewsRoute._addFileChildren(NewsRouteChildren)
 
 interface ReviewsRouteChildren {
   ReviewsSlugRoute: typeof ReviewsSlugRoute
@@ -228,23 +286,13 @@ const ReviewsRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
-  BlogRoute: BlogRoute,
+  BlogRoute: BlogRouteWithChildren,
   CompareRoute: CompareRoute,
   ContactRoute: ContactRoute,
   CouponsRoute: CouponsRoute,
-  NewsRoute: NewsRoute,
+  NewsRoute: NewsRouteWithChildren,
   ReviewsRoute: ReviewsRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

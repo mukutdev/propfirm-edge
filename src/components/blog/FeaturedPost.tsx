@@ -1,5 +1,6 @@
 import { featuredPost } from "@/lib/blog-data";
 import { ChartArt } from "@/components/news/ChartArt";
+import { Link } from "@tanstack/react-router";
 
 export function FeaturedPost() {
   const p = featuredPost;
@@ -22,12 +23,13 @@ export function FeaturedPost() {
             <span className="text-white">{p.author}</span>
             <span className="text-muted-foreground">· {p.date}</span>
           </div>
-          <a
-            href="#"
+          <Link
+            to="/blog/$slug"
+            params={{ slug: p.id }}
             className="mt-3 inline-flex w-fit items-center gap-1 rounded-full bg-gradient-to-r from-[#7C3AED] to-[#EC4899] px-5 py-2.5 text-sm font-semibold text-white transition hover:opacity-90"
           >
             Read Guide →
-          </a>
+          </Link>
         </div>
         <div className="relative h-56 overflow-hidden md:h-auto">
           <ChartArt seed={11} />
