@@ -1,5 +1,6 @@
 import type { BlogPost, BlogCategory } from "@/lib/blog-data";
 import { ArticleCard } from "./ArticleCard";
+import { Link } from "@tanstack/react-router";
 
 type Props = {
   icon: string;
@@ -20,9 +21,9 @@ export function CategorySection({ icon, category, posts, seedOffset = 0 }: Props
           <span className="text-2xl">{icon}</span>
           {category}
         </h2>
-        <a href="#" className="shrink-0 bg-gradient-to-r from-[#7C3AED] to-[#EC4899] bg-clip-text text-sm font-semibold text-transparent">
+        <Link to="/blog" className="shrink-0 bg-gradient-to-r from-[#7C3AED] to-[#EC4899] bg-clip-text text-sm font-semibold text-transparent">
           View All →
-        </a>
+        </Link>
       </div>
       <div className="-mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-3">
         {posts.map((p, i) => (

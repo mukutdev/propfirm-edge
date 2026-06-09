@@ -95,9 +95,7 @@ export function BlogArticle({ post }: { post: BlogPost }) {
           <h2 className="mb-5 font-display text-2xl font-bold text-white">Related Articles</h2>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {related.map((p, i) => (
-              <Link key={p.id} to="/blog/$slug" params={{ slug: p.id }}>
-                <ArticleCard post={p} seed={i + 50} />
-              </Link>
+              <ArticleCard key={p.id} post={p} seed={i + 50} />
             ))}
           </div>
         </section>
