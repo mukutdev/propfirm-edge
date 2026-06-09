@@ -102,3 +102,33 @@ export const popularCategoriesCount: { name: BlogCategory; count: number }[] = [
   { name: "Trading Psychology", count: 24 },
   { name: "Interviews", count: 11 },
 ];
+
+export const allBlogPosts: BlogPost[] = [
+  featuredPost,
+  ...categorySections.flatMap((s) => s.posts),
+  ...popularPosts,
+  ...latestPosts,
+];
+
+export function getBlogPostBySlug(slug: string): BlogPost | undefined {
+  return allBlogPosts.find((p) => p.id === slug);
+}
+
+export function getRelatedBlogPosts(post: BlogPost, limit = 3): BlogPost[] {
+  const seen = new Set<string>([post.id]);
+  const out: BlogPost[] = [];
+  for (const p of allBlogPosts) {
+    if (seen.has(p.id)) continue;
+    if (p.category !== post.category) continue;
+    seen.add(p.id);
+    out.push(p);
+    if (out.length >= limit) break;
+  }
+  for (const p of allBlogPosts) {
+    if (out.length >= limit) break;
+    if (seen.has(p.id)) continue;
+    seen.add(p.id);
+    out.push(p);
+  }
+  return out;
+}
