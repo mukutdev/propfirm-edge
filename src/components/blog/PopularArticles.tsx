@@ -1,5 +1,6 @@
 import { popularPosts } from "@/lib/blog-data";
 import { ChartArt } from "@/components/news/ChartArt";
+import { Link } from "@tanstack/react-router";
 
 export function PopularArticles() {
   const [hero, ...rest] = popularPosts;
@@ -7,7 +8,7 @@ export function PopularArticles() {
     <section>
       <h2 className="mb-5 font-display text-2xl font-bold text-white">Most Read This Month</h2>
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <article className="group flex flex-col overflow-hidden rounded-xl border border-[#222] bg-[#141414] transition hover:-translate-y-1 hover:border-purple-500/40 hover:shadow-[0_10px_40px_-15px_rgba(124,58,237,0.5)]">
+        <Link to="/blog/$slug" params={{ slug: hero.id }} className="group flex flex-col overflow-hidden rounded-xl border border-[#222] bg-[#141414] transition hover:-translate-y-1 hover:border-purple-500/40 hover:shadow-[0_10px_40px_-15px_rgba(124,58,237,0.5)]">
           <div className="relative aspect-[16/9] w-full overflow-hidden">
             <ChartArt seed={21} />
           </div>
@@ -28,12 +29,13 @@ export function PopularArticles() {
               <span className="text-muted-foreground">{hero.date}</span>
             </div>
           </div>
-        </article>
+        </Link>
         <ol className="flex flex-col gap-3">
           {rest.map((p, i) => (
             <li key={p.id}>
-              <a
-                href="#"
+              <Link
+                to="/blog/$slug"
+                params={{ slug: p.id }}
                 className="group flex gap-4 rounded-xl border border-[#222] bg-[#141414] p-4 transition hover:border-purple-500/40 hover:bg-white/[0.02]"
               >
                 <span className="bg-gradient-to-br from-[#7C3AED] to-[#EC4899] bg-clip-text font-display text-3xl font-bold leading-none text-transparent">
@@ -48,7 +50,7 @@ export function PopularArticles() {
                     <span className="text-muted-foreground">⏱ {p.readTime}</span>
                   </div>
                 </div>
-              </a>
+              </Link>
             </li>
           ))}
         </ol>

@@ -1,9 +1,12 @@
 import type { BlogPost } from "@/lib/blog-data";
 import { ChartArt } from "@/components/news/ChartArt";
+import { Link } from "@tanstack/react-router";
 
 export function ArticleCard({ post, seed = 1 }: { post: BlogPost; seed?: number }) {
   return (
-    <article
+    <Link
+      to="/blog/$slug"
+      params={{ slug: post.id }}
       className="group flex h-full flex-col overflow-hidden rounded-xl border border-[#222] bg-[#141414] transition-all duration-200 hover:-translate-y-1 hover:border-purple-500/40 hover:shadow-[0_10px_40px_-15px_rgba(124,58,237,0.5)]"
     >
       <div className="relative aspect-[16/9] w-full overflow-hidden">
@@ -26,6 +29,6 @@ export function ArticleCard({ post, seed = 1 }: { post: BlogPost; seed?: number 
           <span className="text-muted-foreground">{post.date}</span>
         </div>
       </div>
-    </article>
+    </Link>
   );
 }
