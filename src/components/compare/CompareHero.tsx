@@ -15,8 +15,13 @@ export function CompareHero() {
         <p className="mt-4 text-[#888] text-base md:text-lg max-w-2xl">
           Cut through the noise. Compare funding, rules, fees and payouts across all major prop firms in one place.
         </p>
-        <div className="mt-6 inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#2a2a2a] text-xs text-[#888]">
-          <span className="h-1.5 w-1.5 rounded-full bg-[#00d97e]" /> Updated January 2025
+        <div className="mt-6 flex flex-wrap items-center gap-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#2a2a2a] text-xs text-[#888]">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#00d97e] animate-pulse" /> Updated January 2025
+          </div>
+          <a href="#compare-table" className="text-xs px-3 py-1.5 rounded-full border border-[#2a2a2a] text-white/80 hover:border-[#7c3aed] hover:text-white transition">Browse all firms →</a>
+          <a href="#custom-compare" className="text-xs px-3 py-1.5 rounded-full border border-[#2a2a2a] text-white/80 hover:border-[#7c3aed] hover:text-white transition">Build custom comparison →</a>
+          <a href="#methodology" className="text-xs px-3 py-1.5 rounded-full border border-[#2a2a2a] text-white/80 hover:border-[#7c3aed] hover:text-white transition">How we rate →</a>
         </div>
       </div>
     </section>
