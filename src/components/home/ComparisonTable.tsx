@@ -49,8 +49,10 @@ export function ComparisonTable() {
         </div>
 
         <div className="mt-10 flex justify-center">
-          <a href="#" className="btn-gradient">View Full Comparison</a>
+          <Link to="/compare" className="btn-gradient">View Full Comparison</Link>
         </div>
+
+        <MatchupBuilder />
       </div>
     </section>
   );
