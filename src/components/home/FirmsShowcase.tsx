@@ -376,13 +376,14 @@ function PreviewTable() {
   };
 
   const base = reviewFirms.slice();
-  const rows = (
+  const all =
     tab === "Favorite"
       ? base.filter((f) => favs.includes(f.name))
       : tab === "New"
         ? base.sort((a, b) => b.addedOrder - a.addedOrder)
-        : base.sort((a, b) => b.rating - a.rating)
-  ).slice(0, 6);
+        : base.sort((a, b) => b.rating - a.rating);
+  const rows = all.slice(0, visible);
+  const hasMore = all.length > visible;
 
   const maxFunding = Math.max(...reviewFirms.map((f) => f.fundingNumeric));
 
