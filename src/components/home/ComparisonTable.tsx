@@ -1,4 +1,6 @@
+import { Link } from "@tanstack/react-router";
 import { comparisonRows } from "@/lib/home-data";
+import { MatchupBuilder } from "@/components/home/MatchupBuilder";
 import { useReveal } from "@/hooks/use-reveal";
 
 const cols = ["Firm Name", "Max Account", "Profit Split", "Drawdown Type", "Futures Allowed", "Our Rating"];
