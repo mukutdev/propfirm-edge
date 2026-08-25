@@ -103,7 +103,7 @@ export function ContactForm() {
   }
 
   return (
-    <section className="py-12">
+    <section className="py-10">
       <div className="max-w-3xl mx-auto px-6">
         <ReasonCards value={reason} onChange={setReasonAndSubject} />
 
