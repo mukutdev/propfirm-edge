@@ -2,10 +2,10 @@ import { Check } from "lucide-react";
 
 export function ForPropFirms() {
   const items = [
-    "Honest independent review process",
-    "Real account testing before listing",
-    "High-intent futures trader audience",
-    "Monthly updated content",
+    "Honest, independent evaluation — we run the challenge ourselves",
+    "Real funded-account testing before any listing goes live",
+    "Audience of funded-account-ready futures traders",
+    "Reviews re-checked monthly as rules and fees shift",
   ];
   return (
     <section className="py-12">
