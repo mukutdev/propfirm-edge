@@ -184,7 +184,7 @@ function FilterBar({
   return (
     <div className="sticky top-16 z-30 bg-[#141414]/95 backdrop-blur-md border-y border-[#222]">
       <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col md:flex-row gap-4 md:items-center md:justify-between">
-        <div className="flex gap-2 overflow-x-auto pb-1 md:pb-0 -mx-6 px-6 md:mx-0 md:px-0 snap-x">
+        <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1 md:pb-0 -mx-6 px-6 md:mx-0 md:px-0 snap-x">
           {categories.map((c) => {
             const isActive = active === c;
             return (

@@ -11,7 +11,7 @@ const bullets = [
 export function WhyTrustUs() {
   const ref = useReveal<HTMLDivElement>();
   return (
-    <section className="py-24 md:py-32" aria-label="Why trust us">
+    <section className="py-14 md:py-20" aria-label="Why trust us">
       <div ref={ref} className="reveal max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-14 items-center">
         <div>
           <p className="text-xs uppercase tracking-[0.3em] text-[#888] mb-6">Why Trust Us</p>

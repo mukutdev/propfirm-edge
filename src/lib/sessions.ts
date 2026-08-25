@@ -1,0 +1,54 @@
+export type Session = { name: string; short: string; tz: string; open: number; close: number };
+
+export const sessions: Session[] = [
+  { name: "Sydney", short: "SYD", tz: "Australia/Sydney", open: 7, close: 16 },
+  { name: "Tokyo", short: "TYO", tz: "Asia/Tokyo", open: 9, close: 18 },
+  { name: "London", short: "LDN", tz: "Europe/London", open: 8, close: 17 },
+  { name: "New York", short: "NY", tz: "America/New_York", open: 8, close: 17 },
+  { name: "Globex", short: "GLBX", tz: "America/New_York", open: 18, close: 17 },
+];
+
+export function zonedParts(date: Date, tz: string) {
+  const fmt = new Intl.DateTimeFormat("en-US", {
+    timeZone: tz,
+    hour: "2-digit",
+    minute: "2-digit",
+    weekday: "short",
+    hour12: false,
+  });
+  const parts = fmt.formatToParts(date);
+  const get = (t: string) => parts.find((p) => p.type === t)?.value ?? "0";
+  return {
+    hour: Number(get("hour")) % 24,
+    minute: Number(get("minute")),
+    weekday: get("weekday"),
+  };
+}
+
+export function fmtDuration(mins: number) {
+  const m = Math.max(0, Math.round(mins));
+  const h = Math.floor(m / 60);
+  return h > 0 ? `${h}h ${m % 60}m` : `${m}m`;
+}
+
+export function sessionState(date: Date, s: Session) {
+  const { hour, minute, weekday } = zonedParts(date, s.tz);
+  const now = hour * 60 + minute;
+  const weekend = weekday === "Sat" || weekday === "Sun";
+  const openM = s.open * 60;
+  const closeM = s.close * 60;
+  const overnight = s.name === "Globex";
+
+  let isOpen: boolean;
+  if (overnight) {
+    isOpen = !(now >= closeM && now < openM) && weekday !== "Sat";
+  } else {
+    isOpen = !weekend && now >= openM && now < closeM;
+  }
+
+  const target = isOpen ? closeM : openM;
+  let diff = target - now;
+  if (diff <= 0) diff += 24 * 60;
+
+  return { isOpen, label: `${isOpen ? "Closes in" : "Opens in"} ${fmtDuration(diff)}` };
+}

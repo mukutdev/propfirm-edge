@@ -1,30 +1,86 @@
-import { TickerBar } from "./TickerBar";
+import { Link } from "@tanstack/react-router";
+import { TradingViewWidget } from "./TradingViewWidget";
+import { CountUp } from "./CountUp";
+
+const heroSymbols = [
+  { proName: "CME_MINI:NQ1!", title: "Nasdaq 100" },
+  { proName: "CME_MINI:ES1!", title: "S&P 500" },
+  { proName: "COMEX:GC1!", title: "Gold" },
+  { proName: "NYMEX:CL1!", title: "Crude Oil" },
+  { proName: "FX:EURUSD", title: "EUR/USD" },
+];
 
 export function Hero() {
   return (
-    <section className="relative min-h-screen flex flex-col justify-center pt-24 overflow-hidden" aria-label="Hero">
+    <section
+      className="relative flex flex-col justify-center overflow-hidden pt-28 pb-14 md:pb-16"
+      aria-label="Hero"
+    >
       <div className="hero-bloom" />
-      <div className="grid-lines" />
+      <div className="grid-lines-animated" />
 
-      <div className="relative max-w-5xl mx-auto px-6 text-center flex-1 flex flex-col justify-center">
-        <p className="text-xs uppercase tracking-[0.3em] text-white/50 mb-6">
-          Find Your Edge · Get Funded · Trade For Real
+      <div className="relative mx-auto w-full max-w-5xl px-6 text-center">
+        <p className="mb-5 text-[11px] uppercase tracking-[0.3em] text-white/45">
+          Futures · Forex · Funded Accounts
         </p>
-        <h1 className="font-display font-bold text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.02] tracking-tight">
-          The Smartest Way To <br className="hidden sm:block" />
-          Get <span className="text-gradient">Prop Funded</span>
+        <h1 className="font-display font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight">
+          Get Funded. Trade Real Capital.{" "}
+          <span className="text-gradient">Keep What You Earn.</span>
         </h1>
-        <p className="mt-8 text-lg md:text-xl text-[#888] max-w-2xl mx-auto leading-relaxed">
-          Unbiased reviews, real comparisons and exclusive discounts on the top prop firms for futures traders.
+        <p className="mt-6 text-base md:text-lg text-[#8d8d8d] max-w-2xl mx-auto leading-relaxed">
+          Independent prop firm reviews, real trader ratings, and verified discount codes — built by a
+          futures trader, not a marketing team.
         </p>
-        <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-          <a href="#compare" className="btn-gradient">Compare Prop Firms</a>
-          <a href="#firms" className="btn-ghost">See All Reviews</a>
-        </div>
-      </div>
 
-      <div className="relative mt-16">
-        <TickerBar />
+        {/* Live ticker tape — sells the real-data feel immediately */}
+        <div className="mt-8 min-h-[52px] rounded-xl border border-[#7c3aed]/35 bg-[#141414] p-1 overflow-hidden">
+          <div className="hidden sm:block">
+            <TradingViewWidget
+              type="ticker-tape"
+              config={{
+                symbols: heroSymbols,
+                showSymbolLogo: true,
+                colorTheme: "dark",
+                isTransparent: true,
+                displayMode: "adaptive",
+                locale: "en",
+              }}
+            />
+          </div>
+          <div className="sm:hidden">
+            <TradingViewWidget
+              type="ticker-tape"
+              config={{
+                symbols: heroSymbols.slice(0, 3),
+                showSymbolLogo: true,
+                colorTheme: "dark",
+                isTransparent: true,
+                displayMode: "compact",
+                locale: "en",
+              }}
+            />
+          </div>
+        </div>
+
+        <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+          <Link to="/compare" className="btn-gradient">Compare Prop Firms</Link>
+          <Link to="/reviews" className="btn-ghost">Read Real Reviews</Link>
+        </div>
+
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs text-[#8d8d8d]">
+          <span>
+            <span className="text-white font-semibold"><CountUp to={12} suffix="+" /></span> Firms Tracked
+          </span>
+          <span className="hidden sm:inline text-[#333]">|</span>
+          <span>
+            <span className="text-white font-semibold"><CountUp to={11500} suffix="+" /></span> Real Reviews
+          </span>
+          <span className="hidden sm:inline text-[#333]">|</span>
+          <span className="inline-flex items-center gap-1.5">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#00d97e] shadow-[0_0_6px_1px_rgba(0,217,126,0.6)]" />
+            Updated Daily
+          </span>
+        </div>
       </div>
     </section>
   );
