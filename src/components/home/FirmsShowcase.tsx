@@ -37,19 +37,19 @@ const promos: Record<string, Promo> = {
   Earn2Trade: { off: "20% OFF", code: "E2T20" },
 };
 
-const countries: Record<string, { flag: string; code: string }> = {
-  "Apex Trader Funding": { flag: "🇺🇸", code: "USA" },
-  MyFundedFutures: { flag: "🇺🇸", code: "USA" },
-  TradeDay: { flag: "🇬🇧", code: "UK" },
-  "Take Profit Trader": { flag: "🇺🇸", code: "USA" },
-  "FundedNext Futures": { flag: "🇦🇪", code: "UAE" },
-  Tradeify: { flag: "🇺🇸", code: "USA" },
-  Bluenox: { flag: "🇨🇿", code: "CZE" },
-  "Funded Futures Network": { flag: "🇺🇸", code: "USA" },
-  "Lucid Trading": { flag: "🇺🇸", code: "USA" },
-  "Legends Trading": { flag: "🇨🇦", code: "CAN" },
-  "DayTraders.com": { flag: "🇺🇸", code: "USA" },
-  Earn2Trade: { flag: "🇭🇺", code: "HUN" },
+const countries: Record<string, { iso: string; code: string }> = {
+  "Apex Trader Funding": { iso: "us", code: "US" },
+  MyFundedFutures: { iso: "us", code: "US" },
+  TradeDay: { iso: "gb", code: "GB" },
+  "Take Profit Trader": { iso: "us", code: "US" },
+  "FundedNext Futures": { iso: "ae", code: "AE" },
+  Tradeify: { iso: "us", code: "US" },
+  Bluenox: { iso: "cz", code: "CZ" },
+  "Funded Futures Network": { iso: "us", code: "US" },
+  "Lucid Trading": { iso: "us", code: "US" },
+  "Legends Trading": { iso: "ca", code: "CA" },
+  "DayTraders.com": { iso: "us", code: "US" },
+  Earn2Trade: { iso: "hu", code: "HU" },
 };
 
 const promoOf = (name: string): Promo => promos[name] ?? { off: "20% OFF", code: "TWPF20" };
