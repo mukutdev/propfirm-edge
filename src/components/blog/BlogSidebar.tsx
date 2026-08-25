@@ -24,7 +24,7 @@ export function BlogSidebar({ search, onSearch, categoryCounts }: Props) {
       <div className="rounded-xl border border-[#222] bg-[#141414] p-5">
         <h3 className="mb-3 font-display text-lg font-bold text-white">Popular Categories</h3>
         <ul className="flex flex-col gap-2">
-          {popularCategoriesCount.map((c) => (
+          {categoryCounts.map((c) => (
             <li key={c.name}>
               <a href="#" className="group flex items-center justify-between rounded-lg px-2 py-1.5 text-sm text-white transition hover:bg-white/[0.03] hover:text-purple-300">
                 <span>{c.name}</span>
