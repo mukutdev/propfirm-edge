@@ -13,7 +13,7 @@ const heroSymbols = [
 export function Hero() {
   return (
     <section
-      className="relative flex min-h-[92vh] flex-col justify-center pt-28 pb-10 overflow-hidden"
+      className="relative flex flex-col justify-center overflow-hidden pt-28 pb-14 md:pb-16"
       aria-label="Hero"
     >
       <div className="hero-bloom" />
