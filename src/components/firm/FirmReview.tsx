@@ -2,17 +2,20 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Star, Check, X, Copy, Clock, Rocket, Zap, Target, ExternalLink,
 } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import type { FirmDetail } from "@/lib/firm-detail-data";
+import { VerifiedReviews } from "@/components/firm/VerifiedReviews";
+import type { FirmReviewEntry } from "@/lib/firms.functions";
 
 const sections = [
   { id: "overview", label: "Overview" },
-  { id: "rules", label: "Challenge Rules" },
+  { id: "rules", label: "Evaluation Rules" },
   { id: "pricing", label: "Pricing" },
   { id: "payout", label: "Payout" },
   { id: "platforms", label: "Platforms" },
   { id: "proscons", label: "Pros & Cons" },
   { id: "bestfor", label: "Best For" },
-  { id: "experience", label: "Our Experience" },
+  { id: "reviews", label: "Trader Reviews" },
   { id: "verdict", label: "Final Verdict" },
   { id: "alternatives", label: "Alternatives" },
 ];
@@ -149,7 +152,7 @@ function StatsGrid({ firm }: { firm: FirmDetail }) {
   const items = [
     { label: "Max Account Size", value: firm.stats.maxAccount, highlight: true },
     { label: "Profit Split", value: firm.stats.profitSplit, highlight: true },
-    { label: "Challenge Fee", value: firm.stats.challengeFee },
+    { label: "Evaluation Cost", value: firm.stats.challengeFee },
     { label: "Drawdown Type", value: firm.stats.drawdownType },
     { label: "Payout Frequency", value: firm.stats.payoutFrequency },
     { label: "Instruments", value: firm.stats.instruments },
@@ -188,7 +191,7 @@ function Overview({ firm }: { firm: FirmDetail }) {
 function RulesTable({ firm }: { firm: FirmDetail }) {
   return (
     <section className="space-y-6">
-      <SectionHeading id="rules">Challenge Rules</SectionHeading>
+      <SectionHeading id="rules">Evaluation Rules & Risk Limits</SectionHeading>
       <div className="overflow-x-auto rounded-xl border border-[#222]">
         <table className="w-full text-sm min-w-[480px]">
           <thead>
@@ -228,9 +231,9 @@ function Pricing({ firm }: { firm: FirmDetail }) {
             )}
             <div className="text-xs uppercase tracking-wider text-[#888]">Account Size</div>
             <div className="font-display font-bold text-3xl mt-1">{p.size}</div>
-            <div className="text-sm text-[#888] mt-4">Challenge fee</div>
+            <div className="text-sm text-[#888] mt-4">Evaluation cost</div>
             <div className="font-display font-semibold text-xl">{p.fee}</div>
-            <a href="#" className="btn-gradient w-full mt-6 text-sm">Start This Challenge</a>
+            <a href={firm.affiliateUrl} target="_blank" rel="noopener noreferrer sponsored" className="btn-gradient w-full mt-6 text-sm">Start This Evaluation</a>
           </div>
         ))}
       </div>
@@ -352,22 +355,8 @@ function BestFor({ firm }: { firm: FirmDetail }) {
   );
 }
 
-function Experience({ firm }: { firm: FirmDetail }) {
-  return (
-    <section className="space-y-5">
-      <SectionHeading id="experience">Our Real Account Experience</SectionHeading>
-      {firm.experience.map((p, i) => (
-        <p key={i} className="text-[#bbb] leading-relaxed">{p}</p>
-      ))}
-      <div className="card-surface p-8 mt-4 text-center">
-        <div className="text-xs uppercase tracking-wider text-[#888]">Payout proof</div>
-        <div className="h-44 mt-4 rounded-lg border border-dashed border-[#333] flex items-center justify-center text-sm text-[#666]">
-          [ Payout screenshot placeholder ]
-        </div>
-      </div>
-    </section>
-  );
-}
+
+
 
 function VerdictRatings({ firm }: { firm: FirmDetail }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -413,7 +402,7 @@ function VerdictRatings({ firm }: { firm: FirmDetail }) {
         <p className="mt-8 text-[#bbb] leading-relaxed border-t border-[#222] pt-6">{firm.finalRecommendation}</p>
 
         <div className="mt-6 flex flex-col items-center">
-          <a href="#" className="btn-gradient text-base px-8 py-3.5">
+          <a href={firm.affiliateUrl} target="_blank" rel="noopener noreferrer sponsored" className="btn-gradient text-base px-8 py-3.5">
             Visit {firm.name} <ExternalLink size={14} />
           </a>
           <p className="text-xs text-[#666] mt-3 text-center max-w-md">
@@ -431,7 +420,7 @@ function Alternatives({ firm }: { firm: FirmDetail }) {
       <SectionHeading id="alternatives">Compare Alternatives</SectionHeading>
       <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-5">
         {firm.alternatives.map((a) => (
-          <div key={a.name} className="card-surface p-5">
+          <div key={a.slug} className="card-surface p-5">
             <FirmLogoBlock name={a.name} size="md" />
             <div className="font-display font-bold text-lg mt-4">{a.name}</div>
             <GradientStars rating={a.rating} size={14} />
@@ -445,7 +434,7 @@ function Alternatives({ firm }: { firm: FirmDetail }) {
                 <div className="font-display font-semibold text-[#00d97e]">{a.split}</div>
               </div>
             </div>
-            <a href="#" className="btn-ghost w-full mt-4 text-sm py-2.5">View Review</a>
+            <Link to="/reviews/$slug" params={{ slug: a.slug }} className="btn-ghost w-full mt-4 text-sm py-2.5 block text-center">View Review</Link>
           </div>
         ))}
       </div>
@@ -487,7 +476,7 @@ function Sidebar({ firm }: { firm: FirmDetail }) {
   const compactStats = [
     { label: "Max Account", value: firm.stats.maxAccount },
     { label: "Profit Split", value: firm.stats.profitSplit },
-    { label: "Fee", value: firm.stats.challengeFee },
+    { label: "Eval Cost", value: firm.stats.challengeFee },
     { label: "Payout", value: firm.stats.payoutFrequency },
   ];
 
@@ -509,8 +498,8 @@ function Sidebar({ firm }: { firm: FirmDetail }) {
             </div>
           ))}
         </div>
-        <a href="#" className="btn-gradient w-full mt-5 text-sm py-2.5">Visit {firm.name}</a>
-        <a href="#" className="btn-ghost w-full mt-2 text-sm py-2.5">Get Discount Code</a>
+        <a href={firm.affiliateUrl} target="_blank" rel="noopener noreferrer sponsored" className="btn-gradient w-full mt-5 text-sm py-2.5">Visit {firm.name}</a>
+        <a href="#reviews" className="btn-ghost w-full mt-2 text-sm py-2.5">Read Trader Reviews</a>
 
         <div className="mt-5 pt-5 border-t border-[#222]">
           <div className="text-[10px] uppercase tracking-wider text-[#888] mb-2">Exclusive Code</div>
@@ -521,7 +510,7 @@ function Sidebar({ firm }: { firm: FirmDetail }) {
             </button>
           </div>
           <div className="flex items-center gap-1.5 text-xs text-[#888] mt-3">
-            <Clock size={12} /> Offer ends in <span className="text-white/90 font-semibold">{firm.offerEnds}</span>
+            <Clock size={12} /> Data checked <span className="text-white/90 font-semibold">{firm.lastUpdated}</span>
           </div>
         </div>
       </div>
@@ -581,13 +570,23 @@ function MobileStickyCTA({ firm }: { firm: FirmDetail }) {
             <span className="text-[11px] text-[#888] ml-1">{firm.rating.toFixed(1)}</span>
           </div>
         </div>
-        <a href="#" className="btn-gradient text-sm py-2.5">Visit Firm</a>
+        <a href={firm.affiliateUrl} target="_blank" rel="noopener noreferrer sponsored" className="btn-gradient text-sm py-2.5">Visit Firm</a>
       </div>
     </div>
   );
 }
 
-export function FirmReview({ firm }: { firm: FirmDetail }) {
+export function FirmReview({
+  firm,
+  reviews,
+  averageRating,
+  reviewCount,
+}: {
+  firm: FirmDetail;
+  reviews: FirmReviewEntry[];
+  averageRating: number;
+  reviewCount: number;
+}) {
   const memoFirm = useMemo(() => firm, [firm]);
   return (
     <>
@@ -604,7 +603,13 @@ export function FirmReview({ firm }: { firm: FirmDetail }) {
           <Platforms firm={memoFirm} />
           <ProsCons firm={memoFirm} />
           <BestFor firm={memoFirm} />
-          <Experience firm={memoFirm} />
+          <VerifiedReviews
+            firmId={memoFirm.id}
+            firmName={memoFirm.name}
+            reviews={reviews}
+            averageRating={averageRating}
+            reviewCount={reviewCount}
+          />
           <VerdictRatings firm={memoFirm} />
           <Alternatives firm={memoFirm} />
         </div>

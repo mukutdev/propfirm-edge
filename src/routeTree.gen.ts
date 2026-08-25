@@ -17,6 +17,9 @@ import { Route as CompareRouteImport } from './routes/compare'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ReviewsIndexRouteImport } from './routes/reviews.index'
+import { Route as NewsIndexRouteImport } from './routes/news.index'
+import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as ReviewsSlugRouteImport } from './routes/reviews.$slug'
 import { Route as NewsSlugRouteImport } from './routes/news.$slug'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
@@ -61,6 +64,21 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReviewsIndexRoute = ReviewsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ReviewsRoute,
+} as any)
+const NewsIndexRoute = NewsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => NewsRoute,
+} as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => BlogRoute,
+} as any)
 const ReviewsSlugRoute = ReviewsSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -89,19 +107,22 @@ export interface FileRoutesByFullPath {
   '/blog/$slug': typeof BlogSlugRoute
   '/news/$slug': typeof NewsSlugRoute
   '/reviews/$slug': typeof ReviewsSlugRoute
+  '/blog/': typeof BlogIndexRoute
+  '/news/': typeof NewsIndexRoute
+  '/reviews/': typeof ReviewsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/blog': typeof BlogRouteWithChildren
   '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
   '/coupons': typeof CouponsRoute
-  '/news': typeof NewsRouteWithChildren
-  '/reviews': typeof ReviewsRouteWithChildren
   '/blog/$slug': typeof BlogSlugRoute
   '/news/$slug': typeof NewsSlugRoute
   '/reviews/$slug': typeof ReviewsSlugRoute
+  '/blog': typeof BlogIndexRoute
+  '/news': typeof NewsIndexRoute
+  '/reviews': typeof ReviewsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -116,6 +137,9 @@ export interface FileRoutesById {
   '/blog/$slug': typeof BlogSlugRoute
   '/news/$slug': typeof NewsSlugRoute
   '/reviews/$slug': typeof ReviewsSlugRoute
+  '/blog/': typeof BlogIndexRoute
+  '/news/': typeof NewsIndexRoute
+  '/reviews/': typeof ReviewsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -131,19 +155,22 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/news/$slug'
     | '/reviews/$slug'
+    | '/blog/'
+    | '/news/'
+    | '/reviews/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
-    | '/blog'
     | '/compare'
     | '/contact'
     | '/coupons'
-    | '/news'
-    | '/reviews'
     | '/blog/$slug'
     | '/news/$slug'
     | '/reviews/$slug'
+    | '/blog'
+    | '/news'
+    | '/reviews'
   id:
     | '__root__'
     | '/'
@@ -157,6 +184,9 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/news/$slug'
     | '/reviews/$slug'
+    | '/blog/'
+    | '/news/'
+    | '/reviews/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -228,6 +258,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reviews/': {
+      id: '/reviews/'
+      path: '/'
+      fullPath: '/reviews/'
+      preLoaderRoute: typeof ReviewsIndexRouteImport
+      parentRoute: typeof ReviewsRoute
+    }
+    '/news/': {
+      id: '/news/'
+      path: '/'
+      fullPath: '/news/'
+      preLoaderRoute: typeof NewsIndexRouteImport
+      parentRoute: typeof NewsRoute
+    }
+    '/blog/': {
+      id: '/blog/'
+      path: '/'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof BlogRoute
+    }
     '/reviews/$slug': {
       id: '/reviews/$slug'
       path: '/$slug'
@@ -254,30 +305,36 @@ declare module '@tanstack/react-router' {
 
 interface BlogRouteChildren {
   BlogSlugRoute: typeof BlogSlugRoute
+  BlogIndexRoute: typeof BlogIndexRoute
 }
 
 const BlogRouteChildren: BlogRouteChildren = {
   BlogSlugRoute: BlogSlugRoute,
+  BlogIndexRoute: BlogIndexRoute,
 }
 
 const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
 
 interface NewsRouteChildren {
   NewsSlugRoute: typeof NewsSlugRoute
+  NewsIndexRoute: typeof NewsIndexRoute
 }
 
 const NewsRouteChildren: NewsRouteChildren = {
   NewsSlugRoute: NewsSlugRoute,
+  NewsIndexRoute: NewsIndexRoute,
 }
 
 const NewsRouteWithChildren = NewsRoute._addFileChildren(NewsRouteChildren)
 
 interface ReviewsRouteChildren {
   ReviewsSlugRoute: typeof ReviewsSlugRoute
+  ReviewsIndexRoute: typeof ReviewsIndexRoute
 }
 
 const ReviewsRouteChildren: ReviewsRouteChildren = {
   ReviewsSlugRoute: ReviewsSlugRoute,
+  ReviewsIndexRoute: ReviewsIndexRoute,
 }
 
 const ReviewsRouteWithChildren =
