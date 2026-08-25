@@ -33,12 +33,15 @@ function Index() {
       <Navbar />
       <Hero />
       <TrustBar />
+      <LiveMarketWatch />
       <FeaturedFirms />
       <HowItWorks />
       <ComparisonTable />
+      <TraderReviews />
       <MarketNews />
       <CouponsBanner />
       <WhyTrustUs />
+      <YoutubeLive />
       <DiscordCTA />
       <Footer />
     </main>
