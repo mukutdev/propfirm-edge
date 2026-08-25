@@ -37,19 +37,19 @@ const promos: Record<string, Promo> = {
   Earn2Trade: { off: "20% OFF", code: "E2T20" },
 };
 
-const countries: Record<string, { flag: string; code: string }> = {
-  "Apex Trader Funding": { flag: "🇺🇸", code: "USA" },
-  MyFundedFutures: { flag: "🇺🇸", code: "USA" },
-  TradeDay: { flag: "🇬🇧", code: "UK" },
-  "Take Profit Trader": { flag: "🇺🇸", code: "USA" },
-  "FundedNext Futures": { flag: "🇦🇪", code: "UAE" },
-  Tradeify: { flag: "🇺🇸", code: "USA" },
-  Bluenox: { flag: "🇨🇿", code: "CZE" },
-  "Funded Futures Network": { flag: "🇺🇸", code: "USA" },
-  "Lucid Trading": { flag: "🇺🇸", code: "USA" },
-  "Legends Trading": { flag: "🇨🇦", code: "CAN" },
-  "DayTraders.com": { flag: "🇺🇸", code: "USA" },
-  Earn2Trade: { flag: "🇭🇺", code: "HUN" },
+const countries: Record<string, { iso: string; code: string }> = {
+  "Apex Trader Funding": { iso: "us", code: "US" },
+  MyFundedFutures: { iso: "us", code: "US" },
+  TradeDay: { iso: "gb", code: "GB" },
+  "Take Profit Trader": { iso: "us", code: "US" },
+  "FundedNext Futures": { iso: "ae", code: "AE" },
+  Tradeify: { iso: "us", code: "US" },
+  Bluenox: { iso: "cz", code: "CZ" },
+  "Funded Futures Network": { iso: "us", code: "US" },
+  "Lucid Trading": { iso: "us", code: "US" },
+  "Legends Trading": { iso: "ca", code: "CA" },
+  "DayTraders.com": { iso: "us", code: "US" },
+  Earn2Trade: { iso: "hu", code: "HU" },
 };
 
 const promoOf = (name: string): Promo => promos[name] ?? { off: "20% OFF", code: "TWPF20" };
@@ -275,17 +275,21 @@ const tabs = ["Popular", "Favorite", "New", "All"] as const;
 const FAV_KEY = "twpf-favorites";
 
 const COLS =
-  "grid grid-cols-[64px_200px_150px_100px_150px_240px_150px_160px_150px_110px] items-center";
+  "grid grid-cols-[40px_225px_120px_78px_92px_150px_95px_112px_108px_88px] items-center";
 
-const platformPalette = ["#f97316", "#22c55e", "#3b82f6", "#e11d48", "#a855f7", "#eab308"];
+const platformCatalog = [
+  { name: "Tradovate", domain: "tradovate.com" },
+  { name: "NinjaTrader", domain: "ninjatrader.com" },
+  { name: "TradingView", domain: "tradingview.com" },
+  { name: "Rithmic", domain: "rithmic.com" },
+  { name: "Quantower", domain: "quantower.com" },
+  { name: "MetaTrader", domain: "metaquotes.net" },
+];
 
 function platformsOf(name: string) {
   const seed = name.split("").reduce((a, c) => a + c.charCodeAt(0), 0);
-  const count = (seed % 3) + 1;
-  return Array.from({ length: count }, (_, i) => {
-    const idx = (seed + i * 7) % platformPalette.length;
-    return { color: platformPalette[idx], letter: name.replace(/\W/g, "")[i] ?? "T" };
-  });
+  const count = (seed % 3) + 2;
+  return Array.from({ length: count }, (_, i) => platformCatalog[(seed + i * 5) % platformCatalog.length]);
 }
 
 function YearsRing({ years }: { years: number }) {
@@ -345,6 +349,7 @@ function PreviewTable() {
   const [tab, setTab] = useState<(typeof tabs)[number]>("Popular");
   const [favs, setFavs] = useState<string[]>([]);
   const [bounce, setBounce] = useState<string | null>(null);
+  const [visible, setVisible] = useState(15);
   const mounted = useRef(false);
 
   useEffect(() => {
@@ -372,13 +377,14 @@ function PreviewTable() {
   };
 
   const base = reviewFirms.slice();
-  const rows = (
+  const all =
     tab === "Favorite"
       ? base.filter((f) => favs.includes(f.name))
       : tab === "New"
         ? base.sort((a, b) => b.addedOrder - a.addedOrder)
-        : base.sort((a, b) => b.rating - a.rating)
-  ).slice(0, 6);
+        : base.sort((a, b) => b.rating - a.rating);
+  const rows = all.slice(0, visible);
+  const hasMore = all.length > visible;
 
   const maxFunding = Math.max(...reviewFirms.map((f) => f.fundingNumeric));
 
@@ -432,8 +438,8 @@ function PreviewTable() {
       </div>
 
       {/* table */}
-      <div className="mt-8 overflow-x-auto pb-2">
-        <div className="min-w-[1400px]">
+      <div className="mt-8 overflow-x-auto pb-2 xl:overflow-visible">
+        <div className="min-w-[1115px]">
           <div className={`${COLS} pb-3`}>
             <span />
             <div className="flex items-center gap-1 px-3 text-[10px] font-semibold uppercase tracking-wider text-[#8a8a8a]">
@@ -455,7 +461,7 @@ function PreviewTable() {
           <div key={tab} className="flex flex-col gap-3 animate-in fade-in duration-500">
             {rows.map((f, i) => {
               const promo = promoOf(f.name);
-              const country = countries[f.name] ?? { flag: "🌐", code: "GLB" };
+              const country = countries[f.name] ?? { iso: "us", code: "US" };
               const isFav = favs.includes(f.name);
               const years = (f.addedOrder % 5) + 1;
               const assets = ["Crypto", "Energy", "FX", "Indices", "Metals"].slice(
@@ -509,8 +515,13 @@ function PreviewTable() {
                     </span>
                   </div>
 
-                  <div className="flex items-center justify-center gap-1.5 border-r border-[#1c1c1c] px-3 text-sm font-semibold text-white">
-                    <span className="text-base leading-none">{country.flag}</span>
+                  <div className="flex items-center justify-center gap-2 border-r border-[#1c1c1c] px-3 text-sm font-semibold text-white">
+                    <img
+                      src={`https://flagcdn.com/w40/${country.iso}.png`}
+                      alt={`${country.code} flag`}
+                      loading="lazy"
+                      className="h-3.5 w-5 rounded-[2px] object-cover"
+                    />
                     {country.code}
                   </div>
 
@@ -529,15 +540,16 @@ function PreviewTable() {
                     ))}
                   </div>
 
-                  <div className="flex items-center justify-center gap-1.5 border-r border-[#1c1c1c] px-3">
-                    {platformsOf(f.name).map((p, idx) => (
-                      <span
-                        key={idx}
-                        className="grid h-5 w-5 place-items-center rounded-full text-[9px] font-bold text-black"
-                        style={{ backgroundColor: p.color }}
-                      >
-                        {p.letter}
-                      </span>
+                  <div className="flex flex-wrap items-center justify-center gap-1.5 border-r border-[#1c1c1c] px-3">
+                    {platformsOf(f.name).map((p) => (
+                      <img
+                        key={p.name}
+                        src={`https://www.google.com/s2/favicons?domain=${p.domain}&sz=64`}
+                        alt={`${p.name} platform`}
+                        title={p.name}
+                        loading="lazy"
+                        className="h-5 w-5 rounded-full bg-white/95 object-contain p-[1px]"
+                      />
                     ))}
                   </div>
 
@@ -577,7 +589,15 @@ function PreviewTable() {
         </div>
       </div>
 
-      <div className="mt-10 flex justify-center">
+      <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+        {hasMore && (
+          <button
+            onClick={() => setVisible((v) => v + 15)}
+            className="w-full rounded-full border border-[#262626] bg-[#141414] px-6 py-3 text-sm font-semibold text-white transition hover:border-[#7c3aed] sm:w-auto"
+          >
+            View More Firms
+          </button>
+        )}
         <Link to="/reviews" className="btn-gradient w-full justify-center text-base sm:w-auto">
           View All 60+ Firms
         </Link>
