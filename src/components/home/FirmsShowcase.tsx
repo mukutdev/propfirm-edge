@@ -513,8 +513,13 @@ function PreviewTable() {
                     </span>
                   </div>
 
-                  <div className="flex items-center justify-center gap-1.5 border-r border-[#1c1c1c] px-3 text-sm font-semibold text-white">
-                    <span className="text-base leading-none">{country.flag}</span>
+                  <div className="flex items-center justify-center gap-2 border-r border-[#1c1c1c] px-3 text-sm font-semibold text-white">
+                    <img
+                      src={`https://flagcdn.com/w40/${country.iso}.png`}
+                      alt={`${country.code} flag`}
+                      loading="lazy"
+                      className="h-3.5 w-5 rounded-[2px] object-cover"
+                    />
                     {country.code}
                   </div>
 
