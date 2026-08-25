@@ -1,15 +1,15 @@
 import { BarChart3, Search, DollarSign, Star } from "lucide-react";
 
 const criteria = [
-  { icon: BarChart3, title: "Tested with real funded accounts", body: "Every firm gets a live evaluation and a funded account before we publish." },
-  { icon: Search, title: "Rules verified monthly", body: "Drawdown, daily loss and payout rules are re-checked at the start of each month." },
-  { icon: DollarSign, title: "Fees checked against current pricing", body: "Prices are sourced directly from the firm's checkout, not stale marketing pages." },
-  { icon: Star, title: "Ratings based on 10+ criteria", body: "Payout reliability, rule fairness, support, platform and value all feed the score." },
+  { icon: BarChart3, title: "We test with real funded accounts", body: "Every firm is taken through its own evaluation and paid out before we publish a score." },
+  { icon: Search, title: "Rules re-verified whenever a firm updates their terms", body: "Drawdown model, daily loss and consistency rules are re-read the day the firm changes them." },
+  { icon: DollarSign, title: "Fees cross-checked against the firm's live pricing page", body: "Monthly and reset costs come from the firm's own checkout, never stale marketing copy." },
+  { icon: Star, title: "Ratings weighted across rules, payouts, platform, and support", body: "Payout reliability carries the most weight; rule fairness, platform quality and support follow." },
 ];
 
 export function Methodology() {
   return (
-    <section id="methodology" className="py-20 scroll-mt-24">
+    <section id="methodology" className="py-14 scroll-mt-24">
       <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-start">
         <div>
           <h2 className="font-display font-bold text-3xl md:text-4xl gradient-underline">How We Compare Prop Firms</h2>
