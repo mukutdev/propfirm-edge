@@ -257,11 +257,78 @@ function MostPopular() {
 
 /* ---------- Preview table ---------- */
 
-const filters = ["All", "Futures", "Forex", "Crypto", "Stocks"] as const;
+const tabs = ["Popular", "Favorite", "New", "All"] as const;
 const FAV_KEY = "twpf-favorites";
 
+const COLS =
+  "grid grid-cols-[64px_200px_150px_100px_150px_240px_150px_160px_150px_110px] items-center";
+
+const platformPalette = ["#f97316", "#22c55e", "#3b82f6", "#e11d48", "#a855f7", "#eab308"];
+
+function platformsOf(name: string) {
+  const seed = name.split("").reduce((a, c) => a + c.charCodeAt(0), 0);
+  const count = (seed % 3) + 1;
+  return Array.from({ length: count }, (_, i) => {
+    const idx = (seed + i * 7) % platformPalette.length;
+    return { color: platformPalette[idx], letter: name.replace(/\W/g, "")[i] ?? "T" };
+  });
+}
+
+function YearsRing({ years }: { years: number }) {
+  const pct = Math.min(years / 8, 1);
+  const r = 15;
+  const c = 2 * Math.PI * r;
+  return (
+    <span className="relative grid h-9 w-9 place-items-center">
+      <svg viewBox="0 0 36 36" className="absolute inset-0 h-9 w-9 -rotate-90">
+        <circle cx="18" cy="18" r={r} fill="none" stroke="#222" strokeWidth="2.5" />
+        <circle
+          cx="18"
+          cy="18"
+          r={r}
+          fill="none"
+          stroke="#7c3aed"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeDasharray={`${c * pct} ${c}`}
+        />
+      </svg>
+      <span className="relative text-xs font-semibold text-white">{years}</span>
+    </span>
+  );
+}
+
+function FirmLogo({ name }: { name: string }) {
+  const initials = name
+    .replace(/\.com/g, "")
+    .split(/\s+/)
+    .map((w) => w[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+  return (
+    <span className="relative block shrink-0 rounded-xl bg-gradient-to-br from-[#7c3aed] to-[#ec4899] p-[1.5px]">
+      <span className="grid h-[52px] w-[52px] place-items-center rounded-[10px] bg-[#111] font-display text-sm font-bold text-white">
+        {initials}
+      </span>
+      <span className="absolute -bottom-1 -right-1 grid h-4 w-4 place-items-center rounded-full bg-[#facc15] text-[9px] text-black">
+        ★
+      </span>
+    </span>
+  );
+}
+
+function Th({ label, sortable = true }: { label: string; sortable?: boolean }) {
+  return (
+    <div className="flex items-center justify-center gap-1 px-3 text-[10px] font-semibold uppercase tracking-wider text-[#8a8a8a]">
+      {label}
+      {sortable && <ChevronsUpDown size={11} className="text-[#555]" />}
+    </div>
+  );
+}
+
 function PreviewTable() {
-  const [filter, setFilter] = useState<(typeof filters)[number]>("All");
+  const [tab, setTab] = useState<(typeof tabs)[number]>("Popular");
   const [favs, setFavs] = useState<string[]>([]);
   const [bounce, setBounce] = useState<string | null>(null);
   const mounted = useRef(false);
@@ -290,133 +357,210 @@ function PreviewTable() {
     setTimeout(() => setBounce(null), 400);
   };
 
-  const rows = reviewFirms
-    .filter((f) => filter === "All" || f.categories.includes(filter as never))
-    .slice()
-    .sort((a, b) => b.rating - a.rating)
-    .slice(0, 6);
+  const base = reviewFirms.slice();
+  const rows = (
+    tab === "Favorite"
+      ? base.filter((f) => favs.includes(f.name))
+      : tab === "New"
+        ? base.sort((a, b) => b.addedOrder - a.addedOrder)
+        : base.sort((a, b) => b.rating - a.rating)
+  ).slice(0, 6);
 
   const maxFunding = Math.max(...reviewFirms.map((f) => f.fundingNumeric));
 
   return (
     <>
-      <div className="mt-12 -mx-6 flex gap-2 overflow-x-auto px-6 pb-1 md:mx-0 md:justify-center md:px-0">
-        {filters.map((f) => (
-          <button
-            key={f}
-            onClick={() => setFilter(f)}
-            className={`shrink-0 rounded-full px-4 py-1.5 text-xs font-medium transition-all ${
-              filter === f
-                ? "bg-gradient-to-r from-[#7c3aed] to-[#ec4899] text-white shadow-[0_0_20px_-6px_rgba(124,58,237,0.8)]"
-                : "border border-[#2a2a2a] text-[#888] hover:border-[#7c3aed]/60 hover:text-white"
-            }`}
-          >
-            {f}
+      {/* toolbar */}
+      <div className="mt-12 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div className="-mx-6 flex gap-2 overflow-x-auto px-6 pb-1 lg:mx-0 lg:px-0">
+          <button className="flex shrink-0 items-center gap-2 rounded-full border border-[#262626] bg-[#111] px-4 py-2 text-xs font-medium text-white/80 transition hover:border-[#7c3aed]">
+            <SlidersHorizontal size={13} /> Filter
           </button>
-        ))}
+          {tabs.map((t) => {
+            const active = tab === t;
+            const icon =
+              t === "Popular" ? (
+                <Flame size={13} className={active ? "text-[#ec4899]" : "text-[#888]"} />
+              ) : t === "Favorite" ? (
+                <Heart size={13} className={active ? "text-[#ec4899]" : "text-[#888]"} />
+              ) : t === "New" ? (
+                <BadgeCheck size={13} className={active ? "text-[#7c3aed]" : "text-[#888]"} />
+              ) : null;
+            return (
+              <button
+                key={t}
+                onClick={() => setTab(t)}
+                className={`flex shrink-0 items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold transition ${
+                  active
+                    ? "bg-white text-black"
+                    : "border border-[#262626] bg-[#141414] text-[#999] hover:text-white"
+                }`}
+              >
+                {icon}
+                {t === "Favorite" ? `Favorite ${Math.min(favs.length, 5)}/5` : t}
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="flex flex-wrap items-center gap-3">
+          <span className="flex items-center gap-2 rounded-full border border-[#7c3aed] bg-[#7c3aed]/10 px-4 py-2 text-xs font-semibold text-white shadow-[0_0_22px_-8px_rgba(124,58,237,0.9)]">
+            <ShieldCheck size={14} className="text-[#c4a8ff]" /> How We Verify and Rank Firms
+          </span>
+          <span className="flex items-center gap-2 rounded-full border border-[#1f1f1f] bg-[#111] px-4 py-2 text-xs text-[#888]">
+            <span className="relative grid place-items-center">
+              <span className="absolute h-2.5 w-2.5 animate-ping rounded-full bg-[#00d97e]/60" />
+              <span className="h-2 w-2 rounded-full bg-[#00d97e]" />
+            </span>
+            <span className="text-white/90">Live Data</span> updated 2 min ago
+          </span>
+        </div>
       </div>
 
-      <div className="mt-6 overflow-x-auto rounded-xl border border-[#222]">
-        <table className="min-w-[900px] w-full text-sm">
-          <thead>
-            <tr className="bg-[#111]">
-              {["Firm", "Rank / Reviews", "Country", "Assets", "Max Allocation", "Promo", "Actions"].map((c, i) => (
-                <th
-                  key={c}
-                  className={`px-5 py-4 text-left font-display text-[11px] font-semibold uppercase tracking-wider text-white/90 ${
-                    i === 0 ? "sticky left-0 z-10 bg-[#111]" : ""
-                  }`}
-                >
-                  {c}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody key={filter} className="animate-in fade-in duration-500">
+      {/* table */}
+      <div className="mt-8 overflow-x-auto pb-2">
+        <div className="min-w-[1400px]">
+          <div className={`${COLS} pb-3`}>
+            <span />
+            <div className="flex items-center gap-1 px-3 text-[10px] font-semibold uppercase tracking-wider text-[#8a8a8a]">
+              Firm <ChevronsUpDown size={11} className="text-[#555]" />
+            </div>
+            <div className="flex items-center gap-1 px-3 text-[10px] font-semibold uppercase tracking-wider text-[#8a8a8a]">
+              Rank <ChevronsUpDown size={11} className="text-[#555]" /> / Reviews
+              <ChevronUp size={11} className="text-[#7c3aed]" />
+            </div>
+            <Th label="Country" />
+            <Th label="Years in Operation" />
+            <Th label="Assets" sortable={false} />
+            <Th label="Platforms" sortable={false} />
+            <Th label="Max Allocations" />
+            <Th label="Promo" sortable={false} />
+            <Th label="Actions" sortable={false} />
+          </div>
+
+          <div key={tab} className="flex flex-col gap-3 animate-in fade-in duration-500">
             {rows.map((f, i) => {
               const promo = promoOf(f.name);
               const country = countries[f.name] ?? { flag: "🌐", code: "GLB" };
               const isFav = favs.includes(f.name);
-              const rowBg = i % 2 === 0 ? "bg-[#141414]" : "bg-[#1a1a1a]";
+              const years = (f.addedOrder % 5) + 1;
+              const assets = ["Crypto", "Energy", "FX", "Indices", "Metals"].slice(
+                0,
+                3 + (i % 3),
+              );
               return (
-                <tr
+                <div
                   key={f.name}
-                  className={`group border-l-2 border-transparent transition-colors hover:border-[#7c3aed] hover:bg-white/[0.04] ${rowBg} ${
-                    i < 3 ? "bg-gradient-to-r from-[#7c3aed]/[0.07] to-transparent" : ""
-                  }`}
+                  className={`${COLS} rounded-2xl border border-[#1c1c1c] bg-[#101010] py-4 transition-all hover:border-[#7c3aed]/60 hover:bg-white/[0.03]`}
                 >
-                  <td className={`sticky left-0 z-10 px-5 py-4 ${rowBg} group-hover:bg-[#1d1a24]`}>
-                    <div className="flex items-center gap-3">
-                      <span className="w-4 font-display text-xs text-[#888]">{i + 1}</span>
-                      <Logo name={f.name} />
-                      <span className="whitespace-nowrap font-semibold">{f.name}</span>
+                  <div className="grid place-items-center">
+                    <span className="grid h-7 w-7 place-items-center rounded-full border border-[#262626] text-[11px] font-semibold text-[#999]">
+                      {i + 1}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-3 border-r border-[#1c1c1c] px-3">
+                    <FirmLogo name={f.name} />
+                    <div className="min-w-0">
+                      <Link
+                        to="/reviews/$slug"
+                        params={{ slug: slugify(f.name) }}
+                        className="block truncate text-sm font-bold text-white hover:text-[#c4a8ff]"
+                      >
+                        {f.name}
+                      </Link>
                       <button
                         aria-label={isFav ? `Remove ${f.name} from favorites` : `Add ${f.name} to favorites`}
                         onClick={() => toggleFav(f.name)}
-                        className={`flex items-center gap-1 text-[10px] text-[#888] transition-transform ${
+                        className={`mt-1.5 flex items-center gap-1 text-[11px] text-[#888] transition-transform ${
                           bounce === f.name ? "scale-125" : "scale-100"
                         }`}
                       >
                         <Heart
-                          size={14}
-                          className={isFav ? "fill-[#ec4899] text-[#ec4899]" : "text-[#555] hover:text-[#ec4899]"}
+                          size={13}
+                          className={isFav ? "fill-[#ec4899] text-[#ec4899]" : "text-[#ec4899]"}
                         />
                         {120 + Math.round(f.rating * 37) + (isFav ? 1 : 0)}
                       </button>
                     </div>
-                  </td>
-                  <td className="px-5 py-4">
-                    <div className="flex items-center gap-2">
-                      <span className="rounded-md border border-[#7c3aed]/40 bg-[#7c3aed]/10 px-2 py-0.5 text-xs font-semibold text-[#c4a8ff]">
-                        {f.rating.toFixed(1)}
-                      </span>
-                      <Stars rating={f.rating} />
-                    </div>
-                    <div className="mt-1 text-[10px] text-[#ec4899]">
+                  </div>
+
+                  <div className="flex flex-col items-center gap-1 border-r border-[#1c1c1c] px-3">
+                    <span className="rounded-full border border-[#7c3aed] px-2.5 py-0.5 text-xs font-bold text-white">
+                      {f.rating.toFixed(1)}
+                    </span>
+                    <Stars rating={f.rating} size={11} />
+                    <span className="text-[11px] font-medium text-[#ec4899]">
                       {80 + Math.round(f.rating * 51)} reviews
-                    </div>
-                  </td>
-                  <td className="whitespace-nowrap px-5 py-4 text-white/90">
-                    {country.flag} {country.code}
-                  </td>
-                  <td className="px-5 py-4">
-                    <div className="flex flex-wrap gap-1.5">
-                      {f.categories.slice(0, 3).map((c) => (
-                        <span key={c} className="rounded-md bg-[#0c0c0c] px-2 py-0.5 text-[10px] text-[#888]">
-                          {c}
-                        </span>
-                      ))}
-                    </div>
-                  </td>
-                  <td className="px-5 py-4">
-                    <div className="font-display font-bold text-white">{f.maxFunding}</div>
-                    <div className="mt-1.5 h-1 w-24 overflow-hidden rounded-full bg-[#222]">
-                      <div
-                        className="h-full rounded-full bg-gradient-to-r from-[#7c3aed] to-[#ec4899]"
+                    </span>
+                  </div>
+
+                  <div className="flex items-center justify-center gap-1.5 border-r border-[#1c1c1c] px-3 text-sm font-semibold text-white">
+                    <span className="text-base leading-none">{country.flag}</span>
+                    {country.code}
+                  </div>
+
+                  <div className="flex justify-center border-r border-[#1c1c1c] px-3">
+                    <YearsRing years={years} />
+                  </div>
+
+                  <div className="flex flex-wrap justify-center gap-1.5 border-r border-[#1c1c1c] px-3">
+                    {assets.map((a) => (
+                      <span
+                        key={a}
+                        className="rounded-md bg-[#171717] px-2 py-1 text-[11px] text-[#bdbdbd]"
+                      >
+                        {a}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="flex items-center justify-center gap-1.5 border-r border-[#1c1c1c] px-3">
+                    {platformsOf(f.name).map((p, idx) => (
+                      <span
+                        key={idx}
+                        className="grid h-5 w-5 place-items-center rounded-full text-[9px] font-bold text-black"
+                        style={{ backgroundColor: p.color }}
+                      >
+                        {p.letter}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="flex flex-col items-center gap-2 border-r border-[#1c1c1c] px-3">
+                    <span className="font-display text-sm font-bold text-white">{f.maxFunding}</span>
+                    <span className="block h-[3px] w-full max-w-[130px] overflow-hidden rounded-full bg-[#1f1f1f]">
+                      <span
+                        className="block h-full rounded-full bg-gradient-to-r from-[#7c3aed] to-[#ec4899]"
                         style={{ width: `${(f.fundingNumeric / maxFunding) * 100}%` }}
                       />
-                    </div>
-                  </td>
-                  <td className="px-5 py-4">
-                    <div className="flex flex-col items-start gap-1.5">
-                      <OffPill label={promo.off} />
-                      <CodePill code={promo.code} />
-                    </div>
-                  </td>
-                  <td className="px-5 py-4">
+                    </span>
+                  </div>
+
+                  <div className="flex flex-col items-center gap-1.5 border-r border-[#1c1c1c] px-3">
+                    <OffPill label={promo.off} />
+                    <CodePill code={promo.code} />
+                  </div>
+
+                  <div className="flex justify-center px-3">
                     <Link
                       to="/reviews/$slug"
                       params={{ slug: slugify(f.name) }}
-                      className="inline-block rounded-full border border-[#333] px-4 py-1.5 text-xs font-semibold text-white transition-all hover:border-transparent hover:bg-gradient-to-r hover:from-[#7c3aed] hover:to-[#ec4899]"
+                      className="rounded-full border border-[#7c3aed]/70 px-5 py-1.5 text-xs font-semibold text-white transition-all hover:border-transparent hover:bg-gradient-to-r hover:from-[#7c3aed] hover:to-[#ec4899]"
                     >
                       Firm
                     </Link>
-                  </td>
-                </tr>
+                  </div>
+                </div>
               );
             })}
-          </tbody>
-        </table>
+            {rows.length === 0 && (
+              <div className="rounded-2xl border border-[#1c1c1c] bg-[#101010] py-10 text-center text-sm text-[#888]">
+                No favorites yet — tap a heart to save a firm.
+              </div>
+            )}
+          </div>
+        </div>
       </div>
 
       <div className="mt-10 flex justify-center">
