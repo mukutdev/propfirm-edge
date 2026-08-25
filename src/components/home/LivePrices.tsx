@@ -12,10 +12,13 @@ export type PriceSymbol = {
 };
 
 const DEFAULT_SYMBOLS: PriceSymbol[] = [
-  { symbol: "NQ", label: "Nasdaq 100 Futures" },
-  { symbol: "ES", label: "S&P 500 Futures" },
-  { symbol: "GC", label: "Gold Futures" },
-  { symbol: "CL", label: "Crude Oil Futures" },
+  // Free-tier-friendly proxies for the futures the spec asked for.
+  // Twelve Data's free plan can't serve NQ/ES/GC/CL futures (they 404 or resolve
+  // to unrelated stocks), so we use liquid ETFs that track the same markets.
+  { symbol: "QQQ", label: "Nasdaq 100 ETF" }, // proxy for NQ
+  { symbol: "SPY", label: "S&P 500 ETF" }, // proxy for ES
+  { symbol: "GLD", label: "Gold ETF" }, // proxy for GC
+  { symbol: "USO", label: "Crude Oil ETF" }, // proxy for CL
   { symbol: "EUR/USD", label: "Euro / US Dollar" },
 ];
 
