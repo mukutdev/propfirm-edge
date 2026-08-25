@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { TrendingUp, TrendingDown, Globe, BarChart3, Newspaper } from "lucide-react";
+import { LivePrices } from "./LivePrices";
 
 type Session = { name: string; tz: string; open: number; close: number };
 
