@@ -7,7 +7,7 @@ const steps = [
 
 export function ReviewProcess() {
   return (
-    <section className="px-4 py-16">
+    <section className="px-4 py-14">
       <div className="mx-auto max-w-5xl">
         <h2 className="text-center font-display text-3xl font-bold text-white sm:text-4xl">Our Review Process</h2>
         <p className="mx-auto mt-3 max-w-xl text-center text-base text-muted-foreground">
