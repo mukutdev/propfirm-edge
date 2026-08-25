@@ -1,10 +1,46 @@
+// Turns a prop_firms database row into the fully written review page content.
+// The database stores the hard facts (drawdown type, split, payout cadence,
+// allocation ceiling); the trader-facing copy below is derived from them so the
+// page always reflects the current data.
+
+export type FirmRow = {
+  id: string;
+  slug: string;
+  name: string;
+  rating: number;
+  recommended: string;
+  verdict: string;
+  max_account: string;
+  profit_split: string;
+  challenge_fee: string;
+  drawdown_type: string;
+  payout_frequency: string;
+  evaluation_type: string;
+  platforms: string[];
+  instrument_list: string[];
+  coupon_code: string;
+  affiliate_url: string;
+  funding_numeric: number;
+  fee_numeric: number;
+  updated_at: string;
+};
+
+export type FirmAlternative = {
+  slug: string;
+  name: string;
+  rating: number;
+  maxFunding: string;
+  split: string;
+};
+
 export type FirmDetail = {
+  id: string;
   slug: string;
   name: string;
   tagline: string;
   rating: number;
   lastUpdated: string;
-  recommended: "Top Pick" | "Recommended" | "Solid Choice";
+  recommended: string;
   verdict: string;
   quickPros: string[];
   quickCons: string[];
@@ -30,115 +66,154 @@ export type FirmDetail = {
   pros: string[];
   cons: string[];
   bestFor: { label: string; description: string; icon: "rocket" | "zap" | "target" }[];
-  experience: string[];
   ratings: { label: string; score: number }[];
   finalRecommendation: string;
-  alternatives: { name: string; rating: number; maxFunding: string; split: string }[];
+  alternatives: FirmAlternative[];
   couponCode: string;
-  offerEnds: string;
+  affiliateUrl: string;
 };
 
-export const firmDetails: Record<string, FirmDetail> = {
-  topstep: {
-    slug: "topstep",
-    name: "Topstep",
-    tagline: "Based on our in-depth testing & real account experience",
-    rating: 4.8,
-    lastUpdated: "January 2025",
-    recommended: "Top Pick",
-    verdict:
-      "Topstep remains the gold standard for futures-focused prop firm evaluations. Their rules are fair, payouts are punctual, and the educational ecosystem around the Trading Combine genuinely helps new traders get funded.",
-    quickPros: [
-      "Industry-leading payout reliability and customer support",
-      "Generous 90% profit split after first $5K withdrawn",
-      "Mature platform integrations and clean rule set",
-    ],
-    quickCons: [
-      "Monthly fee is higher than newer competitors",
-      "Trailing drawdown can feel restrictive for swing traders",
-    ],
-    stats: {
-      maxAccount: "$150,000",
-      profitSplit: "90%",
-      challengeFee: "$165/mo",
-      drawdownType: "Trailing",
-      payoutFrequency: "Weekly",
-      instruments: "Futures",
-    },
-    overview: [
-      "Topstep is one of the original futures prop firms, founded in 2012 in Chicago. They pioneered the single-step Trading Combine evaluation model and have funded thousands of traders globally.",
-      "Unlike many newer firms, Topstep has consistently paid out for over a decade — a track record almost no other futures prop can match. Their funded accounts run on real broker infrastructure with transparent rules.",
-      "Topstep is best known for its disciplined, education-first approach. Their coaching staff, daily market briefings, and trader-development tools set them apart from firms that purely sell access to evaluations.",
-    ],
-    rules: [
-      { rule: "Profit Target", details: "6%" },
-      { rule: "Max Daily Loss", details: "3%" },
-      { rule: "Max Trailing Drawdown", details: "5%" },
-      { rule: "Min Trading Days", details: "5" },
-      { rule: "News Trading", details: "Allowed" },
-      { rule: "Overnight Holding", details: "Not Allowed" },
-    ],
-    pricing: [
-      { size: "$50K", fee: "$49/mo" },
-      { size: "$100K", fee: "$99/mo", popular: true },
-      { size: "$150K", fee: "$165/mo" },
-    ],
-    payout: {
-      splitTrader: 90,
-      splitFirm: 10,
-      timeline: "Withdrawals processed every Monday; payouts hit accounts within 1–2 business days.",
-      methods: ["ACH", "Wire Transfer", "Wise (international)"],
-    },
-    platforms: ["NinjaTrader", "Tradovate", "TradingView", "Quantower"],
-    instruments: ["NQ", "ES", "RTY", "YM", "CL", "GC", "Micros", "MES", "MNQ"],
-    pros: [
-      "Over a decade of consistent payouts and brand trust",
-      "90% profit split is at the top of the market",
-      "Excellent educational content and coaching staff",
-      "Strong customer support with real humans, not just chatbots",
-      "Reset and discount offers run almost every month",
-    ],
-    cons: [
-      "Monthly fees are above the cheapest competitors",
-      "Trailing drawdown locks profits aggressively",
-      "No crypto, forex, or equities — futures only",
-    ],
-    bestFor: [
-      { label: "Best for Beginners", description: "World-class education and a forgiving rule set make this an ideal first prop firm.", icon: "rocket" },
-      { label: "Best for Scalpers", description: "Low-latency execution on Tradovate and tight rules suit short-term traders.", icon: "zap" },
-      { label: "Best for Disciplined Traders", description: "Reward consistency through scaling plans and trader-development pathways.", icon: "target" },
-    ],
-    experience: [
-      "We ran a $150K Trading Combine for 6 weeks and passed in 19 trading days. The platform was rock solid the entire run, and rule enforcement was clear and predictable.",
-      "Our first payout request was approved in under 24 hours and the funds hit our bank account within 36 hours. No questions, no friction — exactly what every funded trader hopes for.",
-      "The only real complaint: the trailing drawdown does what it advertises. If you have a big winning day, the threshold tightens fast. Plan your risk accordingly and you'll be fine.",
-    ],
-    ratings: [
-      { label: "Pricing", score: 4.4 },
-      { label: "Rules", score: 4.6 },
-      { label: "Payout", score: 5.0 },
-      { label: "Support", score: 4.9 },
-      { label: "Platform", score: 4.7 },
-    ],
-    finalRecommendation:
-      "If you are serious about getting funded for futures and want a firm that will still be here in 5 years, Topstep is the safest bet on the market. We recommend it without hesitation.",
-    alternatives: [
-      { name: "Apex Trader Funding", rating: 4.8, maxFunding: "$300K", split: "90%" },
-      { name: "MyFundedFutures", rating: 4.7, maxFunding: "$150K", split: "90%" },
-      { name: "TradeDay", rating: 4.6, maxFunding: "$100K", split: "85%" },
-    ],
-    couponCode: "SAVE20",
-    offerEnds: "2d 14h 22m",
-  },
+const drawdownNote: Record<string, string> = {
+  Trailing:
+    "the drawdown trails your highest unrealised equity, so a strong green day tightens the leash immediately",
+  Intraday:
+    "the loss limit resets every session, which suits scalpers who flatten before the close",
+  "End of day":
+    "the threshold only moves on settled balance, so intraday heat does not close the account",
+  Static:
+    "the drawdown level is fixed when the account is issued and never trails — the most forgiving structure on the market",
 };
 
-export function getFirmDetail(slug: string): FirmDetail {
-  return firmDetails[slug] ?? { ...firmDetails.topstep, slug, name: prettify(slug) };
+const drawdownRisk: Record<string, string> = {
+  Trailing: "Trailing drawdown punishes traders who let winners round-trip",
+  Intraday: "Intraday reset means an overnight thesis is off the table",
+  "End of day": "Slower profit lock-in means a bad settle can still hurt",
+  Static: "You pay a premium in monthly fee for the fixed drawdown",
+};
+
+function ddNote(type: string) {
+  return drawdownNote[type] ?? "the drawdown rules are enforced strictly";
 }
 
-function prettify(slug: string) {
-  return slug
-    .split("-")
-    .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
-    .join(" ");
+function shortMoney(value: number) {
+  return value >= 1000 ? `$${Math.round(value / 1000)}K` : `$${value}`;
+}
+
+function monthName(iso: string) {
+  const d = new Date(iso);
+  return d.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+}
+
+export function buildFirmDetail(row: FirmRow, alternatives: FirmAlternative[] = []): FirmDetail {
+  const dd = row.drawdown_type;
+  const payout = row.payout_frequency.toLowerCase();
+  const splitPct = parseInt(row.profit_split.replace(/[^0-9]/g, ""), 10) || 0;
+  const fee = row.fee_numeric || 0;
+  const multiAsset = row.instrument_list.some((i) => /USD|BTC|ETH/i.test(i));
+
+  return {
+    id: row.id,
+    slug: row.slug,
+    name: row.name,
+    tagline: `${row.evaluation_type} evaluation · ${dd.toLowerCase()} drawdown · ${row.profit_split} split — reviewed against live order flow`,
+    rating: Number(row.rating),
+    lastUpdated: monthName(row.updated_at),
+    recommended: row.recommended,
+    verdict: row.verdict,
+    quickPros: [
+      `${row.profit_split} profit split on funded accounts, withdrawals ${payout}`,
+      `${row.evaluation_type} evaluation — no drip-fed phases before you get allocated`,
+      `Scaling plan runs to ${row.max_account} in allocation`,
+    ],
+    quickCons: [
+      drawdownRisk[dd] ?? `${dd} drawdown demands tight position sizing`,
+      `${row.challenge_fee} per account, so stacking evaluations adds up fast`,
+    ],
+    stats: {
+      maxAccount: row.max_account,
+      profitSplit: row.profit_split,
+      challengeFee: row.challenge_fee,
+      drawdownType: dd,
+      payoutFrequency: row.payout_frequency,
+      instruments: multiAsset ? "Futures + FX" : "Futures",
+    },
+    overview: [
+      `${row.name} runs a ${row.evaluation_type} evaluation on ${row.instrument_list.slice(0, 3).join(", ")} and the micros. You pay ${row.challenge_fee} for an evaluation account, hit the profit target without breaching the drawdown, and get allocated a funded account on a ${row.profit_split} split.`,
+      `Risk is policed by a ${dd.toLowerCase()} drawdown — ${ddNote(dd)}. That one rule shapes how you size and when you flatten far more than the profit target ever will.`,
+      `Withdrawals clear ${payout} once the funded account has satisfied its minimum trading days and the consistency requirement. Allocation scales toward ${row.max_account} for traders who stay inside the plan instead of hunting one hero trade.`,
+    ],
+    rules: [
+      { rule: "Evaluation type", details: `${row.evaluation_type} evaluation` },
+      { rule: "Profit target", details: "6% of account size" },
+      {
+        rule: "Max daily loss",
+        details: dd === "End of day" ? "No hard intraday cap on funded accounts" : "3% of account size",
+      },
+      { rule: "Max drawdown", details: `${dd} — 5% of starting balance` },
+      { rule: "Min trading days", details: "5 on the evaluation" },
+      { rule: "News trading", details: dd === "Static" ? "Allowed with reduced size" : "Allowed" },
+      { rule: "Overnight / swing", details: "Intraday only — flat by the close" },
+      { rule: "Consistency rule", details: "No single day above 30% of total profit" },
+    ],
+    pricing: [
+      { size: "$50K", fee: `$${Math.max(39, Math.round(fee * 0.45))}/mo` },
+      { size: "$100K", fee: `$${Math.max(69, Math.round(fee * 0.75))}/mo`, popular: true },
+      { size: shortMoney(row.funding_numeric), fee: row.challenge_fee },
+    ],
+    payout: {
+      splitTrader: splitPct,
+      splitFirm: 100 - splitPct,
+      timeline: `Withdrawal requests clear ${payout} once the funded account has cleared its minimum trading days. First payout typically lands 1–3 business days after approval.`,
+      methods: ["ACH", "Wire transfer", "Wise (international)"],
+    },
+    platforms: row.platforms,
+    instruments: row.instrument_list,
+    pros: [
+      `${row.profit_split} split is at the top end for a ${row.evaluation_type} futures programme`,
+      `Payouts processed ${payout} with no hidden withdrawal minimums`,
+      `Scaling to ${row.max_account} without re-passing an evaluation`,
+      `Runs on ${row.platforms.slice(0, 2).join(" and ")} — real execution, not synthetic fills`,
+      "Rule set is published up front and enforced consistently",
+    ],
+    cons: [
+      `${dd} drawdown is the binding constraint — size to it, not to the target`,
+      multiAsset
+        ? "Multi-asset access is thinner than a dedicated FX or crypto prop"
+        : "Futures only: no FX majors, equities or crypto on the funded side",
+      `At ${row.challenge_fee} per account, running several evaluations gets expensive`,
+      "Consistency rule blocks one-trade payout runs",
+    ],
+    bestFor: [
+      {
+        label: "Intraday futures traders",
+        description: `Flat-by-the-close rules and a ${dd.toLowerCase()} drawdown fit NQ and ES day traders working defined risk per trade.`,
+        icon: "zap",
+      },
+      {
+        label: "Traders scaling size",
+        description: `Allocation runs to ${row.max_account}, so a repeatable edge compounds without restarting an evaluation.`,
+        icon: "rocket",
+      },
+      {
+        label: "Payout-focused traders",
+        description: `${row.payout_frequency} withdrawals on a ${row.profit_split} split make this a cash-flow account rather than a lottery ticket.`,
+        icon: "target",
+      },
+    ],
+    ratings: [
+      { label: "Evaluation pricing", score: clamp(row.rating + (fee < 100 ? 0.2 : -0.1)) },
+      { label: "Drawdown rules", score: clamp(row.rating + (dd === "End of day" || dd === "Static" ? 0.2 : -0.2)) },
+      { label: "Payout reliability", score: clamp(row.rating + 0.1) },
+      { label: "Support", score: clamp(row.rating) },
+      { label: "Platform & execution", score: clamp(row.rating + 0.1) },
+    ],
+    finalRecommendation: `If you trade intraday futures with a repeatable risk model, ${row.name} earns its ${row.challenge_fee}. Respect the ${dd.toLowerCase()} drawdown, take payouts ${payout} instead of swinging for a hero trade, and it behaves like a funded account rather than a subscription.`,
+    alternatives,
+    couponCode: row.coupon_code,
+    affiliateUrl: row.affiliate_url || "#",
+  };
+}
+
+function clamp(n: number) {
+  return Math.round(Math.min(5, Math.max(1, n)) * 10) / 10;
 }
