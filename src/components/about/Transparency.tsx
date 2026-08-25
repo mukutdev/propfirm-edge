@@ -18,7 +18,7 @@ const cols = [
 
 export function Transparency() {
   return (
-    <section className="px-4 py-16">
+    <section className="px-4 py-14">
       <div className="mx-auto max-w-6xl overflow-hidden rounded-2xl border border-[#F59E0B]/30 bg-[#181818] shadow-[0_0_60px_-30px_rgba(245,158,11,0.5)]">
         <div className="border-b border-[#F59E0B]/20 bg-gradient-to-r from-[#F59E0B]/10 to-transparent p-6 sm:p-8">
           <span className="inline-flex items-center gap-2 rounded-full bg-[#F59E0B]/15 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-[#F59E0B]">
