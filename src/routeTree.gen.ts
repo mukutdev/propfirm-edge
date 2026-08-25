@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SubmitReviewRouteImport } from './routes/submit-review'
 import { Route as ReviewsRouteImport } from './routes/reviews'
 import { Route as NewsRouteImport } from './routes/news'
 import { Route as CouponsRouteImport } from './routes/coupons'
@@ -24,6 +25,11 @@ import { Route as ReviewsSlugRouteImport } from './routes/reviews.$slug'
 import { Route as NewsSlugRouteImport } from './routes/news.$slug'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 
+const SubmitReviewRoute = SubmitReviewRouteImport.update({
+  id: '/submit-review',
+  path: '/submit-review',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReviewsRoute = ReviewsRouteImport.update({
   id: '/reviews',
   path: '/reviews',
@@ -104,6 +110,7 @@ export interface FileRoutesByFullPath {
   '/coupons': typeof CouponsRoute
   '/news': typeof NewsRouteWithChildren
   '/reviews': typeof ReviewsRouteWithChildren
+  '/submit-review': typeof SubmitReviewRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/news/$slug': typeof NewsSlugRoute
   '/reviews/$slug': typeof ReviewsSlugRoute
@@ -117,6 +124,7 @@ export interface FileRoutesByTo {
   '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
   '/coupons': typeof CouponsRoute
+  '/submit-review': typeof SubmitReviewRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/news/$slug': typeof NewsSlugRoute
   '/reviews/$slug': typeof ReviewsSlugRoute
@@ -134,6 +142,7 @@ export interface FileRoutesById {
   '/coupons': typeof CouponsRoute
   '/news': typeof NewsRouteWithChildren
   '/reviews': typeof ReviewsRouteWithChildren
+  '/submit-review': typeof SubmitReviewRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/news/$slug': typeof NewsSlugRoute
   '/reviews/$slug': typeof ReviewsSlugRoute
@@ -152,6 +161,7 @@ export interface FileRouteTypes {
     | '/coupons'
     | '/news'
     | '/reviews'
+    | '/submit-review'
     | '/blog/$slug'
     | '/news/$slug'
     | '/reviews/$slug'
@@ -165,6 +175,7 @@ export interface FileRouteTypes {
     | '/compare'
     | '/contact'
     | '/coupons'
+    | '/submit-review'
     | '/blog/$slug'
     | '/news/$slug'
     | '/reviews/$slug'
@@ -181,6 +192,7 @@ export interface FileRouteTypes {
     | '/coupons'
     | '/news'
     | '/reviews'
+    | '/submit-review'
     | '/blog/$slug'
     | '/news/$slug'
     | '/reviews/$slug'
@@ -198,10 +210,18 @@ export interface RootRouteChildren {
   CouponsRoute: typeof CouponsRoute
   NewsRoute: typeof NewsRouteWithChildren
   ReviewsRoute: typeof ReviewsRouteWithChildren
+  SubmitReviewRoute: typeof SubmitReviewRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/submit-review': {
+      id: '/submit-review'
+      path: '/submit-review'
+      fullPath: '/submit-review'
+      preLoaderRoute: typeof SubmitReviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/reviews': {
       id: '/reviews'
       path: '/reviews'
@@ -349,6 +369,7 @@ const rootRouteChildren: RootRouteChildren = {
   CouponsRoute: CouponsRoute,
   NewsRoute: NewsRouteWithChildren,
   ReviewsRoute: ReviewsRouteWithChildren,
+  SubmitReviewRoute: SubmitReviewRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

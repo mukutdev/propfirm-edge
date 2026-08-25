@@ -1,18 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { zodValidator, fallback } from "@tanstack/zod-adapter";
-import { z } from "zod";
 import { Navbar } from "@/components/home/Navbar";
 import { Footer } from "@/components/home/Footer";
 import { SubmitReviewIntro, WhyReviewsMatter } from "@/components/submit/SubmitReviewIntro";
 import { SubmitReviewForm } from "@/components/submit/SubmitReviewForm";
 import { listFirmOptions } from "@/lib/firms.functions";
 
-const searchSchema = z.object({
-  firm: fallback(z.string(), "").default(""),
-});
-
 export const Route = createFileRoute("/submit-review")({
-  validateSearch: zodValidator(searchSchema),
+  validateSearch: (search: Record<string, unknown>) => ({ firm: typeof search["firm"] === "string" ? search["firm"] : "" }),
   loader: () => listFirmOptions(),
   head: () => ({
     meta: [
