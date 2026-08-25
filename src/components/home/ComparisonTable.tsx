@@ -1,4 +1,6 @@
+import { Link } from "@tanstack/react-router";
 import { comparisonRows } from "@/lib/home-data";
+import { MatchupBuilder } from "@/components/home/MatchupBuilder";
 import { useReveal } from "@/hooks/use-reveal";
 
 const cols = ["Firm Name", "Max Account", "Profit Split", "Drawdown Type", "Futures Allowed", "Our Rating"];
@@ -49,8 +51,10 @@ export function ComparisonTable() {
         </div>
 
         <div className="mt-10 flex justify-center">
-          <a href="#" className="btn-gradient">View Full Comparison</a>
+          <Link to="/compare" className="btn-gradient">View Full Comparison</Link>
         </div>
+
+        <MatchupBuilder />
       </div>
     </section>
   );

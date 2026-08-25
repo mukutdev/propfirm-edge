@@ -49,7 +49,9 @@ export const Route = createFileRoute("/news/$slug")({
 });
 
 function NewsArticleRoute() {
-  const { article } = Route.useLoaderData();
+  const { slug } = Route.useParams();
+  const article = getNewsArticleBySlug(slug);
+  if (!article) throw notFound();
   return (
     <main className="min-h-screen bg-background text-foreground">
       <Navbar />

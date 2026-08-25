@@ -49,7 +49,9 @@ export const Route = createFileRoute("/blog/$slug")({
 });
 
 function BlogPostRoute() {
-  const { post } = Route.useLoaderData();
+  const { slug } = Route.useParams();
+  const post = getBlogPostBySlug(slug);
+  if (!post) throw notFound();
   return (
     <main className="min-h-screen bg-background text-foreground">
       <Navbar />
