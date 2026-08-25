@@ -17,11 +17,12 @@ export function CouponsHero() {
           <span className="text-white/80">Coupons</span>
         </nav>
         <h1 className="font-display font-bold text-4xl md:text-6xl tracking-tight">
-          Prop Firm <span className="text-gradient">Discount Codes</span> & Coupons
+          Prop Firm <span className="text-gradient">Discount Codes</span>
         </h1>
         <p className="mt-4 text-[#888] text-base md:text-lg max-w-2xl">
-          Exclusive deals negotiated directly with top prop firms. Save up to 30% on your challenge fee before you sign up.
+          Verified codes, checked regularly. No expired promo pages wasting your time.
         </p>
+
         <div className="mt-6 flex flex-wrap gap-3">
           <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#2a2a2a] text-xs text-white/90">
             <span className="text-[#00d97e]">✓</span> Verified & Working Codes

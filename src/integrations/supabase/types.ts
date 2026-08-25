@@ -65,6 +65,7 @@ export type Database = {
           challenge_fee: string
           coupon_code: string
           created_at: string
+          deal_type: string
           drawdown_type: string
           evaluation_type: string
           fee_numeric: number
@@ -76,6 +77,8 @@ export type Database = {
           payout_frequency: string
           platforms: string[]
           profit_split: string
+          promo_discount: number
+          promo_expiry: string | null
           rating: number
           recommended: string
           slug: string
@@ -88,6 +91,7 @@ export type Database = {
           challenge_fee?: string
           coupon_code?: string
           created_at?: string
+          deal_type?: string
           drawdown_type?: string
           evaluation_type?: string
           fee_numeric?: number
@@ -99,6 +103,8 @@ export type Database = {
           payout_frequency?: string
           platforms?: string[]
           profit_split?: string
+          promo_discount?: number
+          promo_expiry?: string | null
           rating?: number
           recommended?: string
           slug: string
@@ -111,6 +117,7 @@ export type Database = {
           challenge_fee?: string
           coupon_code?: string
           created_at?: string
+          deal_type?: string
           drawdown_type?: string
           evaluation_type?: string
           fee_numeric?: number
@@ -122,6 +129,8 @@ export type Database = {
           payout_frequency?: string
           platforms?: string[]
           profit_split?: string
+          promo_discount?: number
+          promo_expiry?: string | null
           rating?: number
           recommended?: string
           slug?: string
