@@ -68,13 +68,6 @@ function sessionState(date: Date, s: Session) {
 }
 
 
-const headlines = [
-  { tag: "Futures", title: "NQ pushes to fresh highs as tech leads pre-market bid", time: "12m ago" },
-  { tag: "Prop Firms", title: "Apex extends 90% profit split promo through month end", time: "48m ago" },
-  { tag: "Forex", title: "Euro steadies ahead of ECB commentary later today", time: "1h ago" },
-  { tag: "Futures", title: "Crude slips on larger-than-expected inventory build", time: "2h ago" },
-  { tag: "Prop Firms", title: "MyFundedFutures trims payout window to two days", time: "3h ago" },
-];
 
 function PanelHeader({
   icon,
