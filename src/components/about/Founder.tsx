@@ -29,9 +29,10 @@ export function Founder() {
             Futures Trader &amp; Founder of Trading With Prop Firms
           </p>
           <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-            I've been trading futures for over 10 years. I built this site because I got tired of fake reviews
-            written by people who've never placed a real trade. Every review here comes from a real account,
-            real money and real trades.
+            I've been trading index futures — NQ, ES, the usual suspects — for over a decade. I built this
+            site because I got tired of "top 10 prop firms" listicles written by people who've never cleared
+            an evaluation. Every review here is backed by a real evaluation I ran, a real trailing drawdown I
+            bled through, and a real payout I actually withdrew.
           </p>
           <div className="mt-5 flex flex-wrap gap-2">
             {["📈 10+ Years Trading", "💼 Multiple Funded Accounts", "🎥 Hanuman Trades — YouTube"].map((c) => (
