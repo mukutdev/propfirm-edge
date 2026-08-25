@@ -609,7 +609,7 @@ function PreviewTable() {
 export function FirmsShowcase() {
   const ref = useReveal<HTMLDivElement>();
   return (
-    <section id="firms" className="py-24 md:py-32" aria-label="Compare the best prop trading firms">
+    <section id="firms" className="py-14 md:py-20" aria-label="Compare the best prop trading firms">
       <div ref={ref} className="reveal mx-auto max-w-7xl px-6">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="font-display text-4xl font-bold md:text-5xl">Compare the Best Prop Trading Firms</h2>

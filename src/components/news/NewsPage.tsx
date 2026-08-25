@@ -7,6 +7,7 @@ import { LatestUpdates } from "./LatestUpdates";
 import { PropFirmIndustry } from "./PropFirmIndustry";
 import { EconCalendar } from "./EconCalendar";
 import { NewsSidebar } from "./NewsSidebar";
+import { LiveNewsFeed } from "./LiveNewsFeed";
 import { topStories, latestUpdates } from "@/lib/news-data";
 
 export function NewsPage() {
@@ -29,6 +30,7 @@ export function NewsPage() {
       <div className="mx-auto max-w-6xl px-4 pb-12">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_320px]">
           <div className="flex flex-col gap-12">
+            <LiveNewsFeed />
             {filteredTop.length > 0 && <TopStories articles={filteredTop} />}
             {filteredLatest.length > 0 && <LatestUpdates items={filteredLatest} />}
             <PropFirmIndustry />

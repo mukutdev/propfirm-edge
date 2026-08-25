@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Link } from "@tanstack/react-router";
+import { SessionStrip } from "@/components/shared/SessionStatus";
 
-const links: { label: string; to: string; external?: boolean }[] = [
+const links: { label: string; to: string }[] = [
   { label: "Reviews", to: "/reviews" },
   { label: "Compare", to: "/compare" },
   { label: "News", to: "/news" },
@@ -28,46 +29,54 @@ export function Navbar() {
   }, [open]);
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-[#141414]/90 backdrop-blur-md border-b border-[#222]" : "bg-transparent"
-      }`}
-    >
-      <nav className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2" aria-label="Trading With Prop Firms home">
-          <div className="h-9 w-9 rounded-md bg-gradient-brand" />
-          <span className="font-display font-bold text-base hidden sm:inline">TWPF</span>
-        </Link>
+    <header className="fixed top-0 left-0 right-0 z-50">
+      <SessionStrip />
 
-        <ul className="hidden lg:flex items-center gap-6 text-sm text-white/80">
-          {links.map((l) => (
-            <li key={l.label}>
-              <Link
-                to={l.to}
-                className="hover:text-white transition-colors"
-                activeProps={{ className: "text-white font-semibold" }}
-              >
-                {l.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
+      <div
+        className={`transition-all duration-300 ${
+          scrolled
+            ? "bg-[#0d0d0d]/90 backdrop-blur-md border-b border-[#222]"
+            : "bg-transparent border-b border-transparent"
+        }`}
+      >
+        <nav className="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between">
+          <Link to="/" className="flex items-center gap-2" aria-label="Trading With Prop Firms home">
+            <div className="logo-mark h-8 w-8 rounded-md bg-gradient-brand" />
+            <span className="font-display font-bold text-base hidden sm:inline">TWPF</span>
+          </Link>
 
-        <div className="hidden lg:block">
-          <Link to="/reviews" className="btn-gradient text-sm">Find A Prop Firm</Link>
-        </div>
+          <ul className="hidden lg:flex items-center gap-5 text-[13px] text-white/75">
+            {links.map((l) => (
+              <li key={l.label}>
+                <Link
+                  to={l.to}
+                  className="nav-underline py-1 hover:text-white transition-colors"
+                  activeProps={{ className: "text-white font-semibold" }}
+                >
+                  {l.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
 
-        <button
-          onClick={() => setOpen((v) => !v)}
-          className="lg:hidden text-white p-2"
-          aria-label="Toggle menu"
-        >
-          {open ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </nav>
+          <div className="hidden lg:block">
+            <Link to="/reviews" className="btn-gradient btn-shimmer text-[13px] px-5 py-2.5">
+              Find A Prop Firm
+            </Link>
+          </div>
+
+          <button
+            onClick={() => setOpen((v) => !v)}
+            className="lg:hidden text-white p-2"
+            aria-label="Toggle menu"
+          >
+            {open ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </nav>
+      </div>
 
       {open && (
-        <div className="lg:hidden fixed inset-0 top-16 bg-[#080808]/98 backdrop-blur-md z-40 animate-fade-in">
+        <div className="lg:hidden fixed inset-0 top-[84px] bg-[#080808]/98 backdrop-blur-md z-40 animate-fade-in">
           <div className="flex flex-col gap-2 p-8">
             {links.map((l) => (
               <Link

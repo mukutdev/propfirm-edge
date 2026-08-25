@@ -10,7 +10,7 @@ const steps = [
 export function HowItWorks() {
   const ref = useReveal<HTMLDivElement>();
   return (
-    <section className="py-24 md:py-32 border-y border-[#222] bg-[#0a0a0a]" aria-label="How it works">
+    <section className="py-14 md:py-20 border-y border-[#222] bg-[#0a0a0a]" aria-label="How it works">
       <div ref={ref} className="reveal max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="font-display font-bold text-4xl md:text-5xl">How It Works</h2>
