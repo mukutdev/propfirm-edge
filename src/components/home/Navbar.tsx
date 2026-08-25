@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { SessionStrip } from "@/components/shared/SessionStatus";
+import logoMark from "@/assets/logo-mark.png";
+
 
 const links: { label: string; to: string }[] = [
   { label: "Reviews", to: "/reviews" },
