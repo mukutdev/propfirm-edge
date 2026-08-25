@@ -2,17 +2,17 @@ const cols = [
   {
     icon: "💰",
     title: "How We Make Money",
-    body: "Some links on this site are affiliate links. When you sign up through our link we may earn a commission at no extra cost to you.",
+    body: "Some links are affiliate links. Sign up through them and we may earn a commission — at no extra cost to you.",
   },
   {
     icon: "🚫",
     title: "What This Does NOT Mean",
-    body: "We never accept payment for positive reviews. A firm being an affiliate partner does not influence our rating or recommendation.",
+    body: "We never take payment for a positive review. Affiliate status doesn't move a firm's rating, drawdown verdict, or where it lands in our rankings.",
   },
   {
     icon: "🤝",
     title: "Our Promise to You",
-    body: "If a firm is bad we will say so. We've turned down affiliate partnerships with firms we don't believe in. Your trust matters more.",
+    body: "If a firm's rules are trader-hostile, we say so. We've walked away from affiliate deals with firms I wouldn't trade with myself.",
   },
 ];
 
