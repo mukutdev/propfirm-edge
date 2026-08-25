@@ -8,7 +8,7 @@ export function ForPropFirms() {
     "Reviews re-checked monthly as rules and fees shift",
   ];
   return (
-    <section className="py-12">
+    <section className="py-10">
       <div className="max-w-6xl mx-auto px-6">
         <div className="bg-[#181818] border border-[#222] rounded-2xl p-8 md:p-12 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
           <div>
