@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { TrendingUp, TrendingDown, Globe, BarChart3, Newspaper } from "lucide-react";
+import { TrendingUp, Globe, Newspaper } from "lucide-react";
 import { LivePrices } from "./LivePrices";
 
 type Session = { name: string; tz: string; open: number; close: number };
@@ -58,13 +58,6 @@ function sessionState(date: Date, s: Session) {
   return { isOpen, label: `${isOpen ? "Closes in" : "Opens in"} ${fmtDuration(diff)}` };
 }
 
-const prices = [
-  { sym: "NQ", price: "18,432.50", change: "+0.42%", up: true },
-  { sym: "ES", price: "5,234.25", change: "-0.12%", up: false },
-  { sym: "GC", price: "2,312.40", change: "+0.78%", up: true },
-  { sym: "CL", price: "78.34", change: "-1.20%", up: false },
-  { sym: "6E", price: "1.0842", change: "+0.05%", up: true },
-];
 
 const headlines = [
   { tag: "Futures", title: "NQ pushes to fresh highs as tech leads pre-market bid", time: "12m ago" },
