@@ -181,29 +181,7 @@ export function LiveMarketWatch() {
             </div>
 
             {/* Panel B */}
-            <div className="p-6">
-              <PanelHeader
-                icon={<BarChart3 size={15} />}
-                label="Live Prices"
-                right={<span className="text-[10px] uppercase tracking-wider text-[#888]">Delayed 15min</span>}
-              />
-              <table className="w-full text-sm">
-                <tbody>
-                  {prices.map((p) => (
-                    <tr key={p.sym} className="border-b border-[#1e1e1e] last:border-0">
-                      <td className="py-2.5 font-semibold text-white/90">{p.sym}</td>
-                      <td className="py-2.5 text-right font-mono tabular-nums text-white/90">{p.price}</td>
-                      <td className={`py-2.5 text-right font-mono tabular-nums ${p.up ? "text-[#00d97e]" : "text-[#ff3b5c]"}`}>
-                        <span className="inline-flex items-center gap-1 justify-end">
-                          {p.change}
-                          {p.up ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            <LivePrices />
 
             {/* Panel C */}
             <div className="p-6">
