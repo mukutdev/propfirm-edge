@@ -1,6 +1,8 @@
 import { Youtube, MessageCircle, Twitter } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { SessionMiniWidget } from "@/components/shared/SessionStatus";
+import logoMark from "@/assets/logo-mark.png";
+
 
 const cols: { title: string; items: { label: string; to: string }[] }[] = [
   {
