@@ -1,6 +1,20 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { Star, ChevronLeft, ChevronRight, Heart, Copy, Check, Trophy } from "lucide-react";
+import {
+  Star,
+  ChevronLeft,
+  ChevronRight,
+  ChevronUp,
+  ChevronsUpDown,
+  Heart,
+  Copy,
+  Check,
+  Trophy,
+  Flame,
+  BadgeCheck,
+  ShieldCheck,
+  SlidersHorizontal,
+} from "lucide-react";
 import { reviewFirms, type ReviewFirm } from "@/lib/home-data";
 import { useReveal } from "@/hooks/use-reveal";
 
