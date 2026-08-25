@@ -200,27 +200,36 @@ export function LiveMarketWatch() {
             {/* Panel B */}
             <LivePrices />
 
-            {/* Panel C */}
-            <div className="p-6">
+            {/* Panel C — TradingView Timeline (market news) */}
+            <div className="p-4">
               <PanelHeader
                 icon={<Newspaper size={15} />}
-                label="Latest"
-                right={<span className="text-[10px] uppercase tracking-wider text-[#888]">Updated 12m ago</span>}
+                label="Market News"
+                right={
+                  <span className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-[#5cf3ad]">
+                    <span className="relative flex h-2 w-2">
+                      <span className="absolute inline-flex h-full w-full rounded-full bg-[#00d97e] opacity-70 animate-ping" />
+                      <span className="relative inline-flex h-2 w-2 rounded-full bg-[#00d97e]" />
+                    </span>
+                    Live
+                  </span>
+                }
               />
-              <ul>
-                {headlines.map((h) => (
-                  <li key={h.title} className="py-2.5 border-b border-[#1e1e1e]">
-                    <div className="flex items-center gap-2">
-                      <span className="text-[9px] uppercase tracking-wider px-1.5 py-0.5 rounded border border-[#7c3aed]/40 bg-[#7c3aed]/10 text-[#c4a8ff]">
-                        {h.tag}
-                      </span>
-                      <span className="text-[10px] text-[#888]">{h.time}</span>
-                    </div>
-                    <p className="mt-1.5 text-sm text-white/85 truncate">{h.title}</p>
-                  </li>
-                ))}
-              </ul>
-              <Link to="/news" className="inline-block mt-4 text-sm font-semibold text-gradient">
+              <div className="rounded-xl border border-[#7c3aed]/40 bg-[#141414] p-1 overflow-hidden">
+                <TradingViewWidget
+                  type="timeline"
+                  height={420}
+                  className="[&_iframe]:!h-[420px]"
+                  config={{
+                    feedMode: "market",
+                    colorTheme: "dark",
+                    isTransparent: true,
+                    displayMode: "regular",
+                    locale: "en",
+                  }}
+                />
+              </div>
+              <Link to="/news" className="inline-block mt-3 text-sm font-semibold text-gradient">
                 View All News →
               </Link>
             </div>
