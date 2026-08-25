@@ -16,6 +16,7 @@ export type Database = {
     Tables: {
       firm_reviews: {
         Row: {
+          claimed_payout: boolean
           created_at: string
           firm_id: string
           id: string
@@ -26,6 +27,7 @@ export type Database = {
           trader_name: string
         }
         Insert: {
+          claimed_payout?: boolean
           created_at?: string
           firm_id: string
           id?: string
@@ -36,6 +38,7 @@ export type Database = {
           trader_name: string
         }
         Update: {
+          claimed_payout?: boolean
           created_at?: string
           firm_id?: string
           id?: string
