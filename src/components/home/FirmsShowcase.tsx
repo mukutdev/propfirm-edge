@@ -439,7 +439,7 @@ function PreviewTable() {
 
       {/* table */}
       <div className="mt-8 overflow-x-auto pb-2 xl:overflow-visible">
-        <div className="min-w-[1080px]">
+        <div className="min-w-[1115px]">
           <div className={`${COLS} pb-3`}>
             <span />
             <div className="flex items-center gap-1 px-3 text-[10px] font-semibold uppercase tracking-wider text-[#8a8a8a]">
