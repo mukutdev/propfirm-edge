@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 
 export function ContactHero() {
   return (
-    <section className="relative pt-32 pb-12 overflow-hidden">
+    <section className="relative pt-28 pb-10 overflow-hidden">
       <div
         aria-hidden
         className="absolute -top-32 left-1/2 -translate-x-1/2 h-[420px] w-[820px] rounded-full blur-3xl opacity-25 pointer-events-none"
@@ -24,7 +24,7 @@ export function ContactHero() {
           </span>
         </h1>
         <p className="mt-5 text-[#bbb] text-base md:text-lg max-w-xl mx-auto">
-          Questions, partnerships, or just want to say hello — we'd love to hear from you.
+          Questions about a firm, partnership enquiries, or a rule change we missed — I read every message myself.
         </p>
       </div>
     </section>
