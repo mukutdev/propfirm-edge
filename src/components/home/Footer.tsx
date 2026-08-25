@@ -43,10 +43,18 @@ export function Footer() {
     <footer className="border-t border-[#222] bg-[#0a0a0a]">
       <div className="max-w-7xl mx-auto px-6 py-12 grid gap-10 md:grid-cols-4">
         <div>
-          <div className="flex items-center gap-2 mb-3">
-            <div className="logo-mark h-8 w-8 rounded-md bg-gradient-brand" />
-            <span className="font-display font-bold">TWPF</span>
+          <div className="flex items-center gap-2.5 mb-3">
+            <span className="h-10 w-10 rounded-lg bg-[#141414] border border-[#7c3aed]/35 flex items-center justify-center">
+              <img src={logoMark} alt="Trading With Prop Firms logo" loading="lazy" width={1024} height={1024} className="h-6 w-6 object-contain" />
+            </span>
+            <span className="flex flex-col leading-none">
+              <span className="font-display font-bold text-[15px]">
+                Trading<span className="text-gradient">WithPropFirms</span>
+              </span>
+              <span className="mt-0.5 text-[9px] uppercase tracking-[0.22em] text-[#777]">Futures · Funded</span>
+            </span>
           </div>
+
           <p className="text-sm text-[#888] leading-relaxed">
             Prop firm reviews for traders who actually take evaluations, hit payouts, and care about
             drawdown rules.
