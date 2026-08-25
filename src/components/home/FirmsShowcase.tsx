@@ -533,15 +533,16 @@ function PreviewTable() {
                     ))}
                   </div>
 
-                  <div className="flex items-center justify-center gap-1.5 border-r border-[#1c1c1c] px-3">
-                    {platformsOf(f.name).map((p, idx) => (
-                      <span
-                        key={idx}
-                        className="grid h-5 w-5 place-items-center rounded-full text-[9px] font-bold text-black"
-                        style={{ backgroundColor: p.color }}
-                      >
-                        {p.letter}
-                      </span>
+                  <div className="flex flex-wrap items-center justify-center gap-1.5 border-r border-[#1c1c1c] px-3">
+                    {platformsOf(f.name).map((p) => (
+                      <img
+                        key={p.name}
+                        src={`https://logo.clearbit.com/${p.domain}`}
+                        alt={`${p.name} platform`}
+                        title={p.name}
+                        loading="lazy"
+                        className="h-5 w-5 rounded-full bg-white/95 object-contain p-[1px]"
+                      />
                     ))}
                   </div>
 
