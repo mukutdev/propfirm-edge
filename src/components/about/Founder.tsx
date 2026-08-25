@@ -2,7 +2,7 @@ import { Youtube, Twitter, MessageCircle } from "lucide-react";
 
 export function Founder() {
   return (
-    <section className="px-4 py-16">
+    <section className="px-4 py-14">
       <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 md:grid-cols-[320px_1fr]">
         <div className="relative mx-auto h-64 w-64 sm:h-80 sm:w-80">
           <div
