@@ -61,6 +61,7 @@ export type Database = {
       prop_firms: {
         Row: {
           affiliate_url: string
+          assets: string[]
           challenge_fee: string
           coupon_code: string
           created_at: string
@@ -83,6 +84,7 @@ export type Database = {
         }
         Insert: {
           affiliate_url?: string
+          assets?: string[]
           challenge_fee?: string
           coupon_code?: string
           created_at?: string
@@ -105,6 +107,7 @@ export type Database = {
         }
         Update: {
           affiliate_url?: string
+          assets?: string[]
           challenge_fee?: string
           coupon_code?: string
           created_at?: string
