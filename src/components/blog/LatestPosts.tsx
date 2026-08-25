@@ -1,13 +1,13 @@
 import { useState } from "react";
-import { latestPosts } from "@/lib/blog-data";
+import type { BlogPostRow } from "@/lib/blog.functions";
 import { ArticleCard } from "./ArticleCard";
 
-export function LatestPosts() {
+export function LatestPosts({ posts }: { posts: BlogPostRow[] }) {
   const [limit, setLimit] = useState(6);
-  const visible = latestPosts.slice(0, limit);
+  const visible = posts.slice(0, limit);
   return (
     <section>
-      <h2 className="mb-5 font-display text-2xl font-bold text-white">Latest Posts</h2>
+      <h2 className="mb-4 font-display text-2xl font-bold text-white">Latest Posts</h2>
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {visible.map((p, i) => (
           <div key={p.id} className="animate-fade-in" style={{ animationDelay: `${i * 60}ms` }}>
@@ -15,8 +15,8 @@ export function LatestPosts() {
           </div>
         ))}
       </div>
-      {limit < latestPosts.length && (
-        <div className="mt-6 flex justify-center">
+      {limit < posts.length && (
+        <div className="mt-5 flex justify-center">
           <button
             onClick={() => setLimit((l) => l + 3)}
             className="rounded-full bg-gradient-to-r from-[#7C3AED] to-[#EC4899] p-[1px] text-sm font-semibold"

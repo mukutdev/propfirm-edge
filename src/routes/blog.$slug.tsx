@@ -2,11 +2,16 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 import { Navbar } from "@/components/home/Navbar";
 import { Footer } from "@/components/home/Footer";
 import { BlogArticle } from "@/components/blog/BlogArticle";
-import { getBlogPostBySlug } from "@/lib/blog-data";
+import { getBlogPost } from "@/lib/blog.functions";
 
 export const Route = createFileRoute("/blog/$slug")({
-  head: ({ params }) => {
-    const post = getBlogPostBySlug(params.slug);
+  loader: async ({ params }) => {
+    const result = await getBlogPost({ data: { slug: params.slug } });
+    if (!result.post) throw notFound();
+    return result;
+  },
+  head: ({ loaderData }) => {
+    const post = loaderData?.post;
     const title = post ? `${post.title} — Trading With Prop Firms` : "Article — Trading With Prop Firms";
     const desc = post?.excerpt ?? "In-depth guides on prop trading, futures, risk and psychology.";
     return {
@@ -16,13 +21,9 @@ export const Route = createFileRoute("/blog/$slug")({
         { property: "og:title", content: title },
         { property: "og:description", content: desc },
         { property: "og:type", content: "article" },
+        { name: "twitter:card", content: "summary_large_image" },
       ],
     };
-  },
-  loader: ({ params }) => {
-    const post = getBlogPostBySlug(params.slug);
-    if (!post) throw notFound();
-    return { post };
   },
   notFoundComponent: () => (
     <main className="min-h-screen bg-background text-foreground">
@@ -49,13 +50,11 @@ export const Route = createFileRoute("/blog/$slug")({
 });
 
 function BlogPostRoute() {
-  const { slug } = Route.useParams();
-  const post = getBlogPostBySlug(slug);
-  if (!post) throw notFound();
+  const { post, related } = Route.useLoaderData();
   return (
     <main className="min-h-screen bg-background text-foreground">
       <Navbar />
-      <BlogArticle post={post} />
+      <BlogArticle post={post!} related={related} />
       <Footer />
     </main>
   );

@@ -1,9 +1,13 @@
 import { useState } from "react";
-import { popularCategoriesCount } from "@/lib/blog-data";
 
-type Props = { search: string; onSearch: (v: string) => void };
+type Props = {
+  search: string;
+  onSearch: (v: string) => void;
+  categoryCounts: { name: string; count: number }[];
+};
 
-export function BlogSidebar({ search, onSearch }: Props) {
+export function BlogSidebar({ search, onSearch, categoryCounts }: Props) {
+
   const [email, setEmail] = useState("");
   return (
     <aside className="flex flex-col gap-6 lg:sticky lg:top-20 lg:self-start">
@@ -20,7 +24,7 @@ export function BlogSidebar({ search, onSearch }: Props) {
       <div className="rounded-xl border border-[#222] bg-[#141414] p-5">
         <h3 className="mb-3 font-display text-lg font-bold text-white">Popular Categories</h3>
         <ul className="flex flex-col gap-2">
-          {popularCategoriesCount.map((c) => (
+          {categoryCounts.map((c) => (
             <li key={c.name}>
               <a href="#" className="group flex items-center justify-between rounded-lg px-2 py-1.5 text-sm text-white transition hover:bg-white/[0.03] hover:text-purple-300">
                 <span>{c.name}</span>
