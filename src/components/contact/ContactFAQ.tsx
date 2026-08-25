@@ -10,7 +10,7 @@ const faqs = [
 export function ContactFAQ() {
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <section className="py-16">
+    <section className="py-14">
       <div className="max-w-3xl mx-auto px-6">
         <h2 className="font-display font-bold text-3xl md:text-4xl text-center">Frequently Asked</h2>
         <div className="mt-10 space-y-3">
