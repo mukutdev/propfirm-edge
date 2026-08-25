@@ -1,9 +1,13 @@
 import { useState } from "react";
-import { popularCategoriesCount } from "@/lib/blog-data";
 
-type Props = { search: string; onSearch: (v: string) => void };
+type Props = {
+  search: string;
+  onSearch: (v: string) => void;
+  categoryCounts: { name: string; count: number }[];
+};
 
-export function BlogSidebar({ search, onSearch }: Props) {
+export function BlogSidebar({ search, onSearch, categoryCounts }: Props) {
+
   const [email, setEmail] = useState("");
   return (
     <aside className="flex flex-col gap-6 lg:sticky lg:top-20 lg:self-start">
