@@ -1,13 +1,13 @@
 const steps = [
-  { icon: "💳", title: "We Open a Real Account", body: "We put real money in and go through the same process every trader does." },
-  { icon: "🧪", title: "We Test the Rules", body: "We test drawdown, payouts, platform stability and support response times." },
-  { icon: "✍️", title: "We Write the Honest Review", body: "No sugarcoating. If a firm has bad rules we say so — even if they're an affiliate." },
-  { icon: "🔄", title: "We Keep It Updated", body: "Prop firm rules change. We revisit every review monthly to keep data accurate." },
+  { icon: "💳", title: "We Open a Real Account", body: "We buy the evaluation, hit the profit target, and trade through the funded account ourselves — the exact gauntlet you'd run." },
+  { icon: "🧪", title: "We Test the Rules", body: "Trailing vs. static drawdown, consistency caps, payout splits, scaling plan triggers — we verify every rule against the live account." },
+  { icon: "✍️", title: "We Write the Honest Review", body: "No sugarcoating. If the drawdown model is brutal or payouts get stalled, we say it — even for affiliate partners." },
+  { icon: "🔄", title: "We Keep It Updated", body: "Firms tweak challenge fees, swap drawdown types, and revise scaling plans. We re-run every review monthly so the numbers match what you'll actually sign." },
 ];
 
 export function ReviewProcess() {
   return (
-    <section className="px-4 py-16">
+    <section className="px-4 py-14">
       <div className="mx-auto max-w-5xl">
         <h2 className="text-center font-display text-3xl font-bold text-white sm:text-4xl">Our Review Process</h2>
         <p className="mx-auto mt-3 max-w-xl text-center text-base text-muted-foreground">

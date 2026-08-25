@@ -1,6 +1,6 @@
 export function ContactCTA() {
   return (
-    <section className="px-4 py-16">
+    <section className="px-4 py-14">
       <div className="relative mx-auto max-w-6xl overflow-hidden rounded-2xl border border-purple-500/20 bg-[#141414] p-8 text-center sm:p-12">
         <div
           aria-hidden
@@ -9,10 +9,11 @@ export function ContactCTA() {
         />
         <div className="relative">
           <h2 className="font-display text-3xl font-bold text-white sm:text-4xl">
-            Have a Question or Want to Work Together?
+            Question About a Firm — or Want an Honest Review?
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-base text-muted-foreground">
-            Whether you're a trader with a question or a prop firm interested in an honest review — I'd love to hear from you.
+            Whether you're a trader trying to pick between two evaluations or a prop firm that wants a real,
+            no-nonsense review — I read every message myself.
           </p>
           <a
             href="#"

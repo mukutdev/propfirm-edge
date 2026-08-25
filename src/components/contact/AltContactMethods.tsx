@@ -2,7 +2,7 @@ import { MessageCircle, Youtube, Mail } from "lucide-react";
 
 export function AltContactMethods() {
   return (
-    <section className="py-12">
+    <section className="py-10">
       <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-5">
         <div className="group bg-[#141414] border border-[#222] rounded-xl p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_15px_40px_-15px_rgba(88,101,242,0.5)]">
           <div className="w-12 h-12 rounded-full flex items-center justify-center mb-4" style={{ background: "linear-gradient(135deg,#5865F2,#404EED)" }}>

@@ -11,10 +11,10 @@ const reasonMeta: Record<Reason, { headline: string; subject: string }> = {
 };
 
 export const REASONS: Array<{ id: Reason; icon: string; label: string; desc: string }> = [
-  { id: "general", icon: "📩", label: "General Enquiry", desc: "I have a question about the site or content" },
-  { id: "partnership", icon: "🤝", label: "Prop Firm Partnership", desc: "I represent a prop firm and want to discuss a listing or review" },
-  { id: "report", icon: "🐛", label: "Report Outdated Info", desc: "A firm's rules or pricing have changed and need updating" },
-  { id: "media", icon: "🎙️", label: "Media or Collaboration", desc: "Podcast, YouTube collab, or press enquiry" },
+  { id: "general", icon: "📩", label: "General Enquiry", desc: "Question about a review, a specific firm, or something on the site" },
+  { id: "partnership", icon: "🤝", label: "Prop Firm Partnership", desc: "You run a prop firm — let's talk a listing and an honest evaluation" },
+  { id: "report", icon: "🐛", label: "Report Outdated Info", desc: "A firm's challenge fee changed, drawdown rule was updated, or payout split shifted" },
+  { id: "media", icon: "🎙️", label: "Media or Collaboration", desc: "Podcast, YouTube collab, or press enquiry — let's talk" },
 ];
 
 function ReasonCards({ value, onChange }: { value: Reason; onChange: (r: Reason) => void }) {
@@ -103,7 +103,7 @@ export function ContactForm() {
   }
 
   return (
-    <section className="py-12">
+    <section className="py-10">
       <div className="max-w-3xl mx-auto px-6">
         <ReasonCards value={reason} onChange={setReasonAndSubject} />
 

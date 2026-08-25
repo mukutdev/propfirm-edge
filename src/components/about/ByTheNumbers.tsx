@@ -8,7 +8,7 @@ const stats = [
 
 export function ByTheNumbers() {
   return (
-    <section className="px-4 py-16">
+    <section className="px-4 py-14">
       <div className="mx-auto max-w-6xl rounded-2xl border border-[#222] bg-[#141414] p-8 sm:p-10">
         <h2 className="text-center text-xs font-semibold uppercase tracking-widest text-muted-foreground">
           By the Numbers

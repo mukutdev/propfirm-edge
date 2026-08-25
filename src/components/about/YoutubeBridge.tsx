@@ -2,7 +2,7 @@ import { Play } from "lucide-react";
 
 export function YoutubeBridge() {
   return (
-    <section className="px-4 py-16">
+    <section className="px-4 py-14">
       <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-8 rounded-2xl border border-[#222] bg-[#141414] p-6 sm:p-10 md:grid-cols-2">
         <div>
           <span className="inline-flex items-center gap-2 rounded-full bg-red-500/10 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-red-400">
@@ -12,8 +12,9 @@ export function YoutubeBridge() {
             Follow the Journey on YouTube
           </h2>
           <p className="mt-3 text-base text-muted-foreground">
-            I document my real trading, prop firm challenges and funded account results on my YouTube
-            channel — Hanuman Trades.
+            I document the real side of prop trading on YouTube — running evaluations, managing funded
+            accounts, and what actually happens when you hit your trailing drawdown. No funded-in-a-week
+            fantasy, just the trades.
           </p>
           <a
             href="#"

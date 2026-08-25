@@ -1,6 +1,6 @@
 export function AboutHero() {
   return (
-    <section className="relative overflow-hidden border-b border-[#1a1a1a] bg-[#080808] px-4 py-14 sm:py-20">
+    <section className="relative overflow-hidden border-b border-[#1a1a1a] bg-[#080808] px-4 py-12 sm:py-16">
       <div
         aria-hidden
         className="pointer-events-none absolute left-1/2 top-0 h-[320px] w-[720px] -translate-x-1/2 rounded-full opacity-30 blur-3xl"
@@ -16,7 +16,7 @@ export function AboutHero() {
           Built by a Trader. For Traders.
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-base text-muted-foreground sm:text-lg">
-          No corporate agenda. No paid placements. Just honest reviews from someone who actually trades.
+          No paid placements. No recycled rankings. Just reviews written by someone who actually runs the evaluations, hits the drawdown, and pulls the payouts.
         </p>
       </div>
     </section>
