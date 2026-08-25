@@ -1,18 +1,18 @@
-import type { BlogPost, BlogCategory } from "@/lib/blog-data";
+import type { BlogPostRow } from "@/lib/blog.functions";
 import { ArticleCard } from "./ArticleCard";
 import { Link } from "@tanstack/react-router";
 
 type Props = {
   icon: string;
-  category: BlogCategory;
-  posts: BlogPost[];
+  category: string;
+  posts: BlogPostRow[];
   seedOffset?: number;
 };
 
 export function CategorySection({ icon, category, posts, seedOffset = 0 }: Props) {
   return (
     <section>
-      <div className="mb-5 flex items-center justify-between gap-4">
+      <div className="mb-4 flex items-center justify-between gap-4">
         <h2 className="flex items-center gap-3 border-l-2 border-transparent pl-3 font-display text-xl font-bold text-white sm:text-2xl">
           <span
             aria-hidden
