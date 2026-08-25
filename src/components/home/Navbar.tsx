@@ -40,10 +40,18 @@ export function Navbar() {
         }`}
       >
         <nav className="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2" aria-label="Trading With Prop Firms home">
-            <div className="logo-mark h-8 w-8 rounded-md bg-gradient-brand" />
-            <span className="font-display font-bold text-base hidden sm:inline">TWPF</span>
+          <Link to="/" className="group flex items-center gap-2.5" aria-label="Trading With Prop Firms home">
+            <span className="logo-mark h-9 w-9 rounded-lg bg-[#141414] border border-[#7c3aed]/35 flex items-center justify-center overflow-hidden">
+              <img src={logoMark} alt="Trading With Prop Firms logo" width={1024} height={1024} className="h-6 w-6 object-contain" />
+            </span>
+            <span className="hidden sm:flex flex-col leading-none">
+              <span className="font-display font-bold text-[15px] tracking-tight">
+                Trading<span className="text-gradient">WithPropFirms</span>
+              </span>
+              <span className="mt-0.5 text-[9px] uppercase tracking-[0.22em] text-[#777]">Futures · Funded</span>
+            </span>
           </Link>
+
 
           <ul className="hidden lg:flex items-center gap-5 text-[13px] text-white/75">
             {links.map((l) => (
