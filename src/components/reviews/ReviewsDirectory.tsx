@@ -1,6 +1,16 @@
 import { useMemo, useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { Star, LayoutGrid, List, Copy, X, Check } from "lucide-react";
 import { reviewFirms, type ReviewFirm } from "@/lib/home-data";
+
+function firmSlug(name: string) {
+  return name
+    .toLowerCase()
+    .replace(/\.com/g, "")
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
 
 type Category = "All" | "Futures" | "Forex" | "Crypto" | "Stocks";
 type SortKey = "rating" | "fee" | "funding" | "newest";
@@ -102,7 +112,7 @@ function GridCard({
         <MarketPills markets={firm.markets} />
 
         <div className="flex gap-3 mt-auto pt-2">
-          <a href="#" className="btn-ghost flex-1 text-sm py-2.5">Read Review</a>
+          <Link to="/reviews/$slug" params={{ slug: firmSlug(firm.name) }} className="btn-ghost flex-1 text-sm py-2.5 text-center">Read Review</Link>
           <a href="#" className="btn-gradient flex-1 text-sm py-2.5">Get Discount</a>
         </div>
       </div>
@@ -167,7 +177,7 @@ function ListCard({
       </div>
 
       <div className="flex md:flex-col gap-2 shrink-0">
-        <a href="#" className="btn-ghost text-xs py-2 px-4">Read Review</a>
+        <Link to="/reviews/$slug" params={{ slug: firmSlug(firm.name) }} className="btn-ghost text-xs py-2 px-4">Read Review</Link>
         <a href="#" className="btn-gradient text-xs py-2 px-4">Get Discount</a>
       </div>
     </article>
