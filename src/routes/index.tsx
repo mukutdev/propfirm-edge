@@ -9,6 +9,9 @@ import { MarketNews } from "@/components/home/MarketNews";
 import { CouponsBanner } from "@/components/home/CouponsBanner";
 import { WhyTrustUs } from "@/components/home/WhyTrustUs";
 import { DiscordCTA } from "@/components/home/DiscordCTA";
+import { LiveMarketWatch } from "@/components/home/LiveMarketWatch";
+import { TraderReviews } from "@/components/home/TraderReviews";
+import { YoutubeLive } from "@/components/home/YoutubeLive";
 import { Footer } from "@/components/home/Footer";
 
 export const Route = createFileRoute("/")({
