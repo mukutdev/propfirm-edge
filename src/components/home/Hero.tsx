@@ -33,7 +33,7 @@ export function Hero() {
         </p>
 
         {/* Live ticker tape — sells the real-data feel immediately */}
-        <div className="mt-8 rounded-xl border border-[#7c3aed]/35 bg-[#141414] p-1 overflow-hidden">
+        <div className="mt-8 min-h-[52px] rounded-xl border border-[#7c3aed]/35 bg-[#141414] p-1 overflow-hidden">
           <div className="hidden sm:block">
             <TradingViewWidget
               type="ticker-tape"
