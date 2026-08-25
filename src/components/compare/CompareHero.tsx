@@ -1,6 +1,6 @@
 export function CompareHero() {
   return (
-    <section className="relative pt-32 pb-14 overflow-hidden border-b border-[#222]">
+    <section className="relative pt-28 pb-10 overflow-hidden border-b border-[#222]">
       <div className="hero-bloom opacity-50" />
       <div className="grid-lines" />
       <div className="relative max-w-7xl mx-auto px-6">
@@ -13,7 +13,7 @@ export function CompareHero() {
           Compare Prop Firms <span className="text-gradient">Side by Side</span>
         </h1>
         <p className="mt-4 text-[#888] text-base md:text-lg max-w-2xl">
-          Cut through the noise. Compare funding, rules, fees and payouts across all major prop firms in one place.
+          Real evaluation rules, real payout terms — no guesswork before you commit capital.
         </p>
         <div className="mt-6 flex flex-wrap items-center gap-3">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#2a2a2a] text-xs text-[#888]">
