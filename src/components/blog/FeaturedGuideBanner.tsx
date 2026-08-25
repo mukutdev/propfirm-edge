@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
-import { featuredPost } from "@/lib/blog-data";
 
-export function FeaturedGuideBanner() {
+
+export function FeaturedGuideBanner({ slug }: { slug: string }) {
   return (
     <section className="relative overflow-hidden rounded-2xl border border-purple-500/30 bg-gradient-to-br from-[#1C1A2E] to-[#141414] p-6 sm:p-8">
       <div
@@ -27,7 +27,7 @@ export function FeaturedGuideBanner() {
         </div>
         <Link
           to="/blog/$slug"
-          params={{ slug: featuredPost.id }}
+          params={{ slug }}
           className="inline-flex shrink-0 items-center gap-1 rounded-full bg-gradient-to-r from-[#7C3AED] to-[#EC4899] px-5 py-2.5 text-sm font-semibold text-white transition hover:opacity-90"
         >
           Read the Beginner's Roadmap →
