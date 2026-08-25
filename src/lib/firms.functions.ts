@@ -99,6 +99,7 @@ export const submitFirmReview = createServerFn({ method: "POST" })
         traderName: z.string().trim().min(2).max(60),
         rating: z.number().int().min(1).max(5),
         reviewText: z.string().trim().min(20).max(4000),
+        claimedPayout: z.boolean().optional(),
       })
       .parse(data),
   )
@@ -111,7 +112,40 @@ export const submitFirmReview = createServerFn({ method: "POST" })
       review_text: data.reviewText,
       status: "pending",
       is_verified: false,
+      claimed_payout: data.claimedPayout ?? false,
     });
     if (error) throw new Error(error.message);
     return { ok: true as const };
   });
+
+export type FirmOption = {
+  id: string;
+  slug: string;
+  name: string;
+  logo: string;
+};
+
+export const listFirmOptions = createServerFn({ method: "GET" }).handler(
+  async (): Promise<FirmOption[]> => {
+    const supabase = publicClient();
+    const { data, error } = await supabase
+      .from("prop_firms")
+      .select("id, slug, name, affiliate_url")
+      .order("name", { ascending: true });
+    if (error) throw new Error(error.message);
+    return (data ?? []).map((f: Record<string, unknown>) => {
+      let host = "";
+      try {
+        host = new URL(String(f["affiliate_url"] || "")).hostname;
+      } catch {
+        host = "";
+      }
+      return {
+        id: String(f["id"]),
+        slug: String(f["slug"]),
+        name: String(f["name"]),
+        logo: host ? `https://www.google.com/s2/favicons?sz=64&domain=${host}` : "",
+      };
+    });
+  },
+);
