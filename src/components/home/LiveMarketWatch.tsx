@@ -2,6 +2,15 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Globe, Newspaper } from "lucide-react";
 import { LivePrices } from "./LivePrices";
+import { TradingViewWidget } from "./TradingViewWidget";
+
+const tickerSymbols = [
+  { proName: "CME_MINI:NQ1!", title: "Nasdaq 100" },
+  { proName: "CME_MINI:ES1!", title: "S&P 500" },
+  { proName: "COMEX:GC1!", title: "Gold" },
+  { proName: "NYMEX:CL1!", title: "Crude Oil" },
+  { proName: "FX:EURUSD", title: "EUR/USD" },
+];
 
 type Session = { name: string; tz: string; open: number; close: number };
 
