@@ -349,6 +349,7 @@ function PreviewTable() {
   const [tab, setTab] = useState<(typeof tabs)[number]>("Popular");
   const [favs, setFavs] = useState<string[]>([]);
   const [bounce, setBounce] = useState<string | null>(null);
+  const [visible, setVisible] = useState(15);
   const mounted = useRef(false);
 
   useEffect(() => {
