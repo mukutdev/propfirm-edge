@@ -275,7 +275,7 @@ const tabs = ["Popular", "Favorite", "New", "All"] as const;
 const FAV_KEY = "twpf-favorites";
 
 const COLS =
-  "grid grid-cols-[44px_minmax(0,1.5fr)_1fr_0.7fr_0.8fr_1.5fr_0.9fr_1fr_0.9fr_0.7fr] items-center";
+  "grid grid-cols-[40px_195px_120px_80px_95px_170px_100px_115px_110px_90px] items-center";
 
 const platformCatalog = [
   { name: "Tradovate", domain: "tradovate.com" },
