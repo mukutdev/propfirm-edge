@@ -459,7 +459,7 @@ function PreviewTable() {
           <div key={tab} className="flex flex-col gap-3 animate-in fade-in duration-500">
             {rows.map((f, i) => {
               const promo = promoOf(f.name);
-              const country = countries[f.name] ?? { flag: "🌐", code: "GLB" };
+              const country = countries[f.name] ?? { iso: "us", code: "US" };
               const isFav = favs.includes(f.name);
               const years = (f.addedOrder % 5) + 1;
               const assets = ["Crypto", "Energy", "FX", "Indices", "Metals"].slice(
