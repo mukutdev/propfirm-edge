@@ -275,17 +275,21 @@ const tabs = ["Popular", "Favorite", "New", "All"] as const;
 const FAV_KEY = "twpf-favorites";
 
 const COLS =
-  "grid grid-cols-[64px_200px_150px_100px_150px_240px_150px_160px_150px_110px] items-center";
+  "grid grid-cols-[44px_minmax(0,1.5fr)_1fr_0.7fr_0.8fr_1.5fr_0.9fr_1fr_0.9fr_0.7fr] items-center";
 
-const platformPalette = ["#f97316", "#22c55e", "#3b82f6", "#e11d48", "#a855f7", "#eab308"];
+const platformCatalog = [
+  { name: "Tradovate", domain: "tradovate.com" },
+  { name: "NinjaTrader", domain: "ninjatrader.com" },
+  { name: "TradingView", domain: "tradingview.com" },
+  { name: "Rithmic", domain: "rithmic.com" },
+  { name: "Quantower", domain: "quantower.com" },
+  { name: "MetaTrader", domain: "metaquotes.net" },
+];
 
 function platformsOf(name: string) {
   const seed = name.split("").reduce((a, c) => a + c.charCodeAt(0), 0);
-  const count = (seed % 3) + 1;
-  return Array.from({ length: count }, (_, i) => {
-    const idx = (seed + i * 7) % platformPalette.length;
-    return { color: platformPalette[idx], letter: name.replace(/\W/g, "")[i] ?? "T" };
-  });
+  const count = (seed % 3) + 2;
+  return Array.from({ length: count }, (_, i) => platformCatalog[(seed + i * 5) % platformCatalog.length]);
 }
 
 function YearsRing({ years }: { years: number }) {
