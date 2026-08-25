@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { TrendingUp, TrendingDown, Globe, BarChart3, Newspaper } from "lucide-react";
+import { Globe, Newspaper } from "lucide-react";
+import { LivePrices } from "./LivePrices";
 
 type Session = { name: string; tz: string; open: number; close: number };
 
@@ -57,13 +58,6 @@ function sessionState(date: Date, s: Session) {
   return { isOpen, label: `${isOpen ? "Closes in" : "Opens in"} ${fmtDuration(diff)}` };
 }
 
-const prices = [
-  { sym: "NQ", price: "18,432.50", change: "+0.42%", up: true },
-  { sym: "ES", price: "5,234.25", change: "-0.12%", up: false },
-  { sym: "GC", price: "2,312.40", change: "+0.78%", up: true },
-  { sym: "CL", price: "78.34", change: "-1.20%", up: false },
-  { sym: "6E", price: "1.0842", change: "+0.05%", up: true },
-];
 
 const headlines = [
   { tag: "Futures", title: "NQ pushes to fresh highs as tech leads pre-market bid", time: "12m ago" },
@@ -180,29 +174,7 @@ export function LiveMarketWatch() {
             </div>
 
             {/* Panel B */}
-            <div className="p-6">
-              <PanelHeader
-                icon={<BarChart3 size={15} />}
-                label="Live Prices"
-                right={<span className="text-[10px] uppercase tracking-wider text-[#888]">Delayed 15min</span>}
-              />
-              <table className="w-full text-sm">
-                <tbody>
-                  {prices.map((p) => (
-                    <tr key={p.sym} className="border-b border-[#1e1e1e] last:border-0">
-                      <td className="py-2.5 font-semibold text-white/90">{p.sym}</td>
-                      <td className="py-2.5 text-right font-mono tabular-nums text-white/90">{p.price}</td>
-                      <td className={`py-2.5 text-right font-mono tabular-nums ${p.up ? "text-[#00d97e]" : "text-[#ff3b5c]"}`}>
-                        <span className="inline-flex items-center gap-1 justify-end">
-                          {p.change}
-                          {p.up ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            <LivePrices />
 
             {/* Panel C */}
             <div className="p-6">
