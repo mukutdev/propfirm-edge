@@ -589,7 +589,15 @@ function PreviewTable() {
         </div>
       </div>
 
-      <div className="mt-10 flex justify-center">
+      <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+        {hasMore && (
+          <button
+            onClick={() => setVisible((v) => v + 15)}
+            className="w-full rounded-full border border-[#262626] bg-[#141414] px-6 py-3 text-sm font-semibold text-white transition hover:border-[#7c3aed] sm:w-auto"
+          >
+            View More Firms
+          </button>
+        )}
         <Link to="/reviews" className="btn-gradient w-full justify-center text-base sm:w-auto">
           View All 60+ Firms
         </Link>
