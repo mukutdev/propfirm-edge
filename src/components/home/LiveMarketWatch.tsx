@@ -126,6 +126,21 @@ export function LiveMarketWatch() {
   return (
     <section className="py-14 md:py-20" aria-label="Live market watch">
       <div className="max-w-7xl mx-auto px-6">
+        {/* TradingView Ticker Tape — full-width live futures strip */}
+        <div className="rounded-2xl border border-[#7c3aed]/40 bg-[#141414] p-1.5 mb-5 overflow-hidden">
+          <TradingViewWidget
+            type="ticker-tape"
+            config={{
+              symbols: tickerSymbols,
+              showSymbolLogo: true,
+              colorTheme: "dark",
+              isTransparent: true,
+              displayMode: "adaptive",
+              locale: "en",
+            }}
+          />
+        </div>
+
         <div className="card-surface overflow-hidden shadow-[0_0_0_1px_rgba(124,58,237,0.28),0_20px_60px_-30px_rgba(124,58,237,0.55)]">
           <div className="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[#222]">
             {/* Panel A */}
