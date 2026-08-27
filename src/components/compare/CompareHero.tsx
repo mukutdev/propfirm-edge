@@ -1,6 +1,6 @@
 export function CompareHero() {
   return (
-    <section className="relative pt-28 pb-10 overflow-hidden border-b border-[#222]">
+    <section className="relative pt-36 pb-20 overflow-hidden border-b border-[#222]">
       <div className="hero-bloom opacity-50" />
       <div className="grid-lines" />
       <div className="relative max-w-7xl mx-auto px-6">

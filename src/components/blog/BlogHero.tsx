@@ -9,7 +9,7 @@ export function BlogHero({ active, onChange }: Props) {
   ];
 
   return (
-    <section className="relative overflow-hidden border-b border-[#1a1a1a] bg-[#080808] px-4 py-10 sm:py-14">
+    <section className="relative overflow-hidden border-b border-[#1a1a1a] bg-[#080808] px-4 pt-28 pb-24 sm:pt-36 sm:pb-28">
       <div
         aria-hidden
         className="pointer-events-none absolute left-1/2 top-0 h-[360px] w-[800px] -translate-x-1/2 rounded-full opacity-30 blur-3xl"
