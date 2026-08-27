@@ -386,7 +386,7 @@ export function PositionCalculatorPage() {
   const [contract, setContract] = useState<FuturesContract>(FUTURES_CONTRACTS["Equity Index — Micro"][0]);
 
   return (
-    <div className="min-h-screen bg-background text-foreground pt-28 pb-20">
+    <div className="bg-background text-foreground pt-28 pb-20">
       <style>{`@keyframes fadeInUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }`}</style>
       <div className="max-w-3xl mx-auto px-6">
         {/* Header */}

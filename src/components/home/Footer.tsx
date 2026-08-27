@@ -12,6 +12,7 @@ const cols: { title: string; items: { label: string; to: string }[] }[] = [
       { label: "Compare", to: "/compare" },
       { label: "Coupons", to: "/coupons" },
       { label: "News", to: "/news" },
+      { label: "Position Calculator", to: "/tools/position-calculator" },
     ],
   },
   {
