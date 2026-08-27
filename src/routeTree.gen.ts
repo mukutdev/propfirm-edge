@@ -21,6 +21,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ReviewsIndexRouteImport } from './routes/reviews.index'
 import { Route as NewsIndexRouteImport } from './routes/news.index'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
+import { Route as ToolsPositionCalculatorRouteImport } from './routes/tools.position-calculator'
 import { Route as ReviewsSlugRouteImport } from './routes/reviews.$slug'
 import { Route as NewsSlugRouteImport } from './routes/news.$slug'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
@@ -85,6 +86,11 @@ const BlogIndexRoute = BlogIndexRouteImport.update({
   path: '/',
   getParentRoute: () => BlogRoute,
 } as any)
+const ToolsPositionCalculatorRoute = ToolsPositionCalculatorRouteImport.update({
+  id: '/tools/position-calculator',
+  path: '/tools/position-calculator',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReviewsSlugRoute = ReviewsSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -114,6 +120,7 @@ export interface FileRoutesByFullPath {
   '/blog/$slug': typeof BlogSlugRoute
   '/news/$slug': typeof NewsSlugRoute
   '/reviews/$slug': typeof ReviewsSlugRoute
+  '/tools/position-calculator': typeof ToolsPositionCalculatorRoute
   '/blog/': typeof BlogIndexRoute
   '/news/': typeof NewsIndexRoute
   '/reviews/': typeof ReviewsIndexRoute
@@ -128,6 +135,7 @@ export interface FileRoutesByTo {
   '/blog/$slug': typeof BlogSlugRoute
   '/news/$slug': typeof NewsSlugRoute
   '/reviews/$slug': typeof ReviewsSlugRoute
+  '/tools/position-calculator': typeof ToolsPositionCalculatorRoute
   '/blog': typeof BlogIndexRoute
   '/news': typeof NewsIndexRoute
   '/reviews': typeof ReviewsIndexRoute
@@ -146,6 +154,7 @@ export interface FileRoutesById {
   '/blog/$slug': typeof BlogSlugRoute
   '/news/$slug': typeof NewsSlugRoute
   '/reviews/$slug': typeof ReviewsSlugRoute
+  '/tools/position-calculator': typeof ToolsPositionCalculatorRoute
   '/blog/': typeof BlogIndexRoute
   '/news/': typeof NewsIndexRoute
   '/reviews/': typeof ReviewsIndexRoute
@@ -165,6 +174,7 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/news/$slug'
     | '/reviews/$slug'
+    | '/tools/position-calculator'
     | '/blog/'
     | '/news/'
     | '/reviews/'
@@ -179,6 +189,7 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/news/$slug'
     | '/reviews/$slug'
+    | '/tools/position-calculator'
     | '/blog'
     | '/news'
     | '/reviews'
@@ -196,6 +207,7 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/news/$slug'
     | '/reviews/$slug'
+    | '/tools/position-calculator'
     | '/blog/'
     | '/news/'
     | '/reviews/'
@@ -211,6 +223,7 @@ export interface RootRouteChildren {
   NewsRoute: typeof NewsRouteWithChildren
   ReviewsRoute: typeof ReviewsRouteWithChildren
   SubmitReviewRoute: typeof SubmitReviewRoute
+  ToolsPositionCalculatorRoute: typeof ToolsPositionCalculatorRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -299,6 +312,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogIndexRouteImport
       parentRoute: typeof BlogRoute
     }
+    '/tools/position-calculator': {
+      id: '/tools/position-calculator'
+      path: '/tools/position-calculator'
+      fullPath: '/tools/position-calculator'
+      preLoaderRoute: typeof ToolsPositionCalculatorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/reviews/$slug': {
       id: '/reviews/$slug'
       path: '/$slug'
@@ -370,6 +390,7 @@ const rootRouteChildren: RootRouteChildren = {
   NewsRoute: NewsRouteWithChildren,
   ReviewsRoute: ReviewsRouteWithChildren,
   SubmitReviewRoute: SubmitReviewRoute,
+  ToolsPositionCalculatorRoute: ToolsPositionCalculatorRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
