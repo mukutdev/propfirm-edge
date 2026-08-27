@@ -1,6 +1,6 @@
 export function CouponsHero() {
   return (
-    <section className="relative pt-32 pb-14 overflow-hidden border-b border-[#222]">
+    <section className="relative pt-40 pb-24 overflow-hidden border-b border-[#222]">
       <div
         className="absolute inset-0 pointer-events-none"
         style={{

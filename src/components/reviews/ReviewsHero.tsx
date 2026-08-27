@@ -1,6 +1,6 @@
 export function ReviewsHero() {
   return (
-    <section className="relative pt-32 pb-16 overflow-hidden border-b border-[#222]">
+    <section className="relative pt-40 pb-24 overflow-hidden border-b border-[#222]">
       <div className="hero-bloom opacity-60" />
       <div className="grid-lines" />
       <div className="relative max-w-7xl mx-auto px-6">

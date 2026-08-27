@@ -2,7 +2,7 @@ const pills = ["✓ Verified Traders Only", "✓ Moderated Before Publishing", "
 
 export function SubmitReviewIntro() {
   return (
-    <section className="border-b border-border py-14">
+    <section className="border-b border-border pt-28 pb-24">
       <div className="mx-auto max-w-4xl px-4 text-center">
         <h1 className="font-display text-4xl font-extrabold tracking-tight sm:text-5xl">
           Share Your <span className="text-gradient">Experience</span>
