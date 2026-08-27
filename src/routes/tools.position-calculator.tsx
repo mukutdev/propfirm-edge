@@ -1,4 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Navbar } from "@/components/home/Navbar";
+import { Footer } from "@/components/home/Footer";
 import { PositionCalculatorPage } from "@/components/tools/PositionCalculator";
 
 export const Route = createFileRoute("/tools/position-calculator")({
@@ -8,7 +10,7 @@ export const Route = createFileRoute("/tools/position-calculator")({
       {
         name: "description",
         content:
-          "Free futures position sizer and P&L estimator for 44+ CME contracts — accurate tick values for ES, NQ, MES, MNQ, gold, crude oil, treasuries, currencies, and more.",
+          "Free futures position sizer and P&L estimator for 44+ CME contracts — accurate tick value for ES, NQ, MES, MNQ, gold, crude oil, treasuries, currencies, and more.",
       },
       { property: "og:title", content: "Futures Position Size & P&L Calculator — Trading With Prop Firms" },
       {
@@ -20,5 +22,15 @@ export const Route = createFileRoute("/tools/position-calculator")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  component: PositionCalculatorPage,
+  component: Page,
 });
+
+function Page() {
+  return (
+    <>
+      <Navbar />
+      <PositionCalculatorPage />
+      <Footer />
+    </>
+  );
+}
