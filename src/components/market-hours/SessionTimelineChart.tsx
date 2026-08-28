@@ -167,17 +167,6 @@ export function SessionTimelineChart() {
             </div>
           </div>
 
-          {/* Fixed left labels overlay */}
-          <div className="pointer-events-none -mt-[calc(5*3rem)] flex">
-            <div className="w-32 shrink-0 space-y-3 pt-8">
-              {rows.map(({ session }) => (
-                <div key={session.key} className="flex h-9 items-center gap-2 text-sm text-white/85">
-                  <span>{session.flag}</span>
-                  <span className="truncate">{session.name}</span>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
 
         {/* Mobile stacked cards */}
