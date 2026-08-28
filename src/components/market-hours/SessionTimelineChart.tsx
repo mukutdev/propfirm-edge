@@ -183,7 +183,14 @@ export function SessionTimelineChart() {
                   {session.name}
                 </span>
                 <span className="font-mono text-[10px] text-[#888]">
-                  {segments.length ? segments.map((s) => `${fmtHM(s.startMin)}–${fmtHM(s.endMin)}`).join(", ") : "Closed"}
+                  {segments.length
+                    ? segments
+                        .map(
+                          (s) =>
+                            `${fmtHM(s.openMin)}${s.wrapsFromPrevDay ? "−1d" : ""}–${fmtHM(s.closeMin)}${s.wrapsToNextDay ? "+1d" : ""}`,
+                        )
+                        .join(", ")
+                    : "Closed"}
                 </span>
               </div>
               <div className="relative h-6">
