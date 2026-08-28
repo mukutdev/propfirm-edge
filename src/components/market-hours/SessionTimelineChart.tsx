@@ -121,7 +121,9 @@ export function SessionTimelineChart() {
                   {HOUR_MARKS.map((h) => (
                     <span
                       key={h}
-                      className="absolute -translate-x-1/2 font-mono text-[10px] text-[#666]"
+                      className={`absolute font-mono text-[10px] text-[#666] ${
+                        h === 0 ? "" : h === 24 ? "-translate-x-full" : "-translate-x-1/2"
+                      }`}
                       style={{ left: pct(h * 60) }}
                     >
                       {String(h).padStart(2, "0")}
