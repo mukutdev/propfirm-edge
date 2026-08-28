@@ -106,7 +106,14 @@ export function SessionTimelineChart() {
         {/* Desktop chart */}
         <div className="card-surface hidden overflow-hidden p-5 md:block">
           <div className="flex">
-            <div className="w-32 shrink-0" />
+            <div className="w-32 shrink-0 space-y-3 pt-8">
+              {rows.map(({ session }) => (
+                <div key={session.key} className="flex h-9 items-center gap-2 text-sm text-white/85">
+                  <span>{session.flag}</span>
+                  <span className="truncate">{session.name}</span>
+                </div>
+              ))}
+            </div>
             <div className="relative flex-1 overflow-x-auto scroll-smooth pb-2">
               <div style={{ width: `${zoom * 100}%` }} className="transition-[width] duration-300 ease-out">
                 {/* Axis */}
