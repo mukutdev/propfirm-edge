@@ -24,8 +24,9 @@ export function Hero() {
           Futures · Forex · Funded Accounts
         </p>
         <h1 className="font-display font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight">
-          Get Funded. Trade Real Capital.{" "}
-          <span className="text-gradient">Keep What You Earn.</span>
+          Find Your Edge.
+          <br />
+          <span className="text-gradient">Get Funded. Keep What You Earn.</span>
         </h1>
         <p className="mt-6 text-base md:text-lg text-[#8d8d8d] max-w-2xl mx-auto leading-relaxed">
           Independent prop firm reviews, real trader ratings, and verified discount codes — built by a
