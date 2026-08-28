@@ -141,14 +141,16 @@ export function SessionTimelineChart() {
                           key={i}
                           className={`absolute top-0 flex h-9 items-center justify-between rounded-md bg-gradient-to-r px-2 transition-all duration-500 ease-out ${session.fill}`}
                           style={{ left: pct(seg.startMin), width: pct(seg.endMin - seg.startMin) }}
-                          title={`${seg.label} · ${fmtHM(seg.startMin)}–${fmtHM(seg.endMin)}`}
+                          title={`${seg.label} · ${fmtHM(seg.openMin)}–${fmtHM(seg.closeMin)}`}
                         >
-                          <span className="rounded-full bg-black/45 px-1.5 py-0.5 font-mono text-[9px] text-white/85">
-                            OPENS {fmtHM(seg.startMin)}
+                          <span className="whitespace-nowrap rounded-full bg-black/45 px-1.5 py-0.5 font-mono text-[9px] text-white/85">
+                            OPENS {fmtHM(seg.openMin)}
+                            {seg.wrapsFromPrevDay && <span className="text-[#c4a8ff]"> −1d</span>}
                           </span>
                           <span className="truncate px-1 text-[10px] font-semibold text-white/90">{seg.label}</span>
-                          <span className="rounded-full bg-black/45 px-1.5 py-0.5 font-mono text-[9px] text-white/85">
-                            CLOSES {fmtHM(seg.endMin)}
+                          <span className="whitespace-nowrap rounded-full bg-black/45 px-1.5 py-0.5 font-mono text-[9px] text-white/85">
+                            CLOSES {fmtHM(seg.closeMin)}
+                            {seg.wrapsToNextDay && <span className="text-[#c4a8ff]"> +1d</span>}
                           </span>
                         </div>
                       ))}
