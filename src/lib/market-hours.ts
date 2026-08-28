@@ -80,9 +80,40 @@ export function startOfZoneDay(date: Date, tz: string) {
   return d;
 }
 
-export type Segment = { startMin: number; endMin: number; label: string };
+export type Segment = {
+  /** clipped position on the displayed 0–1440 axis */
+  startMin: number;
+  endMin: number;
+  /** true session boundaries expressed in reference-tz minutes (may be < 0 or > 1440) */
+  openMin: number;
+  closeMin: number;
+  wrapsFromPrevDay: boolean;
+  wrapsToNextDay: boolean;
+  label: string;
+};
 
 const STEP = 5;
+
+/** Walk backwards from `m` to the real minute the session opened (may be negative). */
+function trueOpenMin(dayStart: Date, s: MarketSession, m: number) {
+  let t = m;
+  for (let i = 0; i < 1440 / STEP; i++) {
+    const prev = t - STEP;
+    if (!isOpenAt(new Date(dayStart.getTime() + prev * 60_000), s)) break;
+    t = prev;
+  }
+  return t;
+}
+
+/** Walk forwards from `m` (first closed sample) to the real close minute (may exceed 1440). */
+function trueCloseMin(dayStart: Date, s: MarketSession, m: number) {
+  let t = m;
+  for (let i = 0; i < 1440 / STEP; i++) {
+    if (!isOpenAt(new Date(dayStart.getTime() + t * 60_000), s)) break;
+    t += STEP;
+  }
+  return t;
+}
 
 /** Filled segments (in reference-tz minutes 0–1440) for one session on the reference day. */
 export function daySegments(dayStart: Date, refTz: string, s: MarketSession): Segment[] {
@@ -90,17 +121,27 @@ export function daySegments(dayStart: Date, refTz: string, s: MarketSession): Se
   const segs: Segment[] = [];
   let cur: { start: number; preAsia: boolean } | null = null;
 
+  const push = (start: number, end: number, preAsia: boolean) => {
+    const openMin = start === 0 ? trueOpenMin(dayStart, s, 0) : start;
+    const closeMin = end >= 1440 ? trueCloseMin(dayStart, s, 1440) : end;
+    segs.push({
+      startMin: start,
+      endMin: Math.min(end, 1440),
+      openMin,
+      closeMin,
+      wrapsFromPrevDay: openMin < 0,
+      wrapsToNextDay: closeMin > 1440,
+      label: s.key === "globex" ? (preAsia ? "Globex · Pre-Asia" : "Globex") : s.name,
+    });
+  };
+
   for (let m = 0; m <= 1440; m += STEP) {
     const at = new Date(dayStart.getTime() + m * 60_000);
     const open = m < 1440 && isOpenAt(at, s);
     if (open) {
       if (!cur) cur = { start: m, preAsia: s.key === "globex" && !isOpenAt(at, tokyo) };
     } else if (cur) {
-      segs.push({
-        startMin: cur.start,
-        endMin: m,
-        label: s.key === "globex" ? (cur.preAsia ? "Globex · Pre-Asia" : "Globex") : s.name,
-      });
+      push(cur.start, m, cur.preAsia);
       cur = null;
     }
   }
