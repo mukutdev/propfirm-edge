@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SubmitReviewRouteImport } from './routes/submit-review'
 import { Route as ReviewsRouteImport } from './routes/reviews'
 import { Route as NewsRouteImport } from './routes/news'
+import { Route as MarketHoursRouteImport } from './routes/market-hours'
 import { Route as CouponsRouteImport } from './routes/coupons'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CompareRouteImport } from './routes/compare'
@@ -39,6 +40,11 @@ const ReviewsRoute = ReviewsRouteImport.update({
 const NewsRoute = NewsRouteImport.update({
   id: '/news',
   path: '/news',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MarketHoursRoute = MarketHoursRouteImport.update({
+  id: '/market-hours',
+  path: '/market-hours',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CouponsRoute = CouponsRouteImport.update({
@@ -114,6 +120,7 @@ export interface FileRoutesByFullPath {
   '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
   '/coupons': typeof CouponsRoute
+  '/market-hours': typeof MarketHoursRoute
   '/news': typeof NewsRouteWithChildren
   '/reviews': typeof ReviewsRouteWithChildren
   '/submit-review': typeof SubmitReviewRoute
@@ -131,6 +138,7 @@ export interface FileRoutesByTo {
   '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
   '/coupons': typeof CouponsRoute
+  '/market-hours': typeof MarketHoursRoute
   '/submit-review': typeof SubmitReviewRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/news/$slug': typeof NewsSlugRoute
@@ -148,6 +156,7 @@ export interface FileRoutesById {
   '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
   '/coupons': typeof CouponsRoute
+  '/market-hours': typeof MarketHoursRoute
   '/news': typeof NewsRouteWithChildren
   '/reviews': typeof ReviewsRouteWithChildren
   '/submit-review': typeof SubmitReviewRoute
@@ -168,6 +177,7 @@ export interface FileRouteTypes {
     | '/compare'
     | '/contact'
     | '/coupons'
+    | '/market-hours'
     | '/news'
     | '/reviews'
     | '/submit-review'
@@ -185,6 +195,7 @@ export interface FileRouteTypes {
     | '/compare'
     | '/contact'
     | '/coupons'
+    | '/market-hours'
     | '/submit-review'
     | '/blog/$slug'
     | '/news/$slug'
@@ -201,6 +212,7 @@ export interface FileRouteTypes {
     | '/compare'
     | '/contact'
     | '/coupons'
+    | '/market-hours'
     | '/news'
     | '/reviews'
     | '/submit-review'
@@ -220,6 +232,7 @@ export interface RootRouteChildren {
   CompareRoute: typeof CompareRoute
   ContactRoute: typeof ContactRoute
   CouponsRoute: typeof CouponsRoute
+  MarketHoursRoute: typeof MarketHoursRoute
   NewsRoute: typeof NewsRouteWithChildren
   ReviewsRoute: typeof ReviewsRouteWithChildren
   SubmitReviewRoute: typeof SubmitReviewRoute
@@ -247,6 +260,13 @@ declare module '@tanstack/react-router' {
       path: '/news'
       fullPath: '/news'
       preLoaderRoute: typeof NewsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/market-hours': {
+      id: '/market-hours'
+      path: '/market-hours'
+      fullPath: '/market-hours'
+      preLoaderRoute: typeof MarketHoursRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/coupons': {
@@ -387,6 +407,7 @@ const rootRouteChildren: RootRouteChildren = {
   CompareRoute: CompareRoute,
   ContactRoute: ContactRoute,
   CouponsRoute: CouponsRoute,
+  MarketHoursRoute: MarketHoursRoute,
   NewsRoute: NewsRouteWithChildren,
   ReviewsRoute: ReviewsRouteWithChildren,
   SubmitReviewRoute: SubmitReviewRoute,

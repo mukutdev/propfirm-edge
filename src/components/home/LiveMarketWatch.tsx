@@ -184,10 +184,14 @@ export function LiveMarketWatch() {
 
               <button
                 onClick={() => setShowLocal((v) => !v)}
-                className="mt-4 text-[11px] text-[#888] hover:text-white transition-colors"
+                className="mt-4 block text-[11px] text-[#888] hover:text-white transition-colors"
               >
                 🌐 {showLocal ? "Hide" : "Show"} my local time
               </button>
+
+              <Link to="/market-hours" className="mt-3 inline-block text-sm font-semibold text-gradient">
+                View Full Session Chart →
+              </Link>
             </div>
 
             {/* Panel B */}
