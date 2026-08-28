@@ -136,24 +136,45 @@ export function SessionTimelineChart() {
                   {rows.map(({ session, segments }) => (
                     <div key={session.key} className="relative h-9">
                       <div className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-[#222]" />
-                      {segments.map((seg, i) => (
-                        <div
-                          key={i}
-                          className={`absolute top-0 flex h-9 items-center justify-between rounded-md bg-gradient-to-r px-2 transition-all duration-500 ease-out ${session.fill}`}
-                          style={{ left: pct(seg.startMin), width: pct(seg.endMin - seg.startMin) }}
-                          title={`${seg.label} · ${fmtHM(seg.openMin)}–${fmtHM(seg.closeMin)}`}
-                        >
-                          <span className="whitespace-nowrap rounded-full bg-black/45 px-1.5 py-0.5 font-mono text-[9px] text-white/85">
-                            OPENS {fmtHM(seg.openMin)}
-                            {seg.wrapsFromPrevDay && <span className="text-[#c4a8ff]"> −1d</span>}
-                          </span>
-                          <span className="truncate px-1 text-[10px] font-semibold text-white/90">{seg.label}</span>
-                          <span className="whitespace-nowrap rounded-full bg-black/45 px-1.5 py-0.5 font-mono text-[9px] text-white/85">
-                            CLOSES {fmtHM(seg.closeMin)}
-                            {seg.wrapsToNextDay && <span className="text-[#c4a8ff]"> +1d</span>}
-                          </span>
-                        </div>
-                      ))}
+                      {segments.map((seg, i) => {
+                        const labels = seg.subLabels ?? [
+                          { startMin: seg.startMin, endMin: seg.endMin, text: seg.label },
+                        ];
+                        const segWidth = seg.endMin - seg.startMin || 1;
+                        const labelText = seg.subLabels
+                          ? seg.subLabels.map((l) => l.text).join(" → ")
+                          : seg.label;
+                        return (
+                          <div
+                            key={i}
+                            className={`absolute top-0 h-9 rounded-md bg-gradient-to-r transition-all duration-500 ease-out ${session.fill}`}
+                            style={{ left: pct(seg.startMin), width: pct(seg.endMin - seg.startMin) }}
+                            title={`${labelText} · ${fmtHM(seg.openMin)}–${fmtHM(seg.closeMin)}`}
+                          >
+                            <span className="absolute left-1 top-1/2 -translate-y-1/2 whitespace-nowrap rounded-full bg-black/45 px-1.5 py-0.5 font-mono text-[9px] text-white/85">
+                              OPENS {fmtHM(seg.openMin)}
+                              {seg.wrapsFromPrevDay && <span className="text-[#c4a8ff]"> −1d</span>}
+                            </span>
+                            {labels.map((lb, j) => {
+                              const leftPct = ((lb.startMin - seg.startMin) / segWidth) * 100;
+                              const wPct = ((lb.endMin - lb.startMin) / segWidth) * 100;
+                              return (
+                                <span
+                                  key={j}
+                                  className="absolute top-1/2 -translate-y-1/2 truncate px-1 text-center text-[10px] font-semibold text-white/90"
+                                  style={{ left: `${leftPct}%`, width: `${wPct}%` }}
+                                >
+                                  {lb.text}
+                                </span>
+                              );
+                            })}
+                            <span className="absolute right-1 top-1/2 -translate-y-1/2 whitespace-nowrap rounded-full bg-black/45 px-1.5 py-0.5 font-mono text-[9px] text-white/85">
+                              CLOSES {fmtHM(seg.closeMin)}
+                              {seg.wrapsToNextDay && <span className="text-[#c4a8ff]"> +1d</span>}
+                            </span>
+                          </div>
+                        );
+                      })}
                     </div>
                   ))}
 
