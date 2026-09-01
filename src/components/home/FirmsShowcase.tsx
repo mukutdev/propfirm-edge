@@ -143,7 +143,7 @@ function OffersCarousel() {
     <div
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
-      className="relative rounded-2xl bg-[#141414] p-[1px] shadow-[0_0_40px_-18px_rgba(124,58,237,0.8)] lg:col-span-2"
+      className="relative min-w-0 rounded-2xl bg-[#141414] p-[1px] shadow-[0_0_40px_-18px_rgba(124,58,237,0.8)] lg:col-span-2"
       style={{ backgroundImage: "linear-gradient(135deg,#7c3aed,#ec4899)" }}
     >
       <span className="absolute -top-3 left-5 z-10 rounded-full bg-gradient-to-r from-[#7c3aed] to-[#ec4899] px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white">
