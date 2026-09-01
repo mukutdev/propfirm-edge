@@ -2,11 +2,20 @@ import { Link } from "@tanstack/react-router";
 import { TradingViewWidget } from "./TradingViewWidget";
 import { CountUp } from "./CountUp";
 
-const heroSymbols = [
-  { proName: "CME_MINI:NQ1!", title: "Nasdaq 100" },
-  { proName: "CME_MINI:ES1!", title: "S&P 500" },
-  { proName: "COMEX:GC1!", title: "Gold" },
-  { proName: "NYMEX:CL1!", title: "Crude Oil" },
+// ETF proxies track the same underlying indexes/commodities and render fully
+// in TradingView's free embed widgets (real CME/COMEX/NYMEX futures contracts
+// are blocked with "permission denied" in free embeds).
+const heroOverviewTabs = [
+  {
+    title: "Markets",
+    symbols: [
+      { s: "NASDAQ:QQQ", d: "Nasdaq 100" },
+      { s: "AMEX:SPY", d: "S&P 500" },
+      { s: "AMEX:GLD", d: "Gold" },
+      { s: "AMEX:USO", d: "Crude Oil" },
+    ],
+    originalTitle: "Markets",
+  },
 ];
 
 export function Hero() {
@@ -32,17 +41,29 @@ export function Hero() {
           futures trader, not a marketing team.
         </p>
 
-        {/* Live futures ticker tape — real CME/COMEX/NYMEX contracts */}
+        {/* Live market overview — price + % change + inline sparkline per row */}
         <div className="mt-8 rounded-xl border border-[#7c3aed]/35 bg-[#141414] p-1 overflow-hidden">
           <TradingViewWidget
-            type="ticker-tape"
+            type="market-overview"
             config={{
-              symbols: heroSymbols,
-              showSymbolLogo: true,
               colorTheme: "dark",
-              isTransparent: true,
-              displayMode: "adaptive",
+              dateRange: "1D",
+              showChart: true,
               locale: "en",
+              width: "100%",
+              height: "400",
+              largeChartUrl: "",
+              isTransparent: true,
+              showSymbolLogo: true,
+              showFloatingTooltip: false,
+              plotLineColorGrowing: "rgba(124, 58, 237, 1)",
+              plotLineColorFalling: "rgba(236, 72, 153, 1)",
+              gridLineColor: "rgba(34, 34, 34, 1)",
+              scaleFontColor: "rgba(136, 136, 136, 1)",
+              belowLineFillColorGrowing: "rgba(124, 58, 237, 0.12)",
+              belowLineFillColorFalling: "rgba(236, 72, 153, 0.12)",
+              symbolActiveColor: "rgba(124, 58, 237, 0.2)",
+              tabs: heroOverviewTabs,
             }}
           />
         </div>
