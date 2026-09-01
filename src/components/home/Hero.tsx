@@ -38,35 +38,35 @@ export function Hero() {
           futures trader, not a marketing team.
         </p>
 
-        {/* Live ticker tape — sells the real-data feel immediately */}
-        <div className="mt-8 min-h-[52px] rounded-xl border border-[#7c3aed]/35 bg-[#141414] p-1 overflow-hidden">
-          <div className="hidden sm:block">
-            <TradingViewWidget
-              type="ticker-tape"
-              config={{
-                symbols: heroSymbols,
-                showSymbolLogo: true,
-                colorTheme: "dark",
-                isTransparent: true,
-                displayMode: "adaptive",
-                locale: "en",
-              }}
-            />
-          </div>
-          <div className="sm:hidden">
-            <TradingViewWidget
-              type="ticker-tape"
-              config={{
-                symbols: heroSymbols.slice(0, 3),
-                showSymbolLogo: true,
-                colorTheme: "dark",
-                isTransparent: true,
-                displayMode: "compact",
-                locale: "en",
-              }}
-            />
-          </div>
+        {/* Live market overview — price + % change + inline sparkline per contract */}
+        <div className="mt-8 rounded-xl border border-[#7c3aed]/35 bg-[#141414] p-1 overflow-hidden">
+          <TradingViewWidget
+            type="market-overview"
+            config={{
+              colorTheme: "dark",
+              dateRange: "1D",
+              showChart: true,
+              locale: "en",
+              largeChartUrl: "",
+              isTransparent: true,
+              showSymbolLogo: true,
+              showFloatingTooltip: true,
+              width: "100%",
+              height: 380,
+              plotLineColorGrowing: "rgba(124, 58, 237, 1)",
+              plotLineColorFalling: "rgba(236, 72, 153, 1)",
+              gridLineColor: "rgba(34, 34, 34, 1)",
+              scaleFontColor: "rgba(141, 141, 141, 1)",
+              belowLineFillColorGrowing: "rgba(124, 58, 237, 0.12)",
+              belowLineFillColorFalling: "rgba(236, 72, 153, 0.12)",
+              belowLineFillColorGrowingBottom: "rgba(124, 58, 237, 0)",
+              belowLineFillColorFallingBottom: "rgba(236, 72, 153, 0)",
+              symbolActiveColor: "rgba(124, 58, 237, 0.2)",
+              tabs: heroOverviewTabs,
+            }}
+          />
         </div>
+
 
         <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
           <Link to="/compare" className="btn-gradient">Compare Prop Firms</Link>
