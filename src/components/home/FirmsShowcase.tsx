@@ -618,7 +618,7 @@ export function FirmsShowcase() {
           </p>
         </div>
 
-        <div className="mt-12 grid gap-6 lg:grid-cols-3">
+        <div className="mt-12 flex flex-col gap-6 lg:grid lg:grid-cols-3">
           <OffersCarousel />
           <MostPopular />
         </div>
