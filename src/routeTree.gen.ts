@@ -16,6 +16,7 @@ import { Route as MarketHoursRouteImport } from './routes/market-hours'
 import { Route as CouponsRouteImport } from './routes/coupons'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CompareRouteImport } from './routes/compare'
+import { Route as ComingSoonRouteImport } from './routes/coming-soon'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
@@ -60,6 +61,11 @@ const ContactRoute = ContactRouteImport.update({
 const CompareRoute = CompareRouteImport.update({
   id: '/compare',
   path: '/compare',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ComingSoonRoute = ComingSoonRouteImport.update({
+  id: '/coming-soon',
+  path: '/coming-soon',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogRoute = BlogRouteImport.update({
@@ -117,6 +123,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/blog': typeof BlogRouteWithChildren
+  '/coming-soon': typeof ComingSoonRoute
   '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
   '/coupons': typeof CouponsRoute
@@ -135,6 +142,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/coming-soon': typeof ComingSoonRoute
   '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
   '/coupons': typeof CouponsRoute
@@ -153,6 +161,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/blog': typeof BlogRouteWithChildren
+  '/coming-soon': typeof ComingSoonRoute
   '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
   '/coupons': typeof CouponsRoute
@@ -174,6 +183,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/blog'
+    | '/coming-soon'
     | '/compare'
     | '/contact'
     | '/coupons'
@@ -192,6 +202,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/coming-soon'
     | '/compare'
     | '/contact'
     | '/coupons'
@@ -209,6 +220,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/blog'
+    | '/coming-soon'
     | '/compare'
     | '/contact'
     | '/coupons'
@@ -229,6 +241,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   BlogRoute: typeof BlogRouteWithChildren
+  ComingSoonRoute: typeof ComingSoonRoute
   CompareRoute: typeof CompareRoute
   ContactRoute: typeof ContactRoute
   CouponsRoute: typeof CouponsRoute
@@ -288,6 +301,13 @@ declare module '@tanstack/react-router' {
       path: '/compare'
       fullPath: '/compare'
       preLoaderRoute: typeof CompareRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/coming-soon': {
+      id: '/coming-soon'
+      path: '/coming-soon'
+      fullPath: '/coming-soon'
+      preLoaderRoute: typeof ComingSoonRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blog': {
@@ -404,6 +424,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   BlogRoute: BlogRouteWithChildren,
+  ComingSoonRoute: ComingSoonRoute,
   CompareRoute: CompareRoute,
   ContactRoute: ContactRoute,
   CouponsRoute: CouponsRoute,
