@@ -10,12 +10,12 @@ export const Route = createFileRoute("/market-hours")({
       {
         name: "description",
         content:
-          "Visual Gantt-style timeline of Globex, Sydney, Tokyo, London and New York trading hours — shown in your own timezone with a scrubbable clock.",
+          "Visual Gantt-style timeline of Sydney, Tokyo, London and New York trading hours — shown in your own timezone with a scrubbable clock.",
       },
       { property: "og:title", content: "Global Market Session Hours — Futures Trading Timeline" },
       {
         property: "og:description",
-        content: "See exactly when Globex, Sydney, Tokyo, London and New York futures sessions are open.",
+        content: "See exactly when Sydney, Tokyo, London and New York futures sessions are open.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -35,7 +35,7 @@ function MarketHoursRoute() {
             Global <span className="text-gradient">Market Session Hours</span>
           </h1>
           <p className="mt-4 max-w-2xl text-[#9a9a9a]">
-            See exactly when Globex, Sydney, Tokyo, London and New York are open — in your own timezone.
+            See exactly when Sydney, Tokyo, London and New York are open — in your own timezone.
           </p>
         </div>
       </section>

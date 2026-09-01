@@ -12,7 +12,7 @@ export type MarketSession = {
 
 /** Chart sessions — separate from the existing sessions clock definitions. */
 export const chartSessions: MarketSession[] = [
-  { key: "globex", name: "Globex", flag: "🌐", tz: "America/New_York", open: 18 * 60, close: 17 * 60, fill: "from-[#7c3aed]/55 to-[#7c3aed]/25" },
+  
   { key: "sydney", name: "Sydney", flag: "🇦🇺", tz: "Australia/Sydney", open: 9 * 60, close: 16 * 60, fill: "from-[#ec4899] to-[#f472b6]" },
   { key: "tokyo", name: "Tokyo", flag: "🇯🇵", tz: "Asia/Tokyo", open: 9 * 60, close: 18 * 60, fill: "from-[#7c3aed] to-[#a855f7]" },
   { key: "london", name: "London", flag: "🇬🇧", tz: "Europe/London", open: 8 * 60, close: 16 * 60 + 30, fill: "from-[#6366f1] to-[#8b5cf6]" },
@@ -60,14 +60,6 @@ export function fmtHM(mins: number) {
 /** True when the given instant falls inside the session's trading window. */
 export function isOpenAt(date: Date, s: MarketSession): boolean {
   const { minutes, weekday } = zoneParts(date, s.tz);
-  if (s.key === "globex") {
-    // Daily maintenance break 17:00–18:00 ET
-    if (minutes >= 17 * 60 && minutes < 18 * 60) return false;
-    if (weekday === 6) return false; // Saturday closed
-    if (weekday === 0 && minutes < 18 * 60) return false; // Sunday before 18:00 ET
-    if (weekday === 5 && minutes >= 17 * 60) return false; // Friday after close
-    return true;
-  }
   if (weekday === 0 || weekday === 6) return false;
   return minutes >= s.open && minutes < s.close;
 }
@@ -90,8 +82,6 @@ export type Segment = {
   wrapsFromPrevDay: boolean;
   wrapsToNextDay: boolean;
   label: string;
-  /** Optional in-bar label split points (Globex Pre-Asia → Globex). The bar stays one continuous segment. */
-  subLabels?: { startMin: number; endMin: number; text: string }[];
 };
 
 const STEP = 5;
@@ -119,31 +109,13 @@ function trueCloseMin(dayStart: Date, s: MarketSession, m: number) {
 
 /** Filled segments (in reference-tz minutes 0–1440) for one session on the reference day. */
 export function daySegments(dayStart: Date, refTz: string, s: MarketSession): Segment[] {
-  const tokyo = chartSessions.find((x) => x.key === "tokyo")!;
-  const isGlobex = s.key === "globex";
   const segs: Segment[] = [];
-  let cur: { start: number; tokyoOpenMin: number | null } | null = null;
-  // Globex: "Pre-Asia" only before Tokyo's first open of the day; once Tokyo opens it stays "Globex".
-  let tokyoOpened = false;
+  let cur: { start: number } | null = null;
 
-  const push = (start: number, end: number, tokyoOpenMin: number | null) => {
+  const push = (start: number, end: number) => {
     const endClipped = Math.min(end, 1440);
     const openMin = start === 0 ? trueOpenMin(dayStart, s, 0) : start;
     const closeMin = end >= 1440 ? trueCloseMin(dayStart, s, 1440) : end;
-    let label = s.name;
-    let subLabels: Segment["subLabels"];
-    if (isGlobex) {
-      if (tokyoOpenMin != null && tokyoOpenMin > start && tokyoOpenMin < endClipped) {
-        // Tokyo opens mid-bar: split the label within the same continuous segment.
-        subLabels = [
-          { startMin: start, endMin: tokyoOpenMin, text: "Globex · Pre-Asia" },
-          { startMin: tokyoOpenMin, endMin: endClipped, text: "Globex" },
-        ];
-        label = "Globex";
-      } else {
-        label = tokyoOpened ? "Globex" : "Globex · Pre-Asia";
-      }
-    }
     segs.push({
       startMin: start,
       endMin: endClipped,
@@ -151,8 +123,7 @@ export function daySegments(dayStart: Date, refTz: string, s: MarketSession): Se
       closeMin,
       wrapsFromPrevDay: openMin < 0,
       wrapsToNextDay: closeMin > 1440,
-      label,
-      subLabels,
+      label: s.name,
     });
   };
 
@@ -160,15 +131,9 @@ export function daySegments(dayStart: Date, refTz: string, s: MarketSession): Se
     const at = new Date(dayStart.getTime() + m * 60_000);
     const open = m < 1440 && isOpenAt(at, s);
     if (open) {
-      if (isGlobex) {
-        if (isOpenAt(at, tokyo) && !tokyoOpened) {
-          tokyoOpened = true;
-          if (cur && cur.tokyoOpenMin == null) cur.tokyoOpenMin = m;
-        }
-      }
-      if (!cur) cur = { start: m, tokyoOpenMin: null };
+      if (!cur) cur = { start: m };
     } else if (cur) {
-      push(cur.start, m, cur.tokyoOpenMin);
+      push(cur.start, m);
       cur = null;
     }
   }

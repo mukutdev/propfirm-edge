@@ -5,7 +5,6 @@ export const sessions: Session[] = [
   { name: "Tokyo", short: "TYO", tz: "Asia/Tokyo", open: 9, close: 18 },
   { name: "London", short: "LDN", tz: "Europe/London", open: 8, close: 17 },
   { name: "New York", short: "NY", tz: "America/New_York", open: 8, close: 17 },
-  { name: "Globex", short: "GLBX", tz: "America/New_York", open: 18, close: 17 },
 ];
 
 export function zonedParts(date: Date, tz: string) {
@@ -37,14 +36,8 @@ export function sessionState(date: Date, s: Session) {
   const weekend = weekday === "Sat" || weekday === "Sun";
   const openM = s.open * 60;
   const closeM = s.close * 60;
-  const overnight = s.name === "Globex";
 
-  let isOpen: boolean;
-  if (overnight) {
-    isOpen = !(now >= closeM && now < openM) && weekday !== "Sat";
-  } else {
-    isOpen = !weekend && now >= openM && now < closeM;
-  }
+  const isOpen = !weekend && now >= openM && now < closeM;
 
   const target = isOpen ? closeM : openM;
   let diff = target - now;
