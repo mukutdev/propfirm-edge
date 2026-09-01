@@ -231,7 +231,7 @@ const rankColor = ["text-[#facc15]", "text-[#cbd5e1]", "text-[#d08b52]"];
 function MostPopular() {
   const top = reviewFirms.slice().sort((a, b) => b.rating - a.rating).slice(0, 3);
   return (
-    <div className="rounded-2xl border border-[#7c3aed]/35 bg-[#141414] p-5 shadow-[0_0_40px_-22px_rgba(124,58,237,0.9)] sm:p-6">
+    <div className="min-w-0 overflow-hidden rounded-2xl border border-[#7c3aed]/35 bg-[#141414] p-5 shadow-[0_0_40px_-22px_rgba(124,58,237,0.9)] sm:p-6">
       <h3 className="font-display text-lg font-bold sm:text-xl">Most Popular Futures Prop Firms 🏆</h3>
       <ul className="mt-4 divide-y divide-[#222]">
         {top.map((f, i) => {
