@@ -7,12 +7,15 @@ import logoMark from "@/assets/logo-mark.png";
 const cols: { title: string; items: { label: string; to: string }[] }[] = [
   {
     title: "Quick Links",
-    items: [
+      items: [
       { label: "Reviews", to: "/reviews" },
       { label: "Compare", to: "/compare" },
-      { label: "Coupons", to: "/coupons" },
       { label: "News", to: "/news" },
       { label: "Position Calculator", to: "/tools/position-calculator" },
+      { label: "Coupons", to: "/coupons" },
+      { label: "Blog", to: "/blog" },
+      { label: "About", to: "/about" },
+      { label: "Contact", to: "/contact" },
     ],
   },
   {

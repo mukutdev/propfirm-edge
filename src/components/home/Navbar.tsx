@@ -9,6 +9,7 @@ const links: { label: string; to: string }[] = [
   { label: "Reviews", to: "/reviews" },
   { label: "Compare", to: "/compare" },
   { label: "News", to: "/news" },
+  { label: "Position Calculator", to: "/tools/position-calculator" },
   { label: "Coupons", to: "/coupons" },
   { label: "Blog", to: "/blog" },
   { label: "About", to: "/about" },
