@@ -2,11 +2,20 @@ import { Link } from "@tanstack/react-router";
 import { TradingViewWidget } from "./TradingViewWidget";
 import { CountUp } from "./CountUp";
 
-const heroSymbols = [
-  { proName: "CME_MINI:NQ1!", title: "Nasdaq 100" },
-  { proName: "CME_MINI:ES1!", title: "S&P 500" },
-  { proName: "COMEX:GC1!", title: "Gold" },
-  { proName: "NYMEX:CL1!", title: "Crude Oil" },
+// ETF proxies track the same underlying indexes/commodities and render fully
+// in TradingView's free embed widgets (real CME/COMEX/NYMEX futures contracts
+// are blocked with "permission denied" in free embeds).
+const heroOverviewTabs = [
+  {
+    title: "Markets",
+    symbols: [
+      { s: "NASDAQ:QQQ", d: "Nasdaq 100" },
+      { s: "AMEX:SPY", d: "S&P 500" },
+      { s: "AMEX:GLD", d: "Gold" },
+      { s: "AMEX:USO", d: "Crude Oil" },
+    ],
+    originalTitle: "Markets",
+  },
 ];
 
 export function Hero() {
