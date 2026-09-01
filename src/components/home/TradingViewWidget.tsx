@@ -2,7 +2,7 @@ import { useEffect, useRef, memo } from "react";
 
 type TradingViewWidgetProps = {
   /** embed-widget-<type> suffix */
-  type: "ticker-tape" | "timeline";
+  type: "ticker-tape" | "timeline" | "market-overview";
   config: Record<string, unknown>;
   /** height for the iframe container; ticker-tape ignores this */
   height?: number | string;
@@ -14,6 +14,8 @@ const SCRIPT_SRC: Record<TradingViewWidgetProps["type"], string> = {
     "https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js",
   timeline:
     "https://s3.tradingview.com/external-embedding/embed-widget-timeline.js",
+  "market-overview":
+    "https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js",
 };
 
 /**

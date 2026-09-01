@@ -50,7 +50,7 @@ export function Navbar() {
               <span className="font-display font-bold text-[15px] tracking-tight">
                 Trading<span className="text-gradient">WithPropFirms</span>
               </span>
-              <span className="mt-0.5 text-[9px] uppercase tracking-[0.22em] text-[#777]">Futures · Funded</span>
+              <span className="mt-0.5 text-[9px] uppercase tracking-[0.22em] text-[#777]">Fund your Future</span>
             </span>
           </Link>
 
