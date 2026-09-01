@@ -165,12 +165,12 @@ function ActionButtons({
 /* ---------- Tab 1: Position Sizer ---------- */
 
 function PositionSizer({ contract }: { contract: FuturesContract }) {
-  const [account, setAccount] = useState("10000");
-  const [riskType, setRiskType] = useState<"percent" | "dollar">("percent");
-  const [riskValue, setRiskValue] = useState("1");
+  const [account, setAccount] = useState("50000");
+  const [riskType, setRiskType] = useState<"dollar" | "percent">("dollar");
+  const [riskValue, setRiskValue] = useState("3");
   const [stopType, setStopType] = useState<"points" | "ticks">("points");
-  const [stopValue, setStopValue] = useState("20");
-  const [rr, setRr] = useState("");
+  const [stopValue, setStopValue] = useState("10");
+  const [rr, setRr] = useState("2");
   const [copied, setCopied] = useState(false);
   const [result, setResult] = useState<null | {
     contracts: number;
@@ -206,8 +206,8 @@ function PositionSizer({ contract }: { contract: FuturesContract }) {
   };
 
   const reset = () => {
-    setAccount("10000"); setRiskType("percent"); setRiskValue("1");
-    setStopType("points"); setStopValue("20"); setRr("");
+    setAccount("50000"); setRiskType("dollar"); setRiskValue("3");
+    setStopType("points"); setStopValue("10"); setRr("2");
     setResult(null); setCopied(false);
   };
 
@@ -233,17 +233,17 @@ function PositionSizer({ contract }: { contract: FuturesContract }) {
     <div className="space-y-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <Field label="Account Balance ($)">
-          <input type="number" value={account} onChange={(e) => setAccount(e.target.value)} className={inputCls} />
+          <input type="number" step="5000" value={account} onChange={(e) => setAccount(e.target.value)} className={inputCls} />
         </Field>
         <Field label="Risk Type">
           <Toggle
-            options={[{ id: "percent", label: "Percent" }, { id: "dollar", label: "Dollar" }]}
+            options={[{ id: "dollar", label: "Dollar" }, { id: "percent", label: "Percent" }]}
             value={riskType}
-            onChange={(id) => setRiskType(id as "percent" | "dollar")}
+            onChange={(id) => setRiskType(id as "dollar" | "percent")}
           />
         </Field>
-        <Field label={riskType === "percent" ? "Risk per Trade (%)" : "Risk per Trade ($)"}>
-          <input type="number" value={riskValue} onChange={(e) => setRiskValue(e.target.value)} className={inputCls} />
+        <Field label={riskType === "dollar" ? "Risk per Trade ($)" : "Risk per Trade (%)"}>
+          <input type="number" step="0.5" value={riskValue} onChange={(e) => setRiskValue(e.target.value)} className={inputCls} />
         </Field>
         <Field label="Stop Distance Type">
           <Toggle
@@ -253,10 +253,10 @@ function PositionSizer({ contract }: { contract: FuturesContract }) {
           />
         </Field>
         <Field label={stopType === "points" ? "Stop Distance (points)" : "Stop Distance (ticks)"}>
-          <input type="number" value={stopValue} onChange={(e) => setStopValue(e.target.value)} className={inputCls} />
+          <input type="number" step={contract.tick} value={stopValue} onChange={(e) => setStopValue(e.target.value)} className={inputCls} />
         </Field>
         <Field label="R:R Ratio (optional)" hint="Calculates profit target in dollars">
-          <input type="number" value={rr} onChange={(e) => setRr(e.target.value)} placeholder="e.g. 2" className={inputCls} />
+          <input type="number" step="0.5" value={rr} onChange={(e) => setRr(e.target.value)} placeholder="e.g. 2" className={inputCls} />
         </Field>
       </div>
 
@@ -354,10 +354,10 @@ function PnLEstimator({ contract }: { contract: FuturesContract }) {
           />
         </Field>
         <Field label="Entry Price">
-          <input type="number" value={entry} onChange={(e) => setEntry(e.target.value)} placeholder="e.g. 21450.25" className={inputCls} />
+          <input type="number" step={contract.tick} value={entry} onChange={(e) => setEntry(e.target.value)} placeholder="e.g. 21450.25" className={inputCls} />
         </Field>
         <Field label="Exit Price">
-          <input type="number" value={exit} onChange={(e) => setExit(e.target.value)} placeholder="e.g. 21510.75" className={inputCls} />
+          <input type="number" step={contract.tick} value={exit} onChange={(e) => setExit(e.target.value)} placeholder="e.g. 21510.75" className={inputCls} />
         </Field>
       </div>
 
@@ -383,7 +383,7 @@ function PnLEstimator({ contract }: { contract: FuturesContract }) {
 
 export function PositionCalculatorPage() {
   const [tab, setTab] = useState<Tab>("sizer");
-  const [contract, setContract] = useState<FuturesContract>(FUTURES_CONTRACTS["Equity Index — Micro"][0]);
+  const [contract, setContract] = useState<FuturesContract>(FUTURES_CONTRACTS["E-mini"][0]);
 
   return (
     <div className="bg-background text-foreground pt-28 pb-20">
@@ -398,8 +398,7 @@ export function PositionCalculatorPage() {
             Futures Position Size &amp; <span className="text-gradient">P&amp;L Calculator</span>
           </h1>
           <p className="mt-4 text-[#999] leading-relaxed max-w-xl mx-auto">
-            Know your risk before you're in the trade. Every major CME futures contract, accurate
-            tick values, zero guesswork.
+            Every major futures instrument, accurate tick value, zero guesswork.
           </p>
         </div>
 
