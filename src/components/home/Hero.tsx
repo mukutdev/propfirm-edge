@@ -32,29 +32,17 @@ export function Hero() {
           futures trader, not a marketing team.
         </p>
 
-        {/* Live market overview — price + % change + inline sparkline per contract */}
+        {/* Live futures ticker tape — real CME/COMEX/NYMEX contracts */}
         <div className="mt-8 rounded-xl border border-[#7c3aed]/35 bg-[#141414] p-1 overflow-hidden">
           <TradingViewWidget
-            type="market-overview"
+            type="ticker-tape"
             config={{
-              colorTheme: "dark",
-              dateRange: "1D",
-              showChart: true,
-              locale: "en",
-              width: "100%",
-              height: "400",
-              largeChartUrl: "",
-              isTransparent: true,
+              symbols: heroSymbols,
               showSymbolLogo: true,
-              showFloatingTooltip: false,
-              plotLineColorGrowing: "rgba(124, 58, 237, 1)",
-              plotLineColorFalling: "rgba(236, 72, 153, 1)",
-              gridLineColor: "rgba(34, 34, 34, 1)",
-              scaleFontColor: "rgba(136, 136, 136, 1)",
-              belowLineFillColorGrowing: "rgba(124, 58, 237, 0.12)",
-              belowLineFillColorFalling: "rgba(236, 72, 153, 0.12)",
-              symbolActiveColor: "rgba(124, 58, 237, 0.2)",
-              tabs: heroOverviewTabs,
+              colorTheme: "dark",
+              isTransparent: true,
+              displayMode: "adaptive",
+              locale: "en",
             }}
           />
         </div>
