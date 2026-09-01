@@ -53,7 +53,7 @@ export function SessionTimelineChart() {
     ...s,
     isOpen: activeDate ? isOpenAt(activeDate, s) : false,
   }));
-  const openNames = statuses.filter((s) => s.isOpen && s.key !== "globex").map((s) => s.name);
+  const openNames = statuses.filter((s) => s.isOpen).map((s) => s.name);
   const windowLabel = openNames.length ? openNames.join(" + ") : "No Markets";
 
   const pct = (m: number) => `${(m / 1440) * 100}%`;
@@ -137,13 +137,11 @@ export function SessionTimelineChart() {
                     <div key={session.key} className="relative h-9">
                       <div className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-[#222]" />
                       {segments.map((seg, i) => {
-                        const labels = seg.subLabels ?? [
+                        const labels = [
                           { startMin: seg.startMin, endMin: seg.endMin, text: seg.label },
                         ];
                         const segWidth = seg.endMin - seg.startMin || 1;
-                        const labelText = seg.subLabels
-                          ? seg.subLabels.map((l) => l.text).join(" → ")
-                          : seg.label;
+                        const labelText = seg.label;
                         return (
                           <div
                             key={i}
