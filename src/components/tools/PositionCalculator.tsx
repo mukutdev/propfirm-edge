@@ -126,15 +126,15 @@ function ResultCard({
   color?: string;
 }) {
   return (
-    <div className="bg-[#0f0f0f] border border-[#222] rounded-xl p-5">
+    <div className="min-w-0 bg-[#0f0f0f] border border-[#222] rounded-xl p-5 overflow-hidden">
       <p className="text-[11px] font-semibold uppercase tracking-wider text-[#888]">{label}</p>
       <p
-        className="mt-2 font-display font-bold text-2xl md:text-3xl"
+        className="mt-2 font-display font-bold text-lg sm:text-xl whitespace-nowrap leading-tight"
         style={{ color: color ?? "#fff" }}
       >
         {value}
       </p>
-      {sub && <p className="mt-1 text-xs text-[#888]">{sub}</p>}
+      {sub && <p className="mt-1 text-xs text-[#888] break-words">{sub}</p>}
     </div>
   );
 }
