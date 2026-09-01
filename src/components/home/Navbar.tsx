@@ -78,10 +78,12 @@ export function Navbar() {
 
           <button
             onClick={() => setOpen((v) => !v)}
-            className="lg:hidden text-white p-2"
+            className="lg:hidden grid h-10 w-10 place-items-center rounded-lg border border-white/15 bg-white/5 text-white active:scale-95 transition"
+            style={{ color: "#fff" }}
             aria-label="Toggle menu"
+            aria-expanded={open}
           >
-            {open ? <X size={24} /> : <Menu size={24} />}
+            {open ? <X size={22} color="#fff" /> : <Menu size={22} color="#fff" />}
           </button>
         </nav>
       </div>
