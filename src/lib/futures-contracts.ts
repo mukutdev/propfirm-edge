@@ -7,9 +7,9 @@ export interface FuturesContract {
 }
 
 export type Sector =
-  | "Equity Index — Micro"
-  | "Equity Index — Nano"
-  | "Equity Index — Standard"
+  | "E-mini"
+  | "Micro E-mini"
+  | "Nano E-mini"
   | "Energy"
   | "Metals"
   | "Treasuries"
@@ -19,21 +19,21 @@ export type Sector =
   | "Crypto";
 
 export const FUTURES_CONTRACTS: Record<Sector, FuturesContract[]> = {
-  "Equity Index — Micro": [
+  "E-mini": [
+    { symbol: "ES", name: "E-mini S&P 500", tick: 0.25, tickValue: 12.5, pointValue: 50 },
+    { symbol: "NQ", name: "E-mini Nasdaq-100", tick: 0.25, tickValue: 5, pointValue: 20 },
+    { symbol: "YM", name: "E-mini Dow", tick: 1, tickValue: 5, pointValue: 5 },
+    { symbol: "RTY", name: "E-mini Russell 2000", tick: 0.1, tickValue: 5, pointValue: 50 },
+  ],
+  "Micro E-mini": [
     { symbol: "MES", name: "Micro E-mini S&P 500", tick: 0.25, tickValue: 1.25, pointValue: 5 },
     { symbol: "MNQ", name: "Micro E-mini Nasdaq-100", tick: 0.25, tickValue: 0.5, pointValue: 2 },
     { symbol: "MYM", name: "Micro E-mini Dow", tick: 1, tickValue: 0.5, pointValue: 0.5 },
     { symbol: "M2K", name: "Micro E-mini Russell 2000", tick: 0.1, tickValue: 0.5, pointValue: 5 },
   ],
-  "Equity Index — Nano": [
-    { symbol: "NOS", name: "Nano S&P 500", tick: 0.05, tickValue: 0.05, pointValue: 1 },
-    { symbol: "NQO", name: "Nano Nasdaq-100", tick: 0.05, tickValue: 0.01, pointValue: 0.2 },
-  ],
-  "Equity Index — Standard": [
-    { symbol: "ES", name: "E-mini S&P 500", tick: 0.25, tickValue: 12.5, pointValue: 50 },
-    { symbol: "NQ", name: "E-mini Nasdaq-100", tick: 0.25, tickValue: 5, pointValue: 20 },
-    { symbol: "YM", name: "E-mini Dow", tick: 1, tickValue: 5, pointValue: 5 },
-    { symbol: "RTY", name: "E-mini Russell 2000", tick: 0.1, tickValue: 5, pointValue: 50 },
+  "Nano E-mini": [
+    { symbol: "NES", name: "Nano S&P 500", tick: 0.05, tickValue: 0.05, pointValue: 1 },
+    { symbol: "NNQ", name: "Nano Nasdaq-100", tick: 0.05, tickValue: 0.01, pointValue: 0.2 },
   ],
   Energy: [
     { symbol: "CL", name: "Crude Oil WTI", tick: 0.01, tickValue: 10, pointValue: 1000 },
