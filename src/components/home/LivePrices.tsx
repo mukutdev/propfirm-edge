@@ -1,14 +1,14 @@
 import { BarChart3 } from "lucide-react";
 import { TradingViewWidget } from "./TradingViewWidget";
 
-// Futures symbols rendered via TradingView's official Ticker Tape widget.
-// Replaces all direct Twelve Data API calls and polling — data is real-time.
+// ETF proxies rendered via TradingView's official Ticker Tape widget.
+// Free-tier TradingView blocks real CME/COMEX/NYMEX futures, so correlated
+// ETF proxies (QQQ/SPY/GLD/USO) are used instead.
 const tickerSymbols = [
-  { proName: "CME_MINI:NQ1!", title: "Nasdaq 100" },
-  { proName: "CME_MINI:ES1!", title: "S&P 500" },
-  { proName: "COMEX:GC1!", title: "Gold" },
-  { proName: "NYMEX:CL1!", title: "Crude Oil" },
-  { proName: "FX:EURUSD", title: "EUR/USD" },
+  { proName: "NASDAQ:QQQ", title: "Nasdaq Proxy" },
+  { proName: "AMEX:SPY", title: "S&P 500 Proxy" },
+  { proName: "AMEX:GLD", title: "Gold Proxy" },
+  { proName: "AMEX:USO", title: "Crude Oil Proxy" },
 ];
 
 export function LivePrices() {
@@ -45,8 +45,8 @@ export function LivePrices() {
         />
       </div>
 
-      <p className="mt-3 text-[10px] text-[#555]">
-        Real-time quotes via TradingView · NQ, ES, GC, CL, EUR/USD.
+      <p className="mt-3 text-[10px] text-white/35">
+        Futures shown via correlated ETF proxies (free data tier).
       </p>
     </div>
   );
