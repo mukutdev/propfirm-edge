@@ -6,10 +6,10 @@ const heroOverviewTabs = [
   {
     title: "Markets",
     symbols: [
-      { s: "NASDAQ:QQQ", d: "QQQ · Nasdaq Proxy" },
-      { s: "AMEX:SPY", d: "SPY · S&P 500 Proxy" },
-      { s: "AMEX:GLD", d: "GLD · Gold Proxy" },
-      { s: "AMEX:USO", d: "USO · Crude Oil Proxy" },
+      { s: "NASDAQ:QQQ", d: "Nasdaq Proxy" },
+      { s: "AMEX:SPY", d: "S&P 500 Proxy" },
+      { s: "AMEX:GLD", d: "Gold Proxy" },
+      { s: "AMEX:USO", d: "Crude Oil Proxy" },
     ],
     originalTitle: "Markets",
   },
