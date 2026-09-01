@@ -60,14 +60,6 @@ export function fmtHM(mins: number) {
 /** True when the given instant falls inside the session's trading window. */
 export function isOpenAt(date: Date, s: MarketSession): boolean {
   const { minutes, weekday } = zoneParts(date, s.tz);
-  if (s.key === "globex") {
-    // Daily maintenance break 17:00–18:00 ET
-    if (minutes >= 17 * 60 && minutes < 18 * 60) return false;
-    if (weekday === 6) return false; // Saturday closed
-    if (weekday === 0 && minutes < 18 * 60) return false; // Sunday before 18:00 ET
-    if (weekday === 5 && minutes >= 17 * 60) return false; // Friday after close
-    return true;
-  }
   if (weekday === 0 || weekday === 6) return false;
   return minutes >= s.open && minutes < s.close;
 }
