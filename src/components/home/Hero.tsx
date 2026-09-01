@@ -2,17 +2,14 @@ import { Link } from "@tanstack/react-router";
 import { TradingViewWidget } from "./TradingViewWidget";
 import { CountUp } from "./CountUp";
 
-// ETF proxies track the same underlying indexes/commodities and render fully
-// in TradingView's free embed widgets (real CME/COMEX/NYMEX futures contracts
-// are blocked with "permission denied" in free embeds).
 const heroOverviewTabs = [
   {
     title: "Markets",
     symbols: [
-      { s: "NASDAQ:QQQ", d: "Nasdaq 100" },
-      { s: "AMEX:SPY", d: "S&P 500" },
-      { s: "AMEX:GLD", d: "Gold" },
-      { s: "AMEX:USO", d: "Crude Oil" },
+      { s: "NASDAQ:QQQ", d: "QQQ · Nasdaq Proxy" },
+      { s: "AMEX:SPY", d: "SPY · S&P 500 Proxy" },
+      { s: "AMEX:GLD", d: "GLD · Gold Proxy" },
+      { s: "AMEX:USO", d: "USO · Crude Oil Proxy" },
     ],
     originalTitle: "Markets",
   },
