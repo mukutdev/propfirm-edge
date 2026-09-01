@@ -82,8 +82,6 @@ export type Segment = {
   wrapsFromPrevDay: boolean;
   wrapsToNextDay: boolean;
   label: string;
-  /** Optional in-bar label split points (Globex Pre-Asia → Globex). The bar stays one continuous segment. */
-  subLabels?: { startMin: number; endMin: number; text: string }[];
 };
 
 const STEP = 5;
