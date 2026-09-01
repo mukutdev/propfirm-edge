@@ -64,6 +64,9 @@ export function Hero() {
             }}
           />
         </div>
+        <p className="mt-2 text-[11px] text-white/35">
+          Futures shown via correlated ETF proxies (free data tier).
+        </p>
 
 
         <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
