@@ -2,12 +2,17 @@ import { Link } from "@tanstack/react-router";
 import { TradingViewWidget } from "./TradingViewWidget";
 import { CountUp } from "./CountUp";
 
-const heroSymbols = [
-  { proName: "CME_MINI:NQ1!", title: "Nasdaq 100" },
-  { proName: "CME_MINI:ES1!", title: "S&P 500" },
-  { proName: "COMEX:GC1!", title: "Gold" },
-  { proName: "NYMEX:CL1!", title: "Crude Oil" },
-  { proName: "FX:EURUSD", title: "EUR/USD" },
+const heroOverviewTabs = [
+  {
+    title: "Futures",
+    symbols: [
+      { s: "CME_MINI:NQ1!", d: "Nasdaq" },
+      { s: "CME_MINI:ES1!", d: "S&P 500" },
+      { s: "COMEX:GC1!", d: "Gold" },
+      { s: "NYMEX:CL1!", d: "Crude Oil" },
+    ],
+    originalTitle: "Futures",
+  },
 ];
 
 export function Hero() {
