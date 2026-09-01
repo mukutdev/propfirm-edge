@@ -298,7 +298,7 @@ export function SessionTimelineChart() {
 
           <div className="mt-5 grid gap-3 sm:grid-cols-3">
             {[
-              { k: "Active Markets", v: `${statuses.filter((s) => s.isOpen).length}/5` },
+              { k: "Active Markets", v: `${statuses.filter((s) => s.isOpen).length}/${chartSessions.length}` },
               { k: "Session Window", v: windowLabel },
               { k: "Selected Time", v: `${fmtHM(activeMin)} ${refTz.split("/").pop()?.replace("_", " ")}` },
             ].map((b) => (
