@@ -129,7 +129,7 @@ function ResultCard({
     <div className="min-w-0 bg-[#0f0f0f] border border-[#222] rounded-xl p-5 overflow-hidden">
       <p className="text-[11px] font-semibold uppercase tracking-wider text-[#888]">{label}</p>
       <p
-        className="mt-2 font-display font-bold text-xl sm:text-2xl break-all leading-tight"
+        className="mt-2 font-display font-bold text-lg sm:text-xl whitespace-nowrap leading-tight"
         style={{ color: color ?? "#fff" }}
       >
         {value}
