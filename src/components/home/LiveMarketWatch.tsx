@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { Globe, Newspaper } from "lucide-react";
 import { LivePrices } from "./LivePrices";
 import { TradingViewWidget } from "./TradingViewWidget";
+import { sessions, sessionState, timezoneStatus } from "@/lib/sessions";
 
 const tickerSymbols = [
   { proName: "NASDAQ:QQQ", title: "Nasdaq Proxy" },
@@ -10,56 +11,6 @@ const tickerSymbols = [
   { proName: "AMEX:GLD", title: "Gold Proxy" },
   { proName: "AMEX:USO", title: "Crude Oil Proxy" },
 ];
-
-type Session = { name: string; tz: string; open: number; close: number };
-
-const sessions: Session[] = [
-  { name: "Sydney", tz: "Australia/Sydney", open: 7, close: 16 },
-  { name: "Tokyo", tz: "Asia/Tokyo", open: 9, close: 18 },
-  { name: "London", tz: "Europe/London", open: 8, close: 17 },
-  { name: "New York", tz: "America/New_York", open: 8, close: 17 },
-];
-
-function zonedParts(date: Date, tz: string) {
-  const fmt = new Intl.DateTimeFormat("en-US", {
-    timeZone: tz,
-    hour: "2-digit",
-    minute: "2-digit",
-    weekday: "short",
-    hour12: false,
-  });
-  const parts = fmt.formatToParts(date);
-  const get = (t: string) => parts.find((p) => p.type === t)?.value ?? "0";
-  return {
-    hour: Number(get("hour")) % 24,
-    minute: Number(get("minute")),
-    weekday: get("weekday"),
-  };
-}
-
-function fmtDuration(mins: number) {
-  const m = Math.max(0, Math.round(mins));
-  const h = Math.floor(m / 60);
-  return h > 0 ? `${h}h ${m % 60}m` : `${m}m`;
-}
-
-function sessionState(date: Date, s: Session) {
-  const { hour, minute, weekday } = zonedParts(date, s.tz);
-  const now = hour * 60 + minute;
-  const weekend = weekday === "Sat" || weekday === "Sun";
-  const openM = s.open * 60;
-  const closeM = s.close * 60;
-
-  const isOpen = !weekend && now >= openM && now < closeM;
-
-  const target = isOpen ? closeM : openM;
-  let diff = target - now;
-  if (diff <= 0) diff += 24 * 60;
-
-  return { isOpen, label: `${isOpen ? "Closes in" : "Opens in"} ${fmtDuration(diff)}` };
-}
-
-
 
 function PanelHeader({
   icon,
@@ -97,8 +48,8 @@ export function LiveMarketWatch() {
   );
 
   const rows = now
-    ? sessions.map((s) => ({ name: s.name, ...sessionState(now, s) }))
-    : sessions.map((s) => ({ name: s.name, isOpen: false, label: "—" }));
+    ? sessions.map((s) => ({ name: s.name, timezone: timezoneStatus(now, s.tz), ...sessionState(now, s) }))
+    : sessions.map((s) => ({ name: s.name, timezone: "—", isOpen: false, label: "—" }));
 
   const overlapActive = now
     ? sessionState(now, sessions[2]).isOpen && sessionState(now, sessions[3]).isOpen
@@ -145,16 +96,19 @@ export function LiveMarketWatch() {
               />
               <ul className="space-y-1">
                 {rows.map((r) => (
-                  <li key={r.name} className="flex items-center justify-between py-2 border-b border-[#1e1e1e] last:border-0">
-                    <span className="flex items-center gap-2.5 text-sm text-white/90">
+                  <li key={r.name} className="flex items-center justify-between gap-3 py-2 border-b border-[#1e1e1e] last:border-0">
+                    <span className="flex min-w-0 items-center gap-2 text-sm text-white/90">
                       {r.isOpen ? (
                         <span className="h-2 w-2 rounded-full bg-[#00d97e] shadow-[0_0_8px_2px_rgba(0,217,126,0.55)] animate-pulse" />
                       ) : (
                         <span className="h-2 w-2 rounded-full bg-[#ff3b5c]" />
                       )}
-                      {r.name}
+                      <span className="shrink-0">{r.name}</span>
+                      <span className="whitespace-nowrap rounded-full border border-[#2a2a2a] bg-[#0e0e0e] px-1.5 py-0.5 font-mono text-[9px] text-[#777]">
+                        ({r.timezone})
+                      </span>
                     </span>
-                    <span className={`text-xs font-mono ${r.isOpen ? "text-[#5cf3ad]" : "text-[#888]"}`}>{r.label}</span>
+                    <span className={`shrink-0 text-right text-[11px] font-mono ${r.isOpen ? "text-[#5cf3ad]" : "text-[#888]"}`}>{r.label}</span>
                   </li>
                 ))}
                 {showLocal && (
@@ -167,6 +121,9 @@ export function LiveMarketWatch() {
                   </li>
                 )}
               </ul>
+              <p className="mt-3 text-[10px] leading-relaxed text-[#666]">
+                Times adjust automatically for daylight saving in each region.
+              </p>
 
               {overlapActive && (
                 <div className="mt-4 rounded-lg border border-[#7c3aed]/40 bg-[#7c3aed]/10 px-3 py-2 text-xs font-semibold">

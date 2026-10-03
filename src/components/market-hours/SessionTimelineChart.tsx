@@ -10,6 +10,7 @@ import {
   startOfZoneDay,
   zoneParts,
 } from "@/lib/market-hours";
+import { timezoneStatus } from "@/lib/sessions";
 
 const HOUR_MARKS = [0, 4, 8, 12, 16, 20, 24];
 
@@ -52,7 +53,9 @@ export function SessionTimelineChart() {
   const statuses = chartSessions.map((s) => ({
     ...s,
     isOpen: activeDate ? isOpenAt(activeDate, s) : false,
+    timezone: now ? timezoneStatus(now, s.tz) : "—",
   }));
+  const timezoneLabels = new Map(statuses.map((s) => [s.key, s.timezone]));
   const openNames = statuses.filter((s) => s.isOpen).map((s) => s.name);
   const windowLabel = openNames.length ? openNames.join(" + ") : "No Markets";
 
@@ -106,11 +109,14 @@ export function SessionTimelineChart() {
         {/* Desktop chart */}
         <div className="card-surface hidden overflow-hidden p-5 md:block">
           <div className="flex">
-            <div className="w-32 shrink-0 space-y-3 pt-8">
+            <div className="w-56 shrink-0 space-y-3 pt-8 pr-3">
               {rows.map(({ session }) => (
                 <div key={session.key} className="flex h-9 items-center gap-2 text-sm text-white/85">
                   <span>{session.flag}</span>
-                  <span className="truncate">{session.name}</span>
+                  <span className="shrink-0">{session.name}</span>
+                  <span className="whitespace-nowrap rounded-full border border-[#2a2a2a] bg-[#0e0e0e] px-1.5 py-0.5 font-mono text-[9px] text-[#777]">
+                    ({timezoneLabels.get(session.key)})
+                  </span>
                 </div>
               ))}
             </div>
@@ -189,17 +195,22 @@ export function SessionTimelineChart() {
               </div>
             </div>
           </div>
-
+          <p className="mt-4 border-t border-[#222] pt-3 text-[11px] text-[#666]">
+            Times adjust automatically for daylight saving in each region.
+          </p>
         </div>
 
         {/* Mobile stacked cards */}
         <div className="space-y-3 md:hidden">
           {rows.map(({ session, segments }) => (
             <div key={session.key} className="card-surface p-4">
-              <div className="mb-3 flex items-center justify-between">
-                <span className="flex items-center gap-2 text-sm text-white/90">
+              <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+                <span className="flex min-w-0 items-center gap-2 text-sm text-white/90">
                   <span>{session.flag}</span>
-                  {session.name}
+                  <span>{session.name}</span>
+                  <span className="whitespace-nowrap rounded-full border border-[#2a2a2a] bg-[#0e0e0e] px-1.5 py-0.5 font-mono text-[9px] text-[#777]">
+                    ({timezoneLabels.get(session.key)})
+                  </span>
                 </span>
                 <span className="font-mono text-[10px] text-[#888]">
                   {segments.length
@@ -233,6 +244,9 @@ export function SessionTimelineChart() {
               </div>
             </div>
           ))}
+          <p className="px-1 pt-1 text-[11px] leading-relaxed text-[#666]">
+            Times adjust automatically for daylight saving in each region.
+          </p>
         </div>
 
         {/* Scrub slider */}
