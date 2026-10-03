@@ -30,6 +30,25 @@ export function fmtDuration(mins: number) {
   return h > 0 ? `${h}h ${m % 60}m` : `${m}m`;
 }
 
+function timezonePart(date: Date, timeZone: string, timeZoneName: "short" | "longOffset", locale: string) {
+  return new Intl.DateTimeFormat(locale, { timeZone, timeZoneName })
+    .formatToParts(date)
+    .find((part) => part.type === "timeZoneName")?.value;
+}
+
+/** Current regional abbreviation and UTC offset, derived from the session's IANA timezone. */
+export function timezoneStatus(date: Date, timeZone: string) {
+  const locale = timeZone === "Australia/Sydney" ? "en-AU" : timeZone === "Asia/Tokyo" ? "ja-JP" : "en-US";
+  const abbreviation = timezonePart(date, timeZone, "short", locale) ?? timeZone;
+  const rawOffset = timezonePart(date, timeZone, "longOffset", "en-US") ?? "GMT";
+  const normalizedOffset = rawOffset
+    .replace(/^GMT/, "UTC")
+    .replace(/([+-])0(\d)/, "$1$2")
+    .replace(/:00$/, "");
+
+  return `${abbreviation}, ${normalizedOffset}`;
+}
+
 export function sessionState(date: Date, s: Session) {
   const { hour, minute, weekday } = zonedParts(date, s.tz);
   const now = hour * 60 + minute;
