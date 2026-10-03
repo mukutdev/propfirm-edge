@@ -14,6 +14,7 @@ export const Route = createFileRoute("/news/")({
       { property: "og:description", content: "Daily trading news, prop firm updates and market analysis." },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/news" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: "/news" }],
   }),
