@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
-import { Star, ArrowUpDown, Loader2 } from "lucide-react";
+import { Star, ArrowUpDown, Loader2, ExternalLink } from "lucide-react";
 import { listCompareFirms, type CompareFirmRow } from "@/lib/compare.functions";
 
 const assetPills = ["All", "Futures", "Forex", "Crypto", "Stocks"] as const;
@@ -163,7 +163,21 @@ export function CompareTable() {
                         <Link to="/reviews/$slug" params={{ slug: firm.slug }} className="font-display font-semibold text-sm hover:text-[#c4a8ff]">
                           {firm.name}
                         </Link>
-                        <div className="text-[10px] text-[#777]">{firm.evaluationType} evaluation</div>
+                        <div className="flex items-center gap-1.5 text-[10px] text-[#777]">
+                          <span>{firm.evaluationType} evaluation</span>
+                          {firm.trustpilotUrl && (
+                            <a
+                              href={firm.trustpilotUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              aria-label={`View ${firm.name} on Trustpilot`}
+                              title="View on Trustpilot"
+                              className="inline-flex text-[#888] transition-colors hover:text-[#c4a8ff]"
+                            >
+                              <ExternalLink size={11} />
+                            </a>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </td>

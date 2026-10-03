@@ -17,11 +17,12 @@ export type CompareFirmRow = {
   assets: string[];
   couponCode: string;
   affiliateUrl: string;
+  trustpilotUrl?: string;
   logo: string;
 };
 
 const COLUMNS =
-  "id, slug, name, rating, max_account, profit_split, challenge_fee, drawdown_type, payout_frequency, evaluation_type, platforms, assets, coupon_code, affiliate_url, funding_numeric, fee_numeric";
+  "id, slug, name, rating, max_account, profit_split, challenge_fee, drawdown_type, payout_frequency, evaluation_type, platforms, assets, coupon_code, affiliate_url, trustpilot_url, funding_numeric, fee_numeric";
 
 const SORT_COLUMNS: Record<string, string> = {
   rating: "rating",
@@ -63,6 +64,7 @@ function mapRow(f: Record<string, unknown>): CompareFirmRow {
     assets: (f["assets"] as string[] | null) ?? [],
     couponCode: String(f["coupon_code"] ?? ""),
     affiliateUrl: String(f["affiliate_url"] ?? ""),
+    trustpilotUrl: f["trustpilot_url"] ? String(f["trustpilot_url"]) : undefined,
     logo: host ? `https://www.google.com/s2/favicons?sz=64&domain=${host}` : "",
   };
 }

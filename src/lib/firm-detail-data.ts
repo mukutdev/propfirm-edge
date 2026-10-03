@@ -20,6 +20,7 @@ export type FirmRow = {
   instrument_list: string[];
   coupon_code: string;
   affiliate_url: string;
+  trustpilot_url: string | null;
   funding_numeric: number;
   fee_numeric: number;
   updated_at: string;
@@ -71,6 +72,7 @@ export type FirmDetail = {
   alternatives: FirmAlternative[];
   couponCode: string;
   affiliateUrl: string;
+  trustpilotUrl?: string;
 };
 
 const drawdownNote: Record<string, string> = {
@@ -211,6 +213,7 @@ export function buildFirmDetail(row: FirmRow, alternatives: FirmAlternative[] = 
     alternatives,
     couponCode: row.coupon_code,
     affiliateUrl: row.affiliate_url || "#",
+    trustpilotUrl: row.trustpilot_url || undefined,
   };
 }
 

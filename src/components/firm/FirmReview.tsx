@@ -86,7 +86,7 @@ function PageHeader({ firm }: { firm: FirmDetail }) {
             <p className="text-sm text-[#888] mt-3 max-w-xl">{firm.tagline}</p>
 
             <div className="flex flex-wrap gap-3 mt-6">
-              <a href="#" className="btn-gradient">
+              <a href={firm.affiliateUrl} target="_blank" rel="noopener noreferrer sponsored" className="btn-gradient">
                 Visit {firm.name} <ExternalLink size={14} />
               </a>
               <a
@@ -99,6 +99,16 @@ function PageHeader({ firm }: { firm: FirmDetail }) {
               >
                 Get Exclusive Discount
               </a>
+              {firm.trustpilotUrl && (
+                <a
+                  href={firm.trustpilotUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-ghost border border-[#333] text-sm"
+                >
+                  View on Trustpilot <ExternalLink size={13} />
+                </a>
+              )}
             </div>
             <p className="text-xs text-[#666] mt-4">Last updated: {firm.lastUpdated}</p>
           </div>
