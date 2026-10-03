@@ -1,7 +1,10 @@
 import { useMemo, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { Star, LayoutGrid, List, Copy, X, Check } from "lucide-react";
+import { useServerFn } from "@tanstack/react-start";
+import { useQuery } from "@tanstack/react-query";
+import { Star, LayoutGrid, List, Copy, X, Check, ExternalLink } from "lucide-react";
 import { reviewFirms, type ReviewFirm } from "@/lib/home-data";
+import { listCompareFirms } from "@/lib/compare.functions";
 
 function firmSlug(name: string) {
   return name
@@ -99,7 +102,21 @@ function GridCard({
       <div className="p-6 flex flex-col gap-4 flex-1">
         <div>
           <h3 className="font-display font-bold text-xl">{firm.name}</h3>
-          <div className="mt-2"><Stars rating={firm.rating} /></div>
+          <div className="mt-2 flex items-center justify-between gap-3">
+            <Stars rating={firm.rating} />
+            {firm.trustpilotUrl && (
+              <a
+                href={firm.trustpilotUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`View ${firm.name} on Trustpilot`}
+                title="View on Trustpilot"
+                className="inline-flex shrink-0 items-center gap-1 text-[11px] text-[#888] transition-colors hover:text-[#c4a8ff]"
+              >
+                Trustpilot <ExternalLink size={11} />
+              </a>
+            )}
+          </div>
         </div>
         <p className="text-sm text-[#888] leading-relaxed line-clamp-2">{firm.description}</p>
 
@@ -313,13 +330,21 @@ function Sidebar() {
 }
 
 export function ReviewsDirectory() {
+  const fetchFirms = useServerFn(listCompareFirms);
   const [category, setCategory] = useState<Category>("All");
   const [sort, setSort] = useState<SortKey>("rating");
   const [view, setView] = useState<ViewMode>("grid");
   const [compare, setCompare] = useState<string[]>([]);
+  const { data: databaseFirms } = useQuery({
+    queryKey: ["directory-firm-links"],
+    queryFn: () => fetchFirms({ data: {} }),
+  });
 
   const filtered = useMemo(() => {
-    const list = reviewFirms.filter((f) => category === "All" || f.categories.includes(category as Exclude<Category, "All">));
+    const trustpilotBySlug = new Map((databaseFirms ?? []).map((firm) => [firm.slug, firm.trustpilotUrl]));
+    const list = reviewFirms
+      .map((firm) => ({ ...firm, trustpilotUrl: trustpilotBySlug.get(firmSlug(firm.name)) }))
+      .filter((f) => category === "All" || f.categories.includes(category as Exclude<Category, "All">));
     const sorted = [...list].sort((a, b) => {
       if (sort === "rating") return b.rating - a.rating;
       if (sort === "fee") return a.feeNumeric - b.feeNumeric;
@@ -327,7 +352,7 @@ export function ReviewsDirectory() {
       return b.addedOrder - a.addedOrder;
     });
     return sorted;
-  }, [category, sort]);
+  }, [category, sort, databaseFirms]);
 
   const toggleCompare = (name: string) => {
     setCompare((prev) =>

@@ -4,7 +4,7 @@ import { z } from "zod";
 import { buildFirmDetail, type FirmAlternative, type FirmDetail, type FirmRow } from "@/lib/firm-detail-data";
 
 const FIRM_COLUMNS =
-  "id, slug, name, rating, recommended, verdict, max_account, profit_split, challenge_fee, drawdown_type, payout_frequency, evaluation_type, platforms, instrument_list, coupon_code, affiliate_url, funding_numeric, fee_numeric, updated_at";
+  "id, slug, name, rating, recommended, verdict, max_account, profit_split, challenge_fee, drawdown_type, payout_frequency, evaluation_type, platforms, instrument_list, coupon_code, affiliate_url, trustpilot_url, funding_numeric, fee_numeric, updated_at";
 
 function publicClient() {
   return createClient(

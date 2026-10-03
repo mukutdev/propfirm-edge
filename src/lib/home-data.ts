@@ -20,6 +20,7 @@ export type Firm = {
   fee: string;
   badge: string;
   badgeColor: "purple" | "pink" | "green";
+  trustpilotUrl?: string;
 };
 
 export type ReviewFirm = Firm & {

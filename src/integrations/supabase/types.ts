@@ -130,6 +130,7 @@ export type Database = {
           rating: number
           recommended: string
           slug: string
+          trustpilot_url: string | null
           updated_at: string
           verdict: string
         }
@@ -156,6 +157,7 @@ export type Database = {
           rating?: number
           recommended?: string
           slug: string
+          trustpilot_url?: string | null
           updated_at?: string
           verdict?: string
         }
@@ -182,6 +184,7 @@ export type Database = {
           rating?: number
           recommended?: string
           slug?: string
+          trustpilot_url?: string | null
           updated_at?: string
           verdict?: string
         }
