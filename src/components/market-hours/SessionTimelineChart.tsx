@@ -10,7 +10,7 @@ import {
   startOfZoneDay,
   zoneParts,
 } from "@/lib/market-hours";
-import { timezoneStatus } from "@/lib/sessions";
+import { fmtDuration, timezoneStatus } from "@/lib/sessions";
 
 const HOUR_MARKS = [0, 4, 8, 12, 16, 20, 24];
 
@@ -59,6 +59,33 @@ export function SessionTimelineChart() {
   const openNames = statuses.filter((s) => s.isOpen).map((s) => s.name);
   const windowLabel = openNames.length ? openNames.join(" + ") : "No Markets";
 
+  // Weekend notice: based on live time, display only (uses existing isOpenAt logic).
+  const weekend = useMemo(() => {
+    if (!now) return null;
+    const allClosed = chartSessions.every((s) => !isOpenAt(now, s));
+    const anyWeekendDay = chartSessions.some((s) => {
+      const wd = zoneParts(now, s.tz).weekday;
+      return wd === 0 || wd === 6;
+    });
+    if (!allClosed || !anyWeekendDay) return null;
+    const sydney = chartSessions.find((s) => s.key === "sydney");
+    if (!sydney) return null;
+    const base = Math.floor(now.getTime() / 60_000) * 60_000;
+    for (let m = 1; m <= 4 * 1440; m++) {
+      const at = new Date(base + m * 60_000);
+      if (isOpenAt(at, sydney)) {
+        const when = new Intl.DateTimeFormat("en-GB", {
+          timeZone: refTz,
+          weekday: "long",
+          hour: "2-digit",
+          minute: "2-digit",
+        }).format(at);
+        return { mins: (at.getTime() - now.getTime()) / 60_000, when: `${when} ${refTz.split("/").pop()?.replace("_", " ")}` };
+      }
+    }
+    return null;
+  }, [now, refTz]);
+
   const pct = (m: number) => `${(m / 1440) * 100}%`;
 
   return (
@@ -106,6 +133,20 @@ export function SessionTimelineChart() {
           </div>
         </div>
 
+        {weekend && (
+          <div
+            role="status"
+            className="mb-6 rounded-2xl border border-[#7c3aed]/40 bg-[#141414] p-5 shadow-[0_0_0_1px_rgba(124,58,237,0.2),0_20px_60px_-30px_rgba(124,58,237,0.55)]"
+          >
+            <div className="text-[11px] uppercase tracking-[0.16em] text-[#c4a8ff]">Markets Closed for the Weekend</div>
+            <p className="mt-2 font-display text-base font-bold text-white md:text-lg">
+              All sessions are closed for the weekend · Sydney opens in{" "}
+              <span className="text-gradient">{fmtDuration(weekend.mins)}</span>{" "}
+              <span className="font-sans text-sm font-normal text-[#9a9a9a]">({weekend.when})</span>
+            </p>
+          </div>
+        )}
+
         {/* Desktop chart */}
         <div className="card-surface hidden overflow-hidden p-5 md:block">
           <div className="flex">
@@ -148,6 +189,10 @@ export function SessionTimelineChart() {
                         ];
                         const segWidth = seg.endMin - seg.startMin || 1;
                         const labelText = seg.label;
+                        // Hide labels on segments too narrow to hold them legibly.
+                        const visualWidth = segWidth * zoom;
+                        const showPills = visualWidth >= 260;
+                        const showName = visualWidth >= 90;
                         return (
                           <div
                             key={i}
@@ -155,11 +200,13 @@ export function SessionTimelineChart() {
                             style={{ left: pct(seg.startMin), width: pct(seg.endMin - seg.startMin) }}
                             title={`${labelText} · ${fmtHM(seg.openMin)}–${fmtHM(seg.closeMin)}`}
                           >
-                            <span className="absolute left-1 top-1/2 -translate-y-1/2 whitespace-nowrap rounded-full bg-black/45 px-1.5 py-0.5 font-mono text-[9px] text-white/85">
-                              OPENS {fmtHM(seg.openMin)}
-                              {seg.wrapsFromPrevDay && <span className="text-[#c4a8ff]"> −1d</span>}
-                            </span>
-                            {labels.map((lb, j) => {
+                            {showPills && (
+                              <span className="absolute left-1 top-1/2 -translate-y-1/2 whitespace-nowrap rounded-full bg-black/45 px-1.5 py-0.5 font-mono text-[9px] text-white/85">
+                                OPENS {fmtHM(seg.openMin)}
+                                {seg.wrapsFromPrevDay && <span className="text-[#c4a8ff]"> −1d</span>}
+                              </span>
+                            )}
+                            {showName && !showPills && labels.map((lb, j) => {
                               const leftPct = ((lb.startMin - seg.startMin) / segWidth) * 100;
                               const wPct = ((lb.endMin - lb.startMin) / segWidth) * 100;
                               return (
@@ -172,10 +219,12 @@ export function SessionTimelineChart() {
                                 </span>
                               );
                             })}
-                            <span className="absolute right-1 top-1/2 -translate-y-1/2 whitespace-nowrap rounded-full bg-black/45 px-1.5 py-0.5 font-mono text-[9px] text-white/85">
-                              CLOSES {fmtHM(seg.closeMin)}
-                              {seg.wrapsToNextDay && <span className="text-[#c4a8ff]"> +1d</span>}
-                            </span>
+                            {showPills && (
+                              <span className="absolute right-1 top-1/2 -translate-y-1/2 whitespace-nowrap rounded-full bg-black/45 px-1.5 py-0.5 font-mono text-[9px] text-white/85">
+                                CLOSES {fmtHM(seg.closeMin)}
+                                {seg.wrapsToNextDay && <span className="text-[#c4a8ff]"> +1d</span>}
+                              </span>
+                            )}
                           </div>
                         );
                       })}
