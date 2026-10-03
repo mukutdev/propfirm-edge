@@ -28,7 +28,7 @@ export const Route = createFileRoute("/submit-review")({
   }),
   errorComponent: ({ error }) => (
     <div role="alert" className="p-10 text-center text-sm text-muted-foreground">
-      {error.message}
+      {error instanceof Error ? error.message : "Please try again."}
     </div>
   ),
   notFoundComponent: () => <div className="p-10 text-center">Page not found.</div>,

@@ -38,7 +38,7 @@ export const Route = createFileRoute("/reviews/$slug")({
   component: FirmReviewPage,
   pendingComponent: FirmPending,
   errorComponent: ({ error }) => (
-    <FirmMessage title="We could not load this review" body={error.message} />
+    <FirmMessage title="We could not load this review" body={error instanceof Error ? error.message : "Please try again."} />
   ),
   notFoundComponent: () => (
     <FirmMessage

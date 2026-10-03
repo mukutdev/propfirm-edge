@@ -24,6 +24,7 @@ export function NewsPage() {
 
   return (
     <>
+      <EconCalendar />
       <BreakingTicker />
       <CategoryFilter active={active} onChange={setActive} />
       <FeaturedNews />
@@ -34,7 +35,6 @@ export function NewsPage() {
             {filteredTop.length > 0 && <TopStories articles={filteredTop} />}
             {filteredLatest.length > 0 && <LatestUpdates items={filteredLatest} />}
             <PropFirmIndustry />
-            <EconCalendar />
           </div>
           <NewsSidebar />
         </div>
