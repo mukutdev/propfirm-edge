@@ -13,10 +13,8 @@ export type Sector =
   | "Energy"
   | "Metals"
   | "Treasuries"
-  | "Currencies"
   | "Agricultural"
-  | "Livestock"
-  | "Crypto";
+  | "Livestock";
 
 export const FUTURES_CONTRACTS: Record<Sector, FuturesContract[]> = {
   "E-mini": [
@@ -60,15 +58,6 @@ export const FUTURES_CONTRACTS: Record<Sector, FuturesContract[]> = {
     { symbol: "SR3", name: "3-Month SOFR", tick: 0.005, tickValue: 12.5, pointValue: 2500 },
     { symbol: "10Y", name: "Micro 10-Year Yield", tick: 0.001, tickValue: 1, pointValue: 1000 },
   ],
-  Currencies: [
-    { symbol: "6E", name: "Euro FX", tick: 0.00005, tickValue: 6.25, pointValue: 125000 },
-    { symbol: "6J", name: "Japanese Yen", tick: 0.0000005, tickValue: 6.25, pointValue: 12500000 },
-    { symbol: "6B", name: "British Pound", tick: 0.0001, tickValue: 6.25, pointValue: 62500 },
-    { symbol: "6A", name: "Australian Dollar", tick: 0.0001, tickValue: 10, pointValue: 100000 },
-    { symbol: "6C", name: "Canadian Dollar", tick: 0.00005, tickValue: 5, pointValue: 100000 },
-    { symbol: "6S", name: "Swiss Franc", tick: 0.0001, tickValue: 12.5, pointValue: 125000 },
-    { symbol: "DX", name: "US Dollar Index", tick: 0.005, tickValue: 5, pointValue: 1000 },
-  ],
   Agricultural: [
     { symbol: "ZC", name: "Corn", tick: 0.25, tickValue: 12.5, pointValue: 50 },
     { symbol: "ZW", name: "Wheat", tick: 0.25, tickValue: 12.5, pointValue: 50 },
@@ -82,12 +71,6 @@ export const FUTURES_CONTRACTS: Record<Sector, FuturesContract[]> = {
     { symbol: "LE", name: "Live Cattle", tick: 0.025, tickValue: 10, pointValue: 400 },
     { symbol: "HE", name: "Lean Hogs", tick: 0.025, tickValue: 10, pointValue: 400 },
     { symbol: "GF", name: "Feeder Cattle", tick: 0.025, tickValue: 12.5, pointValue: 500 },
-  ],
-  Crypto: [
-    { symbol: "BTC", name: "Bitcoin Futures", tick: 5, tickValue: 25, pointValue: 5 },
-    { symbol: "MBT", name: "Micro Bitcoin", tick: 5, tickValue: 0.5, pointValue: 0.1 },
-    { symbol: "ETH", name: "Ether Futures", tick: 0.25, tickValue: 12.5, pointValue: 50 },
-    { symbol: "MET", name: "Micro Ether", tick: 0.25, tickValue: 0.25, pointValue: 0.1 },
   ],
 };
 
