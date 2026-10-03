@@ -80,7 +80,8 @@ export function SessionTimelineChart() {
           hour: "2-digit",
           minute: "2-digit",
         }).format(at);
-        return { mins: (at.getTime() - now.getTime()) / 60_000, when: `${when} ${refTz.split("/").pop()?.replace("_", " ")}` };
+        const sydWhen = new Intl.DateTimeFormat("en-GB", { timeZone: sydney.tz, weekday: "long", hour: "2-digit", minute: "2-digit" }).format(at);
+        return { mins: (at.getTime() - now.getTime()) / 60_000, when: `${sydWhen} Sydney · ${when} ${refTz.split("/").pop()?.replace("_", " ")}` };
       }
     }
     return null;
