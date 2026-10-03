@@ -38,7 +38,14 @@ function timezonePart(date: Date, timeZone: string, timeZoneName: "short" | "lon
 
 /** Current regional abbreviation and UTC offset, derived from the session's IANA timezone. */
 export function timezoneStatus(date: Date, timeZone: string) {
-  const locale = timeZone === "Australia/Sydney" ? "en-AU" : timeZone === "Asia/Tokyo" ? "ja-JP" : "en-US";
+  const locale =
+    timeZone === "Australia/Sydney"
+      ? "en-AU"
+      : timeZone === "Asia/Tokyo"
+        ? "ja-JP"
+        : timeZone === "Europe/London"
+          ? "en-GB"
+          : "en-US";
   const abbreviation = timezonePart(date, timeZone, "short", locale) ?? timeZone;
   const rawOffset = timezonePart(date, timeZone, "longOffset", "en-US") ?? "GMT";
   const normalizedOffset = rawOffset
