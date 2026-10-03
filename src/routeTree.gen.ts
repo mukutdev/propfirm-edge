@@ -9,68 +9,28 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as SubmitReviewRouteImport } from './routes/submit-review'
-import { Route as ReviewsRouteImport } from './routes/reviews'
-import { Route as NewsRouteImport } from './routes/news'
-import { Route as MarketHoursRouteImport } from './routes/market-hours'
-import { Route as CouponsRouteImport } from './routes/coupons'
-import { Route as ContactRouteImport } from './routes/contact'
-import { Route as CompareRouteImport } from './routes/compare'
-import { Route as ComingSoonRouteImport } from './routes/coming-soon'
-import { Route as BlogRouteImport } from './routes/blog'
-import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ReviewsIndexRouteImport } from './routes/reviews.index'
-import { Route as NewsIndexRouteImport } from './routes/news.index'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as BlogRouteImport } from './routes/blog'
+import { Route as ComingSoonRouteImport } from './routes/coming-soon'
+import { Route as CompareRouteImport } from './routes/compare'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CouponsRouteImport } from './routes/coupons'
+import { Route as MarketHoursRouteImport } from './routes/market-hours'
+import { Route as NewsRouteImport } from './routes/news'
+import { Route as ReviewsRouteImport } from './routes/reviews'
+import { Route as SubmitReviewRouteImport } from './routes/submit-review'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
-import { Route as ToolsPositionCalculatorRouteImport } from './routes/tools.position-calculator'
-import { Route as ReviewsSlugRouteImport } from './routes/reviews.$slug'
-import { Route as NewsSlugRouteImport } from './routes/news.$slug'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as NewsIndexRouteImport } from './routes/news.index'
+import { Route as NewsSlugRouteImport } from './routes/news.$slug'
+import { Route as ReviewsIndexRouteImport } from './routes/reviews.index'
+import { Route as ReviewsSlugRouteImport } from './routes/reviews.$slug'
+import { Route as ToolsPositionCalculatorRouteImport } from './routes/tools.position-calculator'
 
-const SubmitReviewRoute = SubmitReviewRouteImport.update({
-  id: '/submit-review',
-  path: '/submit-review',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ReviewsRoute = ReviewsRouteImport.update({
-  id: '/reviews',
-  path: '/reviews',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const NewsRoute = NewsRouteImport.update({
-  id: '/news',
-  path: '/news',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MarketHoursRoute = MarketHoursRouteImport.update({
-  id: '/market-hours',
-  path: '/market-hours',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CouponsRoute = CouponsRouteImport.update({
-  id: '/coupons',
-  path: '/coupons',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ContactRoute = ContactRouteImport.update({
-  id: '/contact',
-  path: '/contact',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CompareRoute = CompareRouteImport.update({
-  id: '/compare',
-  path: '/compare',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ComingSoonRoute = ComingSoonRouteImport.update({
-  id: '/coming-soon',
-  path: '/coming-soon',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BlogRoute = BlogRouteImport.update({
-  id: '/blog',
-  path: '/blog',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -78,45 +38,85 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ReviewsIndexRoute = ReviewsIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => ReviewsRoute,
+const ComingSoonRoute = ComingSoonRouteImport.update({
+  id: '/coming-soon',
+  path: '/coming-soon',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const NewsIndexRoute = NewsIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => NewsRoute,
+const CompareRoute = CompareRouteImport.update({
+  id: '/compare',
+  path: '/compare',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CouponsRoute = CouponsRouteImport.update({
+  id: '/coupons',
+  path: '/coupons',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MarketHoursRoute = MarketHoursRouteImport.update({
+  id: '/market-hours',
+  path: '/market-hours',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NewsRoute = NewsRouteImport.update({
+  id: '/news',
+  path: '/news',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReviewsRoute = ReviewsRouteImport.update({
+  id: '/reviews',
+  path: '/reviews',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SubmitReviewRoute = SubmitReviewRouteImport.update({
+  id: '/submit-review',
+  path: '/submit-review',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => BlogRoute,
 } as any)
-const ToolsPositionCalculatorRoute = ToolsPositionCalculatorRouteImport.update({
-  id: '/tools/position-calculator',
-  path: '/tools/position-calculator',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ReviewsSlugRoute = ReviewsSlugRouteImport.update({
+const BlogSlugRoute = BlogSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
-  getParentRoute: () => ReviewsRoute,
+  getParentRoute: () => BlogRoute,
+} as any)
+const NewsIndexRoute = NewsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => NewsRoute,
 } as any)
 const NewsSlugRoute = NewsSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
   getParentRoute: () => NewsRoute,
 } as any)
-const BlogSlugRoute = BlogSlugRouteImport.update({
+const ReviewsIndexRoute = ReviewsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ReviewsRoute,
+} as any)
+const ReviewsSlugRoute = ReviewsSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
-  getParentRoute: () => BlogRoute,
+  getParentRoute: () => ReviewsRoute,
+} as any)
+const ToolsPositionCalculatorRoute = ToolsPositionCalculatorRouteImport.update({
+  id: '/tools/position-calculator',
+  path: '/tools/position-calculator',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -254,67 +254,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/submit-review': {
-      id: '/submit-review'
-      path: '/submit-review'
-      fullPath: '/submit-review'
-      preLoaderRoute: typeof SubmitReviewRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/reviews': {
-      id: '/reviews'
-      path: '/reviews'
-      fullPath: '/reviews'
-      preLoaderRoute: typeof ReviewsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/news': {
-      id: '/news'
-      path: '/news'
-      fullPath: '/news'
-      preLoaderRoute: typeof NewsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/market-hours': {
-      id: '/market-hours'
-      path: '/market-hours'
-      fullPath: '/market-hours'
-      preLoaderRoute: typeof MarketHoursRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/coupons': {
-      id: '/coupons'
-      path: '/coupons'
-      fullPath: '/coupons'
-      preLoaderRoute: typeof CouponsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contact': {
-      id: '/contact'
-      path: '/contact'
-      fullPath: '/contact'
-      preLoaderRoute: typeof ContactRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/compare': {
-      id: '/compare'
-      path: '/compare'
-      fullPath: '/compare'
-      preLoaderRoute: typeof CompareRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/coming-soon': {
-      id: '/coming-soon'
-      path: '/coming-soon'
-      fullPath: '/coming-soon'
-      preLoaderRoute: typeof ComingSoonRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/blog': {
-      id: '/blog'
-      path: '/blog'
-      fullPath: '/blog'
-      preLoaderRoute: typeof BlogRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -324,26 +268,68 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/reviews/': {
-      id: '/reviews/'
-      path: '/'
-      fullPath: '/reviews/'
-      preLoaderRoute: typeof ReviewsIndexRouteImport
-      parentRoute: typeof ReviewsRoute
+    '/coming-soon': {
+      id: '/coming-soon'
+      path: '/coming-soon'
+      fullPath: '/coming-soon'
+      preLoaderRoute: typeof ComingSoonRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/news/': {
-      id: '/news/'
-      path: '/'
-      fullPath: '/news/'
-      preLoaderRoute: typeof NewsIndexRouteImport
-      parentRoute: typeof NewsRoute
+    '/compare': {
+      id: '/compare'
+      path: '/compare'
+      fullPath: '/compare'
+      preLoaderRoute: typeof CompareRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/coupons': {
+      id: '/coupons'
+      path: '/coupons'
+      fullPath: '/coupons'
+      preLoaderRoute: typeof CouponsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/market-hours': {
+      id: '/market-hours'
+      path: '/market-hours'
+      fullPath: '/market-hours'
+      preLoaderRoute: typeof MarketHoursRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/news': {
+      id: '/news'
+      path: '/news'
+      fullPath: '/news'
+      preLoaderRoute: typeof NewsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reviews': {
+      id: '/reviews'
+      path: '/reviews'
+      fullPath: '/reviews'
+      preLoaderRoute: typeof ReviewsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/submit-review': {
+      id: '/submit-review'
+      path: '/submit-review'
+      fullPath: '/submit-review'
+      preLoaderRoute: typeof SubmitReviewRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/blog/': {
       id: '/blog/'
@@ -352,19 +338,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogIndexRouteImport
       parentRoute: typeof BlogRoute
     }
-    '/tools/position-calculator': {
-      id: '/tools/position-calculator'
-      path: '/tools/position-calculator'
-      fullPath: '/tools/position-calculator'
-      preLoaderRoute: typeof ToolsPositionCalculatorRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/reviews/$slug': {
-      id: '/reviews/$slug'
+    '/blog/$slug': {
+      id: '/blog/$slug'
       path: '/$slug'
-      fullPath: '/reviews/$slug'
-      preLoaderRoute: typeof ReviewsSlugRouteImport
-      parentRoute: typeof ReviewsRoute
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof BlogRoute
+    }
+    '/news/': {
+      id: '/news/'
+      path: '/'
+      fullPath: '/news/'
+      preLoaderRoute: typeof NewsIndexRouteImport
+      parentRoute: typeof NewsRoute
     }
     '/news/$slug': {
       id: '/news/$slug'
@@ -373,12 +359,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NewsSlugRouteImport
       parentRoute: typeof NewsRoute
     }
-    '/blog/$slug': {
-      id: '/blog/$slug'
+    '/reviews/': {
+      id: '/reviews/'
+      path: '/'
+      fullPath: '/reviews/'
+      preLoaderRoute: typeof ReviewsIndexRouteImport
+      parentRoute: typeof ReviewsRoute
+    }
+    '/reviews/$slug': {
+      id: '/reviews/$slug'
       path: '/$slug'
-      fullPath: '/blog/$slug'
-      preLoaderRoute: typeof BlogSlugRouteImport
-      parentRoute: typeof BlogRoute
+      fullPath: '/reviews/$slug'
+      preLoaderRoute: typeof ReviewsSlugRouteImport
+      parentRoute: typeof ReviewsRoute
+    }
+    '/tools/position-calculator': {
+      id: '/tools/position-calculator'
+      path: '/tools/position-calculator'
+      fullPath: '/tools/position-calculator'
+      preLoaderRoute: typeof ToolsPositionCalculatorRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
