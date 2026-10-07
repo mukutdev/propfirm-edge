@@ -5,8 +5,6 @@ import { ContactHero } from "@/components/contact/ContactHero";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { ResponsePromise } from "@/components/contact/ResponsePromise";
 import { AltContactMethods } from "@/components/contact/AltContactMethods";
-import { ForPropFirms } from "@/components/contact/ForPropFirms";
-import { ContactFAQ } from "@/components/contact/ContactFAQ";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -33,8 +31,6 @@ function ContactRoute() {
       </div>
       <ResponsePromise />
       <AltContactMethods />
-      <ForPropFirms />
-      <ContactFAQ />
       <Footer />
     </main>
   );
