@@ -15,16 +15,16 @@ export function ContactHero() {
           <span className="text-white">Contact</span>
         </nav>
         <h1 className="font-display font-bold text-4xl md:text-6xl tracking-tight">
-          Get In{" "}
+          Have a Question?{" "}
           <span
             className="bg-clip-text text-transparent"
             style={{ backgroundImage: "linear-gradient(135deg,#7C3AED,#EC4899)" }}
           >
-            Touch
+            Let's Talk About Trading.
           </span>
         </h1>
         <p className="mt-5 text-[#bbb] text-base md:text-lg max-w-xl mx-auto">
-          Questions about a firm, partnership enquiries, or a rule change we missed — I read every message myself.
+          Question about a prop firm, futures trading, or Trading With Prop Firms? We want to hear from you.
         </p>
       </div>
     </section>

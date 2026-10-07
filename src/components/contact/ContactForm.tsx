@@ -5,15 +5,15 @@ export type Reason = "general" | "partnership" | "report" | "media";
 
 const reasonMeta: Record<Reason, { headline: string; subject: string }> = {
   general: { headline: "Send Us a Message", subject: "General Enquiry" },
-  partnership: { headline: "Tell Us About Your Firm", subject: "Prop Firm Partnership" },
+  partnership: { headline: "Tell Us About Your Firm", subject: "Prop Firm Affiliates" },
   report: { headline: "What Needs Updating?", subject: "Report Outdated Info" },
   media: { headline: "Let's Collaborate", subject: "Media or Collaboration" },
 };
 
 export const REASONS: Array<{ id: Reason; icon: string; label: string; desc: string }> = [
-  { id: "general", icon: "📩", label: "General Enquiry", desc: "Question about a review, a specific firm, or something on the site" },
-  { id: "partnership", icon: "🤝", label: "Prop Firm Partnership", desc: "You run a prop firm — let's talk a listing and an honest evaluation" },
-  { id: "report", icon: "🐛", label: "Report Outdated Info", desc: "A firm's challenge fee changed, drawdown rule was updated, or payout split shifted" },
+  { id: "general", icon: "📩", label: "General Enquiry", desc: "Question about trading, a specific firm, or something on this site." },
+  { id: "partnership", icon: "🤝", label: "Prop Firm Affiliates", desc: "Do you want to be in business with Trading With Prop Firms?" },
+  { id: "report", icon: "🐛", label: "Report Outdated Info", desc: "Help us provide the most accurate information as Prop Firms are constantly evolving in this space." },
   { id: "media", icon: "🎙️", label: "Media or Collaboration", desc: "Podcast, YouTube collab, or press enquiry — let's talk" },
 ];
 
@@ -123,9 +123,13 @@ export function ContactForm() {
             <form onSubmit={handleSubmit} className="space-y-4">
               <h2 className="font-display font-bold text-2xl mb-2">{reasonMeta[reason].headline}</h2>
 
-              <Field label="Full Name">
-                <input required type="text" placeholder="Jane Trader" className={inputCls} />
-              </Field>
+              <div>
+                <span className="block text-xs text-[#888] mb-1.5 font-medium">Contact Name</span>
+                <div className="grid grid-cols-2 gap-3">
+                  <input required type="text" placeholder="First" aria-label="First name" className={inputCls} />
+                  <input required type="text" placeholder="Last" aria-label="Last name" className={inputCls} />
+                </div>
+              </div>
               <Field label="Email Address">
                 <input required type="email" placeholder="you@example.com" className={inputCls} />
               </Field>
@@ -170,12 +174,13 @@ export function ContactForm() {
                 <div className="overflow-hidden">
                   <div className="space-y-4 pt-1">
                     <Field label="Which Firm?">
-                      <input type="text" placeholder="e.g. Apex Trader Funding" className={inputCls} />
+                      <input type="text" className={inputCls} />
                     </Field>
                     <Field label="What needs updating?">
                       <select className={inputCls}>
                         <option>Pricing</option>
                         <option>Rules</option>
+                        <option>Drawdown</option>
                         <option>Payout Info</option>
                         <option>Firm Closed</option>
                         <option>Other</option>
