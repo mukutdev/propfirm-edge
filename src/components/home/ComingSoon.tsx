@@ -9,7 +9,7 @@ const features = [
 ];
 
 const socials = [
-  { Icon: Youtube, label: "YouTube", href: "https://youtube.com" },
+  { Icon: Youtube, label: "YouTube", href: "https://www.youtube.com/@hanumantrades" },
   { Icon: MessageCircle, label: "Discord", href: "https://discord.com" },
   { Icon: Twitter, label: "Twitter / X", href: "https://twitter.com" },
 ];

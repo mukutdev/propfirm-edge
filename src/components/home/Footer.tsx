@@ -69,7 +69,8 @@ export function Footer() {
             {socials.map(({ Icon, label }) => (
               <a
                 key={label}
-                href="#"
+                href={label === "YouTube" ? "https://www.youtube.com/@hanumantrades" : "#"}
+                {...(label === "YouTube" ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                 aria-label={label}
                 className="group h-9 w-9 rounded-full border border-[#222] flex items-center justify-center text-white/70 transition-all hover:border-transparent hover:bg-gradient-brand hover:text-white"
               >

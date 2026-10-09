@@ -49,7 +49,8 @@ export function Founder() {
             ].map(({ Icon, label }) => (
               <a
                 key={label}
-                href="#"
+                href={label === "YouTube" ? "https://www.youtube.com/@hanumantrades" : "#"}
+                {...(label === "YouTube" ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                 className="inline-flex items-center gap-2 rounded-full border border-[#2a2a2a] bg-[#141414] px-4 py-2 text-sm text-white transition hover:border-purple-500/50 hover:text-purple-300"
               >
                 <Icon size={16} />

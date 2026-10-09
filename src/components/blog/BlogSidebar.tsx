@@ -43,7 +43,7 @@ export function BlogSidebar({ search, onSearch, categoryCounts }: Props) {
           Enter your account size and see your exact profit targets and loss limits.
         </p>
         <a
-          href="#"
+          href="https://www.youtube.com/@hanumantrades" target="_blank" rel="noopener noreferrer"
           className="mt-4 inline-flex w-full items-center justify-center rounded-lg bg-gradient-to-r from-[#7C3AED] to-[#EC4899] px-4 py-2.5 text-sm font-semibold text-white transition hover:opacity-90"
         >
           Use Calculator →
@@ -58,7 +58,7 @@ export function BlogSidebar({ search, onSearch, categoryCounts }: Props) {
           Follow Hanuman Trades for real trading content and prop firm walkthroughs.
         </p>
         <a
-          href="#"
+          href="https://www.youtube.com/@hanumantrades" target="_blank" rel="noopener noreferrer"
           className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#FF0000] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#cc0000]"
         >
           ▶ Subscribe

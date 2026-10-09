@@ -32,7 +32,7 @@ export function YoutubeLive() {
                 </span>
               )}
               <a
-                href="https://youtube.com"
+                href="https://www.youtube.com/@hanumantrades"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Watch the live stream"
@@ -79,7 +79,7 @@ export function YoutubeLive() {
               </ul>
 
               <a
-                href="https://youtube.com"
+                href="https://www.youtube.com/@hanumantrades"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-7 inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full font-semibold text-white bg-[#ff0033] hover:bg-[#d4002a] transition-colors"
