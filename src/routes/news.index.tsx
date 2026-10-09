@@ -9,7 +9,7 @@ export const Route = createFileRoute("/news/")({
   head: () => ({
     meta: [
       { title: "Markets & Trading News — Trading With Prop Firms" },
-      { name: "description", content: "Latest futures, forex, crypto and prop firm industry news. Daily market updates, economic calendar and breaking headlines for prop traders." },
+      { name: "description", content: "Latest futures and prop firm industry news. Daily market updates, economic calendar and breaking headlines for prop traders." },
       { property: "og:title", content: "Markets & Trading News" },
       { property: "og:description", content: "Daily trading news, prop firm updates and market analysis." },
       { property: "og:type", content: "website" },

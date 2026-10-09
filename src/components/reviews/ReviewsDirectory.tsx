@@ -15,11 +15,11 @@ function firmSlug(name: string) {
     .replace(/^-|-$/g, "");
 }
 
-type Category = "All" | "Futures" | "Forex" | "Crypto" | "Stocks";
+type Category = "All" | "Futures" | "Stocks";
 type SortKey = "rating" | "fee" | "funding" | "newest";
 type ViewMode = "grid" | "list";
 
-const categories: Category[] = ["All", "Futures", "Forex", "Crypto", "Stocks"];
+const categories: Category[] = ["All", "Futures", "Stocks"];
 
 const sortLabels: Record<SortKey, string> = {
   rating: "Top Rated",

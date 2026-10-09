@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Star, ArrowUpDown, Loader2, ExternalLink } from "lucide-react";
 import { listCompareFirms, type CompareFirmRow } from "@/lib/compare.functions";
 
-const assetPills = ["All", "Futures", "Forex", "Crypto", "Stocks"] as const;
+const assetPills = ["All", "Futures", "Stocks"] as const;
 
 type ColKey = "maxFunding" | "profitSplit" | "fee" | "drawdownType" | "payoutSpeed" | "rating";
 

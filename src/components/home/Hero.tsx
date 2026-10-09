@@ -26,7 +26,7 @@ export function Hero() {
 
       <div className="relative mx-auto w-full max-w-5xl px-6 text-center">
         <p className="mb-5 text-[11px] uppercase tracking-[0.3em] text-white/45">
-          Futures · Forex · Funded Accounts
+          Futures · Funded Accounts
         </p>
         <h1 className="font-display font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight">
           Find Your Edge.
