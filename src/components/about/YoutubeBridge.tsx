@@ -17,7 +17,7 @@ export function YoutubeBridge() {
             fantasy, just the trades.
           </p>
           <a
-            href="#"
+            href="https://www.youtube.com/@hanumantrades" target="_blank" rel="noopener noreferrer"
             className="mt-5 inline-flex items-center gap-2 rounded-full bg-[#FF0000] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#cc0000]"
           >
             <Play size={16} fill="white" /> Subscribe on YouTube
