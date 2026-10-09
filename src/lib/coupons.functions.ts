@@ -31,8 +31,6 @@ export const listCoupons = createServerFn({ method: "GET" }).handler(async (): P
     .select(
       "id, slug, name, rating, coupon_code, promo_discount, deal_type, promo_expiry, challenge_fee, assets, affiliate_url",
     )
-    .not("coupon_code", "is", null)
-    .neq("coupon_code", "")
     .order("promo_discount", { ascending: false });
 
   if (error) throw new Error(error.message);
