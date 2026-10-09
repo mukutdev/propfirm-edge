@@ -137,7 +137,7 @@ export function buildFirmDetail(row: FirmRow, alternatives: FirmAlternative[] = 
       challengeFee: row.challenge_fee,
       drawdownType: dd,
       payoutFrequency: row.payout_frequency,
-      instruments: multiAsset ? "Futures + FX" : "Futures",
+      instruments: multiAsset ? "Futures + Stocks" : "Futures",
     },
     overview: [
       `${row.name} runs a ${row.evaluation_type} evaluation on ${row.instrument_list.slice(0, 3).join(", ")} and the micros. You pay ${row.challenge_fee} for an evaluation account, hit the profit target without breaching the drawdown, and get allocated a funded account on a ${row.profit_split} split.`,
@@ -180,8 +180,8 @@ export function buildFirmDetail(row: FirmRow, alternatives: FirmAlternative[] = 
     cons: [
       `${dd} drawdown is the binding constraint — size to it, not to the target`,
       multiAsset
-        ? "Multi-asset access is thinner than a dedicated FX or crypto prop"
-        : "Futures only: no FX majors, equities or crypto on the funded side",
+        ? "Multi-asset access is thinner than a dedicated single-market prop"
+        : "Futures only: no equities on the funded side",
       `At ${row.challenge_fee} per account, running several evaluations gets expensive`,
       "Consistency rule blocks one-trade payout runs",
     ],

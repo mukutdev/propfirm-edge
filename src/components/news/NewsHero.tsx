@@ -25,7 +25,7 @@ export function NewsHero() {
           Markets &amp; Trading News
         </h1>
         <p className="max-w-2xl text-base text-muted-foreground sm:text-lg">
-          Stay ahead of the markets. Latest futures, forex and prop firm industry news updated daily.
+          Stay ahead of the markets. Latest futures and prop firm industry news updated daily.
         </p>
       </div>
     </section>

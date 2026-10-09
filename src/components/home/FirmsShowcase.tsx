@@ -464,7 +464,7 @@ function PreviewTable() {
               const country = countries[f.name] ?? { iso: "us", code: "US" };
               const isFav = favs.includes(f.name);
               const years = (f.addedOrder % 5) + 1;
-              const assets = ["Crypto", "Energy", "FX", "Indices", "Metals"].slice(
+              const assets = ["Energy", "Indices", "Metals", "Rates", "Ags"].slice(
                 0,
                 3 + (i % 3),
               );

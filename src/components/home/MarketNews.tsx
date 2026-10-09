@@ -17,7 +17,7 @@ export function MarketNews() {
               Markets & Trading News
             </h2>
             <p className="mt-3 text-sm text-[#888]">
-              Live headlines pulled straight from ForexLive and CNBC Markets.
+              Live market headlines pulled straight from CNBC Markets.
             </p>
           </div>
           <Link to="/news" className="text-sm font-semibold text-gradient">All News →</Link>

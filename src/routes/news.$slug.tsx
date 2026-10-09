@@ -10,7 +10,7 @@ export const Route = createFileRoute("/news/$slug")({
   head: ({ params }) => {
     const a = getNewsArticleBySlug(params.slug);
     const title = a ? `${a.title} — Trading With Prop Firms` : "News — Trading With Prop Firms";
-    const desc = a?.excerpt ?? "Latest futures, forex, crypto and prop firm industry news.";
+    const desc = a?.excerpt ?? "Latest futures and prop firm industry news.";
     return {
       meta: [
         { title },

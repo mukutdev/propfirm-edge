@@ -26,7 +26,7 @@ export type Firm = {
 export type ReviewFirm = Firm & {
   description: string;
   markets: string[];
-  categories: ("Futures" | "Forex" | "Crypto" | "Stocks")[];
+  categories: ("Futures" | "Stocks")[];
   feeNumeric: number;
   fundingNumeric: number;
   addedOrder: number; // higher = newer
@@ -141,9 +141,9 @@ export const reviewFirms: ReviewFirm[] = [
     split: "90%",
     fee: "$99/mo", feeNumeric: 99,
     badge: "New & Trusted", badgeColor: "pink",
-    description: "The futures arm of a heavyweight forex prop — flexible rules and global support.",
+    description: "Flexible futures rules and global support.",
     markets: ["NQ", "ES", "EURUSD"],
-    categories: ["Futures", "Forex"],
+    categories: ["Futures"],
     addedOrder: 12,
   },
   {
@@ -215,7 +215,7 @@ export const reviewFirms: ReviewFirm[] = [
     badge: "", badgeColor: "pink",
     description: "Veteran prop firm with multi-asset programs and a track record going back years.",
     markets: ["NQ", "ES", "EURUSD", "BTC"],
-    categories: ["Futures", "Forex", "Crypto", "Stocks"],
+    categories: ["Futures", "Stocks"],
     addedOrder: 1,
   },
   {
@@ -227,7 +227,7 @@ export const reviewFirms: ReviewFirm[] = [
     badge: "", badgeColor: "green",
     description: "Established education-first prop firm with the Gauntlet Mini evaluation.",
     markets: ["NQ", "ES", "CL", "EURUSD"],
-    categories: ["Futures", "Forex"],
+    categories: ["Futures"],
     addedOrder: 2,
   },
 ];

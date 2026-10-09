@@ -1,4 +1,4 @@
-export type NewsCategory = "Futures" | "Forex" | "Prop Firms" | "Crypto" | "Stocks" | "Economic Events";
+export type NewsCategory = "Futures" | "Prop Firms" | "Stocks" | "Economic Events";
 
 export type NewsArticle = {
   id: string;
@@ -14,7 +14,7 @@ export type NewsArticle = {
 
 export const breakingHeadlines: string[] = [
   "Apex Trader Funding raises max funding to $300K across all plans",
-  "FundedNext Futures launches 1-step evaluation for Forex traders",
+  "FundedNext Futures launches 1-step evaluation for futures traders",
   "Fed signals potential rate cut as inflation cools to 2.4%",
   "MyFundedFutures eliminates activation fees on all PA accounts",
   "NQ futures hit record high as tech rally accelerates",
@@ -47,20 +47,20 @@ export const topStories: NewsArticle[] = [
   },
   {
     id: "top-2",
-    title: "ECB Holds Rates Steady — Euro Slides Against Dollar",
+    title: "ES Futures Steady as Traders Price in Fed Path",
     excerpt:
-      "The European Central Bank kept its main refinancing rate at 3.25%, citing persistent core inflation in services.",
-    category: "Forex",
+      "S&P 500 futures held a tight range overnight as traders weighed the latest Fed commentary ahead of key data.",
+    category: "Futures",
     author: "James O'Brien",
     date: "June 4, 2026",
     timeAgo: "5h ago",
   },
   {
     id: "top-3",
-    title: "Bitcoin Tests $95K Resistance Amid ETF Inflow Surge",
+    title: "Treasury Futures Rally as Yields Slip on Soft Data",
     excerpt:
-      "Spot Bitcoin ETFs recorded their largest single-day net inflow since launch, pushing BTC back into yearly highs.",
-    category: "Crypto",
+      "10-year note futures climbed after a softer-than-expected jobs print pulled yields to multi-week lows.",
+    category: "Futures",
     author: "Priya Shah",
     date: "June 3, 2026",
     timeAgo: "12h ago",
@@ -79,13 +79,13 @@ export const topStories: NewsArticle[] = [
 
 export const latestUpdates: NewsArticle[] = [
   { id: "l1", title: "Crude oil drops 1.2% as OPEC+ signals output hike", excerpt: "", category: "Futures", author: "", date: "", timeAgo: "32m ago" },
-  { id: "l2", title: "GBP/USD breaks 1.30 ahead of BoE decision", excerpt: "", category: "Forex", author: "", date: "", timeAgo: "1h ago" },
+  { id: "l2", title: "Micro E-mini volume hits record session", excerpt: "", category: "Futures", author: "", date: "", timeAgo: "1h ago" },
   { id: "l3", title: "Take Profit Trader updates consistency rule", excerpt: "", category: "Prop Firms", author: "", date: "", timeAgo: "2h ago" },
   { id: "l4", title: "S&P 500 closes at fresh record — 7th straight green day", excerpt: "", category: "Stocks", author: "", date: "", timeAgo: "3h ago" },
-  { id: "l5", title: "Ethereum staking yields tick higher post-upgrade", excerpt: "", category: "Crypto", author: "", date: "", timeAgo: "4h ago" },
+  { id: "l5", title: "Natural gas futures jump on colder forecasts", excerpt: "", category: "Futures", author: "", date: "", timeAgo: "4h ago" },
   { id: "l6", title: "US Non-Farm Payrolls preview: what to expect Friday", excerpt: "", category: "Economic Events", author: "", date: "", timeAgo: "5h ago" },
   { id: "l7", title: "Legends Trading announces Pro Trader scaling plan", excerpt: "", category: "Prop Firms", author: "", date: "", timeAgo: "7h ago" },
-  { id: "l8", title: "Yen weakens past 158 vs USD — intervention risk rises", excerpt: "", category: "Forex", author: "", date: "", timeAgo: "9h ago" },
+  { id: "l8", title: "Gold futures extend gains into weekly close", excerpt: "", category: "Futures", author: "", date: "", timeAgo: "9h ago" },
 ];
 
 export const propFirmNews: NewsArticle[] = [
@@ -158,9 +158,7 @@ export const marketSnapshot: { ticker: string; price: string; change: string; up
 export const newsCategories: ("All" | NewsCategory)[] = [
   "All",
   "Futures",
-  "Forex",
   "Prop Firms",
-  "Crypto",
   "Stocks",
   "Economic Events",
 ];

@@ -97,8 +97,8 @@ export function Footer() {
       <div className="border-t border-[#222] bg-[#0d0d0d]">
         <div className="max-w-7xl mx-auto px-6 py-5">
           <p className="text-xs leading-relaxed text-[#8d8d8d]">
-            <span className="font-semibold text-white/80">Risk disclosure:</span> Trading futures and
-            forex involves substantial risk of loss and is not suitable for all investors. Past
+            <span className="font-semibold text-white/80">Risk disclosure:</span> Trading futures
+            involves substantial risk of loss and is not suitable for all investors. Past
             performance is not indicative of future results.
           </p>
         </div>

@@ -1,5 +1,5 @@
 export type DealType = "Percentage Off" | "Free Trial" | "Special Offer";
-export type Category = "Futures" | "Forex" | "Crypto" | "Stocks";
+export type Category = "Futures" | "Stocks";
 
 export type Coupon = {
   firm: string;
@@ -82,7 +82,7 @@ export const coupons: Coupon[] = [
     code: "FNF15",
     expires: "Apr 1, 2025",
     expiresAt: "2025-04-01",
-    categories: ["Futures", "Forex"],
+    categories: ["Futures"],
     isNew: true,
   },
   {
@@ -146,11 +146,11 @@ export const coupons: Coupon[] = [
     type: "Percentage Off",
     discountLabel: "10% OFF",
     headline: "10% Off Multi-Asset Accounts",
-    description: "One of the few firms covering futures, forex, crypto and stocks under one roof.",
+    description: "One of the few firms covering futures and stocks under one roof.",
     code: "DAYTRADERS10",
     expires: "May 1, 2025",
     expiresAt: "2025-05-01",
-    categories: ["Futures", "Forex", "Crypto", "Stocks"],
+    categories: ["Futures", "Stocks"],
   },
   // Expired
   { firm: "Topstep", type: "Percentage Off", discountLabel: "15% OFF", headline: "15% Off Holiday Promo", description: "Past holiday sale — may still apply at checkout.", code: "HOLIDAY15", expires: "Dec 31, 2024", expiresAt: "2024-12-31", categories: ["Futures"], expired: true },

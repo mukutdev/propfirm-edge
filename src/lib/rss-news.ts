@@ -12,11 +12,6 @@ export type RssArticle = {
 
 const FEEDS: { url: string; source: string; category: string }[] = [
   {
-    url: "https://www.forexlive.com/feed/news",
-    source: "ForexLive",
-    category: "Forex",
-  },
-  {
     url: "https://www.cnbc.com/id/20910258/device/rss/rss.html",
     source: "CNBC",
     category: "Markets",
