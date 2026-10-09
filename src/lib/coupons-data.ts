@@ -35,7 +35,7 @@ export const coupons: Coupon[] = [
     discountLabel: "80% OFF",
     headline: "80% Off All Account Sizes",
     description: "Limited-time sitewide discount on every evaluation tier.",
-    code: "TWPF80",
+    code: "",
     expires: "Mar 15, 2025",
     expiresAt: "2025-03-15",
     categories: ["Futures"],

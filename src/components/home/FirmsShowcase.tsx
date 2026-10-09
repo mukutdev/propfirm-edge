@@ -23,9 +23,9 @@ const slugify = (name: string) =>
 
 type Promo = { off: string; code: string };
 const promos: Record<string, Promo> = {
-  "Apex Trader Funding": { off: "80% OFF", code: "TWPF80" },
+  "Apex Trader Funding": { off: "80% OFF", code: "" },
   MyFundedFutures: { off: "50% OFF", code: "MATCH" },
-  TradeDay: { off: "40% OFF", code: "TWPF40" },
+  TradeDay: { off: "40% OFF", code: "" },
   "Take Profit Trader": { off: "35% OFF", code: "TPT35" },
   "FundedNext Futures": { off: "45% OFF", code: "FNF45" },
   Tradeify: { off: "30% OFF", code: "TDY30" },
@@ -52,7 +52,7 @@ const countries: Record<string, { iso: string; code: string }> = {
   Earn2Trade: { iso: "hu", code: "HU" },
 };
 
-const promoOf = (name: string): Promo => promos[name] ?? { off: "20% OFF", code: "TWPF20" };
+const promoOf = (name: string): Promo => promos[name] ?? { off: "20% OFF", code: "" };
 
 function Stars({ rating, size = 12 }: { rating: number; size?: number }) {
   return (
@@ -211,9 +211,11 @@ function OffersCarousel() {
                 </div>
                 <div className="mt-3 flex flex-col items-start gap-1.5">
                   <OffPill label={promo.off} />
-                  <span className="rounded-full border border-dashed border-[#333] bg-[#0c0c0c] px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-white/70">
-                    {promo.code}
-                  </span>
+                  {promo.code && (
+                    <span className="rounded-full border border-dashed border-[#333] bg-[#0c0c0c] px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-white/70">
+                      {promo.code}
+                    </span>
+                  )}
                 </div>
               </Link>
             );
@@ -256,9 +258,11 @@ function MostPopular() {
                 </span>
                 <span className="flex shrink-0 flex-col items-end gap-1">
                   <OffPill label={promo.off} />
-                  <span className="rounded-full border border-dashed border-[#333] bg-[#0c0c0c] px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-white/70">
-                    {promo.code}
-                  </span>
+                  {promo.code && (
+                    <span className="rounded-full border border-dashed border-[#333] bg-[#0c0c0c] px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-white/70">
+                      {promo.code}
+                    </span>
+                  )}
                 </span>
               </Link>
             </li>
@@ -565,7 +569,7 @@ function PreviewTable() {
 
                   <div className="flex flex-col items-center gap-1.5 border-r border-[#1c1c1c] px-3">
                     <OffPill label={promo.off} />
-                    <CodePill code={promo.code} />
+                    {promo.code && <CodePill code={promo.code} />}
                   </div>
 
                   <div className="flex justify-center px-3">

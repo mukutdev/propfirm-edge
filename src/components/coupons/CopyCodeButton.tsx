@@ -18,6 +18,8 @@ export function CopyCodeButton({
     setTimeout(() => setCopied(false), 2500);
   };
 
+  if (!code) return null;
+
   const cls =
     variant === "gradient"
       ? `btn-gradient ${size === "lg" ? "text-base py-3 px-6" : "text-xs py-2 px-3.5"}`

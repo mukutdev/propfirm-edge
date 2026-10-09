@@ -512,6 +512,7 @@ function Sidebar({ firm }: { firm: FirmDetail }) {
         <a href="#reviews" className="btn-ghost w-full mt-2 text-sm py-2.5">Read Trader Reviews</a>
 
         <div className="mt-5 pt-5 border-t border-[#222]">
+          {firm.couponCode && (<>
           <div className="text-[10px] uppercase tracking-wider text-[#888] mb-2">Exclusive Code</div>
           <div className="flex items-center gap-2">
             <code className="flex-1 bg-[#0a0a0a] border border-dashed border-[#7c3aed] rounded-md px-3 py-2 text-center font-mono text-sm">{firm.couponCode}</code>
@@ -519,6 +520,7 @@ function Sidebar({ firm }: { firm: FirmDetail }) {
               {copied ? <Check size={14} className="text-[#00d97e]" /> : <Copy size={14} />}
             </button>
           </div>
+          </>)}
           <div className="flex items-center gap-1.5 text-xs text-[#888] mt-3">
             <Clock size={12} /> Data checked <span className="text-white/90 font-semibold">{firm.lastUpdated}</span>
           </div>
