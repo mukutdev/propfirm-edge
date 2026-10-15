@@ -2,6 +2,7 @@ import { Youtube, MessageCircle, Twitter } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { SessionMiniWidget } from "@/components/shared/SessionStatus";
 import logoMark from "@/assets/logo-mark.png";
+import { TikTokIcon, TIKTOK_URL } from "@/components/shared/TikTokIcon";
 
 
 const cols: { title: string; items: { label: string; to: string }[] }[] = [
@@ -40,9 +41,14 @@ const cols: { title: string; items: { label: string; to: string }[] }[] = [
 
 const socials = [
   { Icon: Youtube, label: "YouTube" },
+  { Icon: TikTokIcon, label: "TikTok" },
   { Icon: MessageCircle, label: "Discord" },
   { Icon: Twitter, label: "X" },
 ];
+const socialHref: Record<string, string> = {
+  YouTube: "https://www.youtube.com/@hanumantrades",
+  TikTok: TIKTOK_URL,
+};
 
 export function Footer() {
   return (
@@ -69,8 +75,8 @@ export function Footer() {
             {socials.map(({ Icon, label }) => (
               <a
                 key={label}
-                href={label === "YouTube" ? "https://www.youtube.com/@hanumantrades" : "#"}
-                {...(label === "YouTube" ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                href={socialHref[label] ?? "#"}
+                {...(socialHref[label] ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                 aria-label={label}
                 className="group h-9 w-9 rounded-full border border-[#222] flex items-center justify-center text-white/70 transition-all hover:border-transparent hover:bg-gradient-brand hover:text-white"
               >
