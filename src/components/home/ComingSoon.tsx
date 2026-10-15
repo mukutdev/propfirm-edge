@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Youtube, MessageCircle, Twitter } from "lucide-react";
 import logoMark from "@/assets/logo-mark.png";
+import { TikTokIcon, TIKTOK_URL } from "@/components/shared/TikTokIcon";
 
 const features = [
   { icon: "📅", label: "Economic Calendar" },
@@ -10,6 +11,7 @@ const features = [
 
 const socials = [
   { Icon: Youtube, label: "YouTube", href: "https://www.youtube.com/@hanumantrades" },
+  { Icon: TikTokIcon, label: "TikTok", href: TIKTOK_URL },
   { Icon: MessageCircle, label: "Discord", href: "https://discord.com" },
   { Icon: Twitter, label: "Twitter / X", href: "https://twitter.com" },
 ];

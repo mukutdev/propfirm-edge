@@ -1,4 +1,5 @@
 import { Youtube, Twitter, MessageCircle } from "lucide-react";
+import { TikTokIcon, TIKTOK_URL } from "@/components/shared/TikTokIcon";
 
 export function Founder() {
   return (
@@ -43,14 +44,15 @@ export function Founder() {
           </div>
           <div className="mt-5 flex flex-wrap gap-2">
             {[
-              { Icon: Youtube, label: "YouTube" },
-              { Icon: Twitter, label: "Twitter" },
-              { Icon: MessageCircle, label: "Discord" },
-            ].map(({ Icon, label }) => (
+              { Icon: Youtube, label: "YouTube", href: "https://www.youtube.com/@hanumantrades" },
+              { Icon: TikTokIcon, label: "TikTok", href: TIKTOK_URL },
+              { Icon: Twitter, label: "Twitter", href: "" },
+              { Icon: MessageCircle, label: "Discord", href: "" },
+            ].map(({ Icon, label, href }) => (
               <a
                 key={label}
-                href={label === "YouTube" ? "https://www.youtube.com/@hanumantrades" : "#"}
-                {...(label === "YouTube" ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                href={href || "#"}
+                {...(href ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                 className="inline-flex items-center gap-2 rounded-full border border-[#2a2a2a] bg-[#141414] px-4 py-2 text-sm text-white transition hover:border-purple-500/50 hover:text-purple-300"
               >
                 <Icon size={16} />
