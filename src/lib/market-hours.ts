@@ -15,7 +15,7 @@ export type MarketSession = {
 /** Chart sessions — separate from the existing sessions clock definitions. */
 export const chartSessions: MarketSession[] = [
   
-  { key: "sydney", name: "Sydney", flag: "🇦🇺", tz: "Australia/Sydney", open: 9 * 60, close: 16 * 60, fill: "from-[#ec4899] to-[#f472b6]" },
+  { key: "sydney", name: "Sydney", flag: "🇦🇺", tz: "Australia/Sydney", open: 10 * 60, close: 16 * 60, fill: "from-[#ec4899] to-[#f472b6]" },
   { key: "tokyo", name: "Tokyo", flag: "🇯🇵", tz: "Asia/Tokyo", open: 9 * 60, close: 15 * 60 + 30, breaks: [[11 * 60 + 30, 12 * 60 + 30]], fill: "from-[#7c3aed] to-[#a855f7]" },
   { key: "london", name: "London", flag: "🇬🇧", tz: "Europe/London", open: 8 * 60, close: 16 * 60 + 30, fill: "from-[#6366f1] to-[#8b5cf6]" },
   { key: "newyork", name: "New York", flag: "🇺🇸", tz: "America/New_York", open: 9 * 60 + 30, close: 16 * 60, fill: "from-[#ec4899] to-[#7c3aed]" },
