@@ -4,7 +4,7 @@ export const sessions: Session[] = [
   { name: "Sydney", short: "SYD", tz: "Australia/Sydney", open: 7, close: 16 },
   { name: "Tokyo", short: "TYO", tz: "Asia/Tokyo", open: 9, close: 15.5, breaks: [[11.5, 12.5]] },
   { name: "London", short: "LDN", tz: "Europe/London", open: 8, close: 17 },
-  { name: "New York", short: "NY", tz: "America/New_York", open: 8, close: 17 },
+  { name: "New York", short: "NY", tz: "America/New_York", open: 9.5, close: 16 },
 ];
 
 export function zonedParts(date: Date, tz: string) {
