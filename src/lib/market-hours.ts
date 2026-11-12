@@ -6,6 +6,8 @@ export type MarketSession = {
   /** local open/close in minutes from midnight (session tz) */
   open: number;
   close: number;
+  /** intraday closed gaps (local minutes), e.g. Tokyo lunch break */
+  breaks?: [number, number][];
   /** gradient classes for the filled bar */
   fill: string;
 };
@@ -14,7 +16,7 @@ export type MarketSession = {
 export const chartSessions: MarketSession[] = [
   
   { key: "sydney", name: "Sydney", flag: "🇦🇺", tz: "Australia/Sydney", open: 9 * 60, close: 16 * 60, fill: "from-[#ec4899] to-[#f472b6]" },
-  { key: "tokyo", name: "Tokyo", flag: "🇯🇵", tz: "Asia/Tokyo", open: 9 * 60, close: 18 * 60, fill: "from-[#7c3aed] to-[#a855f7]" },
+  { key: "tokyo", name: "Tokyo", flag: "🇯🇵", tz: "Asia/Tokyo", open: 9 * 60, close: 15 * 60 + 30, breaks: [[11 * 60 + 30, 12 * 60 + 30]], fill: "from-[#7c3aed] to-[#a855f7]" },
   { key: "london", name: "London", flag: "🇬🇧", tz: "Europe/London", open: 8 * 60, close: 16 * 60 + 30, fill: "from-[#6366f1] to-[#8b5cf6]" },
   { key: "newyork", name: "New York", flag: "🇺🇸", tz: "America/New_York", open: 9 * 60 + 30, close: 16 * 60, fill: "from-[#ec4899] to-[#7c3aed]" },
 ];
@@ -61,6 +63,7 @@ export function fmtHM(mins: number) {
 export function isOpenAt(date: Date, s: MarketSession): boolean {
   const { minutes, weekday } = zoneParts(date, s.tz);
   if (weekday === 0 || weekday === 6) return false;
+  if (s.breaks?.some(([a, b]) => minutes >= a && minutes < b)) return false;
   return minutes >= s.open && minutes < s.close;
 }
 
