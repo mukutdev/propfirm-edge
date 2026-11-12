@@ -1,8 +1,8 @@
-export type Session = { name: string; short: string; tz: string; open: number; close: number };
+export type Session = { name: string; short: string; tz: string; open: number; close: number; breaks?: [number, number][] };
 
 export const sessions: Session[] = [
   { name: "Sydney", short: "SYD", tz: "Australia/Sydney", open: 7, close: 16 },
-  { name: "Tokyo", short: "TYO", tz: "Asia/Tokyo", open: 9, close: 18 },
+  { name: "Tokyo", short: "TYO", tz: "Asia/Tokyo", open: 9, close: 15.5, breaks: [[11.5, 12.5]] },
   { name: "London", short: "LDN", tz: "Europe/London", open: 8, close: 17 },
   { name: "New York", short: "NY", tz: "America/New_York", open: 8, close: 17 },
 ];
@@ -60,14 +60,24 @@ export function sessionState(date: Date, s: Session) {
   const { hour, minute, weekday } = zonedParts(date, s.tz);
   const now = hour * 60 + minute;
   const weekend = weekday === "Sat" || weekday === "Sun";
-  const openM = s.open * 60;
-  const closeM = s.close * 60;
+  // Open windows (local minutes), splitting around any intraday breaks.
+  const windows: [number, number][] = [];
+  let start = s.open * 60;
+  for (const [a, b] of s.breaks ?? []) {
+    windows.push([start, a * 60]);
+    start = b * 60;
+  }
+  windows.push([start, s.close * 60]);
 
-  const isOpen = !weekend && now >= openM && now < closeM;
+  const current = weekend ? undefined : windows.find(([o, c]) => now >= o && now < c);
+  const isOpen = Boolean(current);
 
-  const target = isOpen ? closeM : openM;
-  let diff = target - now;
-  if (diff <= 0) diff += 24 * 60;
+  let diff: number;
+  if (current) diff = current[1] - now;
+  else {
+    const nextOpen = windows.find(([o]) => o > now);
+    diff = nextOpen && !weekend ? nextOpen[0] - now : windows[0][0] - now + 24 * 60;
+  }
 
   return { isOpen, label: `${isOpen ? "Closes in" : "Opens in"} ${fmtDuration(diff)}` };
 }
