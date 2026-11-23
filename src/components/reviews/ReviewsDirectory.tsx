@@ -163,6 +163,7 @@ export function ReviewsDirectory() {
     <>
       <div className="sticky top-16 z-30 border-y border-border bg-card/95 backdrop-blur-md">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-4 md:flex-row md:items-center md:justify-between">
+          {categories.length > 2 ? (
           <div className="flex gap-2 overflow-x-auto" role="tablist" aria-label="Market">
             {categories.map((c) => (
               <button
@@ -178,6 +179,7 @@ export function ReviewsDirectory() {
               </button>
             ))}
           </div>
+          ) : <div />}
           <div className="flex items-center gap-3">
             <label htmlFor="reviews-sort" className="text-xs uppercase tracking-wider text-muted-foreground">Sort</label>
             <select
