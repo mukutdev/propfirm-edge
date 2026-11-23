@@ -122,6 +122,7 @@ export type Database = {
           instrument_list: string[]
           is_active: boolean
           max_account: string
+          max_accounts: number | null
           name: string
           payout_frequency: string
           platforms: string[]
@@ -132,6 +133,7 @@ export type Database = {
           rating: number
           recommended: string
           slug: string
+          sort_order: number | null
           trustpilot_score: number | null
           trustpilot_updated_at: string | null
           trustpilot_url: string | null
@@ -153,6 +155,7 @@ export type Database = {
           instrument_list?: string[]
           is_active?: boolean
           max_account?: string
+          max_accounts?: number | null
           name: string
           payout_frequency?: string
           platforms?: string[]
@@ -163,6 +166,7 @@ export type Database = {
           rating?: number
           recommended?: string
           slug: string
+          sort_order?: number | null
           trustpilot_score?: number | null
           trustpilot_updated_at?: string | null
           trustpilot_url?: string | null
@@ -184,6 +188,7 @@ export type Database = {
           instrument_list?: string[]
           is_active?: boolean
           max_account?: string
+          max_accounts?: number | null
           name?: string
           payout_frequency?: string
           platforms?: string[]
@@ -194,6 +199,7 @@ export type Database = {
           rating?: number
           recommended?: string
           slug?: string
+          sort_order?: number | null
           trustpilot_score?: number | null
           trustpilot_updated_at?: string | null
           trustpilot_url?: string | null

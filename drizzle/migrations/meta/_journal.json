@@ -15,6 +15,13 @@
       "when": 1795447201942,
       "tag": "0001_trustpilot_score_promo_codes_active",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1795447850479,
+      "tag": "0002_max_accounts_sort_order",
+      "breakpoints": true
     }
   ]
 }

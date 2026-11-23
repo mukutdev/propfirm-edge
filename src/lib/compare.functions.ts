@@ -9,6 +9,8 @@ export type CompareFirmRow = {
   name: string;
   trustpilotScore: number | null;
   trustpilotUpdatedAt: string | null;
+  maxAccounts: number | null;
+  sortOrder: number | null;
   maxAccount: string;
   profitSplit: string;
   monthlyFee: string;
@@ -24,11 +26,12 @@ export type CompareFirmRow = {
 };
 
 const COLUMNS =
-  "id, slug, name, trustpilot_score, trustpilot_updated_at, max_account, profit_split, challenge_fee, drawdown_type, payout_frequency, evaluation_type, platforms, assets, promo_codes, affiliate_url, trustpilot_url, funding_numeric, fee_numeric";
+  "id, slug, name, trustpilot_score, trustpilot_updated_at, max_accounts, sort_order, max_account, profit_split, challenge_fee, drawdown_type, payout_frequency, evaluation_type, platforms, assets, promo_codes, affiliate_url, trustpilot_url, funding_numeric, fee_numeric";
 
 const SORT_COLUMNS: Record<string, string> = {
   rating: "trustpilot_score",
   maxFunding: "funding_numeric",
+  maxAccounts: "max_accounts",
   fee: "fee_numeric",
   name: "name",
   drawdownType: "drawdown_type",
@@ -57,6 +60,8 @@ function mapRow(f: Record<string, unknown>): CompareFirmRow {
     name: String(f["name"]),
     trustpilotScore: f["trustpilot_score"] == null ? null : Number(f["trustpilot_score"]),
     trustpilotUpdatedAt: f["trustpilot_updated_at"] ? String(f["trustpilot_updated_at"]) : null,
+    maxAccounts: f["max_accounts"] == null ? null : Number(f["max_accounts"]),
+    sortOrder: f["sort_order"] == null ? null : Number(f["sort_order"]),
     maxAccount: String(f["max_account"] ?? ""),
     profitSplit: String(f["profit_split"] ?? ""),
     monthlyFee: String(f["challenge_fee"] ?? ""),
@@ -95,7 +100,8 @@ export const listCompareFirms = createServerFn({ method: "GET" })
     const { data: rows, error } = await query;
     if (error) throw new Error(error.message);
     const mapped = (rows ?? []).map((r) => mapRow(r as Record<string, unknown>));
-    if (column === "trustpilot_score") mapped.sort((a, b) => compareTrustpilot(a.trustpilotScore, b.trustpilotScore, ascending ? "asc" : "desc"));
+    if (column === "trustpilot_score") mapped.sort((a, b) => compareTrustpilot(a.trustpilotScore, b.trustpilotScore, ascending ? "asc" : "desc") || (a.sortOrder ?? 999) - (b.sortOrder ?? 999));
+    if (column === "max_accounts") mapped.sort((a, b) => (a.maxAccounts == null ? 1 : b.maxAccounts == null ? -1 : ascending ? a.maxAccounts - b.maxAccounts : b.maxAccounts - a.maxAccounts));
     return mapped;
   });
 

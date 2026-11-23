@@ -1,0 +1,1 @@
+ALTER TABLE public.prop_firms ADD COLUMN IF NOT EXISTS max_accounts integer, ADD COLUMN IF NOT EXISTS sort_order integer;

@@ -6,7 +6,7 @@ import { Star, ArrowUpDown, Loader2, Check, Copy, ChevronDown } from "lucide-rea
 import { listCompareFirms, type CompareFirmRow } from "@/lib/compare.functions";
 import { formatTrustpilotDate, type PromoCode } from "@/lib/promo-codes";
 
-type SortKey = "name" | "rating" | "maxFunding";
+type SortKey = "name" | "rating" | "maxAccounts";
 
 function RatingStars({ firm }: { firm: CompareFirmRow }) {
   const score = firm.trustpilotScore;
@@ -29,6 +29,7 @@ function RatingStars({ firm }: { firm: CompareFirmRow }) {
       <span className="text-sm font-semibold">{score == null ? "N/A" : score.toFixed(1)}</span>
     </span>
   );
+  if (score == null) return <span className="text-xs text-muted-foreground">Rating coming soon</span>;
   const title = score == null ? "No Trustpilot rating yet" : `Trustpilot rating${date ? `, updated ${date}` : ""}`;
   if (!firm.trustpilotUrl || score == null) return <span title={title}>{inner}</span>;
   return (
@@ -169,7 +170,7 @@ export function CompareTable() {
             <tr className="border-b border-border text-left text-[10px] font-semibold tracking-wider text-muted-foreground">
               <th className="w-[22%] pb-3 pr-3"><SortHead k="name" label="Firm Name" /></th>
               <th className="w-[15%] pb-3 pr-3"><SortHead k="rating" label="Rating" /></th>
-              <th className="w-[10%] pb-3 pr-3"><SortHead k="maxFunding" label="Max Accounts" /></th>
+              <th className="w-[10%] pb-3 pr-3"><SortHead k="maxAccounts" label="Max Accounts" /></th>
               <th className="w-[17%] pb-3 pr-3 uppercase">Trading Platforms</th>
               <th className="w-[9%] pb-3 pr-3 uppercase">Discount</th>
               <th className="w-[19%] pb-3 pr-3 uppercase">Discount Code</th>
@@ -188,7 +189,7 @@ export function CompareTable() {
                   </div>
                 </td>
                 <td className="py-5 pr-3"><RatingStars firm={firm} /></td>
-                <td className="py-5 pr-3 font-semibold">{firm.maxAccount || "—"}</td>
+                <td className="py-5 pr-3 font-semibold">{firm.maxAccounts ?? "-"}</td>
                 <td className="py-5 pr-3 text-muted-foreground"><span className="line-clamp-2">{firm.platforms.join(", ") || "—"}</span></td>
                 <td className="py-5 pr-3 font-semibold">{discountOf(firm)}</td>
                 <td className="py-5 pr-3"><CodeCell codes={firm.promoCodes} /></td>
