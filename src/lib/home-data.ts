@@ -7,20 +7,19 @@ export const tickerItems = [
   "Legends Trading • Pro Trader Program",
   "MyFundedFutures • $0 Activation",
   "Funded Futures Network • Scalable Accounts",
-  "DayTraders.com • Trusted Veteran Firm",
-  "Bluenox • 2-Step Evaluation",
   "TradeDay • No Daily Drawdown",
 ];
 
 export type Firm = {
   name: string;
-  rating: number;
   maxFunding: string;
   split: string;
   fee: string;
   badge: string;
   badgeColor: "purple" | "pink" | "green";
-  trustpilotUrl?: string;
+  trustpilotUrl?: string | undefined;
+  trustpilotScore?: number | null;
+  trustpilotUpdatedAt?: string | null;
 };
 
 export type ReviewFirm = Firm & {
@@ -33,17 +32,15 @@ export type ReviewFirm = Firm & {
 };
 
 export const featuredFirms: Firm[] = [
-  { name: "Apex Trader Funding", rating: 4.8, maxFunding: "$300K", split: "90%", fee: "$137/mo", badge: "Editor's Pick", badgeColor: "purple" },
-  { name: "MyFundedFutures", rating: 4.7, maxFunding: "$150K", split: "90%", fee: "$80/mo", badge: "Fast Payouts", badgeColor: "pink" },
-  { name: "TradeDay", rating: 4.6, maxFunding: "$100K", split: "85%", fee: "$99/mo", badge: "Best for Beginners", badgeColor: "green" },
-  { name: "Take Profit Trader", rating: 4.5, maxFunding: "$150K", split: "90%", fee: "$150/mo", badge: "1-Step Eval", badgeColor: "purple" },
-  { name: "FundedNext Futures", rating: 4.5, maxFunding: "$200K", split: "90%", fee: "$99/mo", badge: "New & Trusted", badgeColor: "pink" },
-  { name: "Tradeify", rating: 4.4, maxFunding: "$100K", split: "90%", fee: "$107/mo", badge: "Flexible Rules", badgeColor: "green" },
-  { name: "Bluenox", rating: 4.3, maxFunding: "$250K", split: "90%", fee: "$115/mo", badge: "Best Value", badgeColor: "purple" },
-  { name: "Funded Futures Network", rating: 4.3, maxFunding: "$100K", split: "90%", fee: "$97/mo", badge: "Community Pick", badgeColor: "pink" },
-  { name: "Lucid Trading", rating: 4.2, maxFunding: "$150K", split: "90%", fee: "$125/mo", badge: "Fast Funding", badgeColor: "green" },
-  { name: "Legends Trading", rating: 4.1, maxFunding: "$150K", split: "85%", fee: "$130/mo", badge: "Pro Program", badgeColor: "purple" },
-  { name: "DayTraders.com", rating: 4.0, maxFunding: "$100K", split: "80%", fee: "$99/mo", badge: "Veteran Firm", badgeColor: "pink" },
+  { name: "Apex Trader Funding", maxFunding: "$300K", split: "90%", fee: "$137/mo", badge: "Editor's Pick", badgeColor: "purple" },
+  { name: "MyFundedFutures", maxFunding: "$150K", split: "90%", fee: "$80/mo", badge: "Fast Payouts", badgeColor: "pink" },
+  { name: "TradeDay", maxFunding: "$100K", split: "85%", fee: "$99/mo", badge: "Best for Beginners", badgeColor: "green" },
+  { name: "Take Profit Trader", maxFunding: "$150K", split: "90%", fee: "$150/mo", badge: "1-Step Eval", badgeColor: "purple" },
+  { name: "FundedNext Futures", maxFunding: "$200K", split: "90%", fee: "$99/mo", badge: "New & Trusted", badgeColor: "pink" },
+  { name: "Tradeify", maxFunding: "$100K", split: "90%", fee: "$107/mo", badge: "Flexible Rules", badgeColor: "green" },
+  { name: "Funded Futures Network", maxFunding: "$100K", split: "90%", fee: "$97/mo", badge: "Community Pick", badgeColor: "pink" },
+  { name: "Lucid Trading", maxFunding: "$150K", split: "90%", fee: "$125/mo", badge: "Fast Funding", badgeColor: "green" },
+  { name: "Legends Trading", maxFunding: "$150K", split: "85%", fee: "$130/mo", badge: "Pro Program", badgeColor: "purple" },
 ];
 
 export type ComparisonRow = {
@@ -52,16 +49,15 @@ export type ComparisonRow = {
   split: string;
   drawdown: string;
   futures: string;
-  rating: string;
   highlight?: boolean;
 };
 
 export const comparisonRows: ComparisonRow[] = [
-  { firm: "Apex Trader Funding", maxAccount: "$300K", split: "90%", drawdown: "Trailing", futures: "Yes", rating: "4.8 / 5", highlight: true },
-  { firm: "MyFundedFutures", maxAccount: "$150K", split: "90%", drawdown: "Intraday", futures: "Yes", rating: "4.7 / 5" },
-  { firm: "TradeDay", maxAccount: "$100K", split: "85%", drawdown: "End of Day", futures: "Yes", rating: "4.6 / 5" },
-  { firm: "Take Profit Trader", maxAccount: "$150K", split: "90%", drawdown: "Static", futures: "Yes", rating: "4.5 / 5" },
-  { firm: "FundedNext Futures", maxAccount: "$200K", split: "90%", drawdown: "Trailing", futures: "Yes", rating: "4.5 / 5" },
+  { firm: "Apex Trader Funding", maxAccount: "$300K", split: "90%", drawdown: "Trailing", futures: "Yes", highlight: true },
+  { firm: "MyFundedFutures", maxAccount: "$150K", split: "90%", drawdown: "Intraday", futures: "Yes" },
+  { firm: "TradeDay", maxAccount: "$100K", split: "85%", drawdown: "End of Day", futures: "Yes" },
+  { firm: "Take Profit Trader", maxAccount: "$150K", split: "90%", drawdown: "Static", futures: "Yes" },
+  { firm: "FundedNext Futures", maxAccount: "$200K", split: "90%", drawdown: "Trailing", futures: "Yes" },
 ];
 
 export const newsItems = [
@@ -88,7 +84,6 @@ export const newsItems = [
 export const reviewFirms: ReviewFirm[] = [
   {
     name: "Apex Trader Funding",
-    rating: 4.8,
     maxFunding: "$300K", fundingNumeric: 300000,
     split: "90%",
     fee: "$137/mo", feeNumeric: 137,
@@ -100,7 +95,6 @@ export const reviewFirms: ReviewFirm[] = [
   },
   {
     name: "MyFundedFutures",
-    rating: 4.7,
     maxFunding: "$150K", fundingNumeric: 150000,
     split: "90%",
     fee: "$80/mo", feeNumeric: 80,
@@ -112,7 +106,6 @@ export const reviewFirms: ReviewFirm[] = [
   },
   {
     name: "TradeDay",
-    rating: 4.6,
     maxFunding: "$100K", fundingNumeric: 100000,
     split: "85%",
     fee: "$99/mo", feeNumeric: 99,
@@ -124,7 +117,6 @@ export const reviewFirms: ReviewFirm[] = [
   },
   {
     name: "Take Profit Trader",
-    rating: 4.5,
     maxFunding: "$150K", fundingNumeric: 150000,
     split: "90%",
     fee: "$150/mo", feeNumeric: 150,
@@ -136,7 +128,6 @@ export const reviewFirms: ReviewFirm[] = [
   },
   {
     name: "FundedNext Futures",
-    rating: 4.5,
     maxFunding: "$200K", fundingNumeric: 200000,
     split: "90%",
     fee: "$99/mo", feeNumeric: 99,
@@ -148,7 +139,6 @@ export const reviewFirms: ReviewFirm[] = [
   },
   {
     name: "Tradeify",
-    rating: 4.4,
     maxFunding: "$100K", fundingNumeric: 100000,
     split: "90%",
     fee: "$107/mo", feeNumeric: 107,
@@ -159,20 +149,7 @@ export const reviewFirms: ReviewFirm[] = [
     addedOrder: 8,
   },
   {
-    name: "Bluenox",
-    rating: 4.3,
-    maxFunding: "$250K", fundingNumeric: 250000,
-    split: "90%",
-    fee: "$115/mo", feeNumeric: 115,
-    badge: "", badgeColor: "purple",
-    description: "European-based 2-step evaluation with strong customer support and fast KYC.",
-    markets: ["NQ", "ES", "DAX"],
-    categories: ["Futures"],
-    addedOrder: 9,
-  },
-  {
     name: "Funded Futures Network",
-    rating: 4.3,
     maxFunding: "$100K", fundingNumeric: 100000,
     split: "90%",
     fee: "$97/mo", feeNumeric: 97,
@@ -184,7 +161,6 @@ export const reviewFirms: ReviewFirm[] = [
   },
   {
     name: "Lucid Trading",
-    rating: 4.2,
     maxFunding: "$150K", fundingNumeric: 150000,
     split: "90%",
     fee: "$125/mo", feeNumeric: 125,
@@ -196,7 +172,6 @@ export const reviewFirms: ReviewFirm[] = [
   },
   {
     name: "Legends Trading",
-    rating: 4.1,
     maxFunding: "$150K", fundingNumeric: 150000,
     split: "85%",
     fee: "$130/mo", feeNumeric: 130,
@@ -205,29 +180,5 @@ export const reviewFirms: ReviewFirm[] = [
     markets: ["NQ", "ES", "CL"],
     categories: ["Futures"],
     addedOrder: 3,
-  },
-  {
-    name: "DayTraders.com",
-    rating: 4.0,
-    maxFunding: "$100K", fundingNumeric: 100000,
-    split: "80%",
-    fee: "$99/mo", feeNumeric: 99,
-    badge: "", badgeColor: "pink",
-    description: "Veteran prop firm with multi-asset programs and a track record going back years.",
-    markets: ["NQ", "ES", "EURUSD", "BTC"],
-    categories: ["Futures", "Stocks"],
-    addedOrder: 1,
-  },
-  {
-    name: "Earn2Trade",
-    rating: 4.2,
-    maxFunding: "$200K", fundingNumeric: 200000,
-    split: "80%",
-    fee: "$150/mo", feeNumeric: 150,
-    badge: "", badgeColor: "green",
-    description: "Established education-first prop firm with the Gauntlet Mini evaluation.",
-    markets: ["NQ", "ES", "CL", "EURUSD"],
-    categories: ["Futures"],
-    addedOrder: 2,
   },
 ];

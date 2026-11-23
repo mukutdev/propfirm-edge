@@ -5,6 +5,8 @@ import { useQuery } from "@tanstack/react-query";
 import { Star, LayoutGrid, List, Copy, X, Check, ExternalLink } from "lucide-react";
 import { reviewFirms, type ReviewFirm } from "@/lib/home-data";
 import { listCompareFirms } from "@/lib/compare.functions";
+import { compareTrustpilot } from "@/lib/promo-codes";
+import { TrustpilotScore } from "@/components/shared/TrustpilotScore";
 
 function firmSlug(name: string) {
   return name
@@ -22,7 +24,7 @@ type ViewMode = "grid" | "list";
 const categories: Category[] = ["All", "Futures", "Stocks"];
 
 const sortLabels: Record<SortKey, string> = {
-  rating: "Top Rated",
+  rating: "Trustpilot Score",
   fee: "Lowest Fee",
   funding: "Highest Funding",
   newest: "Newest",
@@ -32,17 +34,6 @@ function badgeClass(color: ReviewFirm["badgeColor"]) {
   if (color === "purple") return "bg-gradient-brand text-white";
   if (color === "pink") return "bg-gradient-brand text-white";
   return "bg-gradient-brand text-white";
-}
-
-function Stars({ rating }: { rating: number }) {
-  return (
-    <div className="flex items-center gap-1">
-      {[1, 2, 3, 4, 5].map((i) => (
-        <Star key={i} size={14} className={i <= Math.round(rating) ? "fill-[#facc15] text-[#facc15]" : "text-[#333]"} />
-      ))}
-      <span className="text-xs text-white/90 ml-2 font-medium">{rating.toFixed(1)}/5</span>
-    </div>
-  );
 }
 
 function MarketPills({ markets }: { markets: string[] }) {
@@ -103,8 +94,8 @@ function GridCard({
         <div>
           <h3 className="font-display font-bold text-xl">{firm.name}</h3>
           <div className="mt-2 flex items-center justify-between gap-3">
-            <Stars rating={firm.rating} />
-            {firm.trustpilotUrl && (
+            <TrustpilotScore score={firm.trustpilotScore ?? null} url={firm.trustpilotUrl} updatedAt={firm.trustpilotUpdatedAt} />
+            {firm.trustpilotUrl && firm.trustpilotScore == null && (
               <a
                 href={firm.trustpilotUrl}
                 target="_blank"
@@ -173,7 +164,7 @@ function ListCard({
             </span>
           )}
         </div>
-        <div className="mt-1.5"><Stars rating={firm.rating} /></div>
+        <div className="mt-1.5"><TrustpilotScore score={firm.trustpilotScore ?? null} url={firm.trustpilotUrl} updatedAt={firm.trustpilotUpdatedAt} /></div>
         <p className="text-sm text-[#888] mt-2 line-clamp-1">{firm.description}</p>
         <div className="mt-3"><MarketPills markets={firm.markets} /></div>
       </div>
@@ -341,12 +332,21 @@ export function ReviewsDirectory() {
   });
 
   const filtered = useMemo(() => {
-    const trustpilotBySlug = new Map((databaseFirms ?? []).map((firm) => [firm.slug, firm.trustpilotUrl]));
+    const live = new Map((databaseFirms ?? []).map((firm) => [firm.slug, firm]));
     const list = reviewFirms
-      .map((firm) => ({ ...firm, trustpilotUrl: trustpilotBySlug.get(firmSlug(firm.name)) }))
+      .filter((firm) => !databaseFirms || live.has(firmSlug(firm.name)))
+      .map((firm) => {
+        const row = live.get(firmSlug(firm.name));
+        return {
+          ...firm,
+          trustpilotUrl: row?.trustpilotUrl,
+          trustpilotScore: row?.trustpilotScore ?? null,
+          trustpilotUpdatedAt: row?.trustpilotUpdatedAt ?? null,
+        };
+      })
       .filter((f) => category === "All" || f.categories.includes(category as Exclude<Category, "All">));
     const sorted = [...list].sort((a, b) => {
-      if (sort === "rating") return b.rating - a.rating;
+      if (sort === "rating") return compareTrustpilot(a.trustpilotScore, b.trustpilotScore);
       if (sort === "fee") return a.feeNumeric - b.feeNumeric;
       if (sort === "funding") return b.fundingNumeric - a.fundingNumeric;
       return b.addedOrder - a.addedOrder;

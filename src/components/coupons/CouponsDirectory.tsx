@@ -37,6 +37,8 @@ function expiryLabel(row: CouponRow) {
 }
 
 function discountLabel(row: CouponRow) {
+  const label = row.codes[0]?.discountLabel;
+  if (label) return label.toUpperCase();
   if (row.dealType === "free_trial") return "FREE TRIAL";
   if (row.dealType === "special") return row.discount > 0 ? `${row.discount}% + PERKS` : "SPECIAL OFFER";
   return `${row.discount}% OFF`;
@@ -44,13 +46,13 @@ function discountLabel(row: CouponRow) {
 
 function headlineFor(row: CouponRow) {
   if (row.dealType === "free_trial") return `Test ${row.name}'s evaluation free before you fund`;
-  if (row.dealType === "special") return `Bundled perks on every ${row.name} account tier`;
+  if (row.dealType === "special") return `${row.codes[0]?.discountLabel || "Special offer"} on ${row.name}`;
   return `${row.discount}% off every ${row.name} evaluation`;
 }
 
 function descriptionFor(row: CouponRow) {
   if (row.dealType === "free_trial") return `Run the ${row.name} eval on live data with no upfront fee — same drawdown rules, same payout path.`;
-  if (row.dealType === "special") return `Reset credits and scaling perks stacked on top of the standard ${row.name} evaluation terms.`;
+  if (row.dealType === "special") return `Enter the code at checkout on ${row.name}'s site to get their current best deal.`;
   return `Applies to all account sizes at checkout — cuts your monthly eval fee from ${row.challengeFee || "list price"} down before your first trade.`;
 }
 
@@ -90,10 +92,15 @@ function CouponCard({ row }: { row: CouponRow }) {
           <p className="text-sm text-[#888] mt-2 leading-relaxed line-clamp-2">{descriptionFor(row)}</p>
         </div>
 
-        <div className="flex items-center gap-2 border border-dashed border-[#7c3aed] rounded-lg px-3 py-2 bg-[#0a0a0a]">
-          <code className="flex-1 font-mono font-bold text-sm text-gradient tracking-wider truncate">{row.code}</code>
-          <CopyCodeButton code={row.code} />
-        </div>
+        {row.codes.map((c) => (
+          <div key={c.code} className="flex items-center gap-2 border border-dashed border-[#7c3aed] rounded-lg px-3 py-2 bg-[#0a0a0a]">
+            <div className="flex-1 min-w-0">
+              <code className="block font-mono font-bold text-sm text-gradient tracking-wider truncate">{c.code}</code>
+              <span className="block text-[10px] text-[#888]">{c.discountLabel}{c.accountType ? ` · ${c.accountType}` : ""}</span>
+            </div>
+            <CopyCodeButton code={c.code} />
+          </div>
+        ))}
 
         <div className="flex items-center justify-between text-xs">
           <span className={isExpiringSoon(row) ? "text-[#F59E0B] animate-pulse" : "text-[#888]"}>
@@ -223,9 +230,14 @@ function AllDealsTable({ list }: { list: CouponRow[] }) {
               <td className="px-5 py-4 font-semibold">{c.name}</td>
               <td className="px-5 py-4 text-gradient font-semibold">{discountLabel(c)}</td>
               <td className="px-5 py-4">
-                <div className="flex items-center gap-2">
-                  <code className="font-mono text-xs px-2 py-1 rounded bg-[#0a0a0a] border border-dashed border-[#7c3aed] text-white">{c.code}</code>
-                  <CopyCodeButton code={c.code} />
+                <div className="flex flex-col gap-2">
+                  {c.codes.map((pc) => (
+                    <div key={pc.code} className="flex items-center gap-2">
+                      <code className="font-mono text-xs px-2 py-1 rounded bg-[#0a0a0a] border border-dashed border-[#7c3aed] text-white">{pc.code}</code>
+                      {pc.accountType && <span className="text-[10px] text-[#888]">{pc.accountType}</span>}
+                      <CopyCodeButton code={pc.code} />
+                    </div>
+                  ))}
                 </div>
               </td>
               <td className="px-5 py-4 text-[#888]">{expiryLabel(c)}</td>

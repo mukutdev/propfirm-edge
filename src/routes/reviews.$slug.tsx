@@ -23,7 +23,7 @@ export const Route = createFileRoute("/reviews/$slug")({
     }
     const { firm, averageRating, reviewCount } = loaderData;
     const title = `${firm.name} Review (${new Date().getFullYear()}) — Evaluation, Drawdown & Payouts`;
-    const description = `${firm.name}: ${firm.stats.drawdownType} drawdown, ${firm.stats.profitSplit} split, ${firm.stats.payoutFrequency} payouts, up to ${firm.stats.maxAccount} allocation. ${reviewCount} trader reviews averaging ${averageRating || firm.rating}/5.`;
+    const description = `${firm.name}: ${firm.stats.drawdownType} drawdown, ${firm.stats.profitSplit} split, ${firm.stats.payoutFrequency} payouts, up to ${firm.stats.maxAccount} allocation.${reviewCount ? ` ${reviewCount} trader reviews averaging ${averageRating}/5.` : ""}`;
     return {
       meta: [
         { title },

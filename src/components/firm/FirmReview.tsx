@@ -22,23 +22,6 @@ const sections = [
   { id: "alternatives", label: "Alternatives" },
 ];
 
-function GradientStars({ rating, size = 18 }: { rating: number; size?: number }) {
-  return (
-    <div className="flex items-center gap-1">
-      {[1, 2, 3, 4, 5].map((i) => {
-        const filled = i <= Math.round(rating);
-        return (
-          <Star
-            key={i}
-            size={size}
-            className={filled ? "text-[#facc15] fill-[#facc15]" : "text-[#333]"}
-          />
-        );
-      })}
-    </div>
-  );
-}
-
 function ProgressBar({ score, animate }: { score: number; animate: boolean }) {
   const pct = (score / 5) * 100;
   return (

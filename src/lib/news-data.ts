@@ -19,7 +19,7 @@ export const breakingHeadlines: string[] = [
   "MyFundedFutures eliminates activation fees on all PA accounts",
   "NQ futures hit record high as tech rally accelerates",
   "Tradeify rolls out new flexible drawdown model — community reacts",
-  "Bluenox expands payout schedule to twice-weekly for funded traders",
+  "Tradeify expands payout schedule to twice-weekly for funded traders",
   "TradeDay removes daily drawdown rule on Pro accounts",
 ];
 
@@ -111,8 +111,8 @@ export const propFirmNews: NewsArticle[] = [
   },
   {
     id: "pf-3",
-    title: "Bluenox Launches Weekly Payout Schedule For Funded Traders",
-    excerpt: "Bluenox is now paying out twice weekly, joining a small group of firms offering same-week withdrawals.",
+    title: "Tradeify Launches Weekly Payout Schedule For Funded Traders",
+    excerpt: "Tradeify is now paying out twice weekly, joining a small group of firms offering same-week withdrawals.",
     category: "Prop Firms",
     author: "David Kim",
     date: "June 2, 2026",

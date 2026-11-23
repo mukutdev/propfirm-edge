@@ -19,12 +19,9 @@ const extras: Record<string, Omit<CompareFirm, keyof ReviewFirm>> = {
   "Take Profit Trader": { drawdownType: "Static", dailyLoss: "None", trailingStop: "$2,500", minDays: "5 days", payoutSpeed: "Weekly", payoutSpeedDays: 7 },
   "FundedNext Futures": { drawdownType: "Trailing", dailyLoss: "5%", trailingStop: "$3,000", minDays: "5 days", payoutSpeed: "1–2 days", payoutSpeedDays: 2 },
   "Tradeify": { drawdownType: "Trailing", dailyLoss: "None", trailingStop: "$2,500", minDays: "0 days", payoutSpeed: "1–3 days", payoutSpeedDays: 3 },
-  "Bluenox": { drawdownType: "Static", dailyLoss: "4%", trailingStop: "$3,000", minDays: "5 days", payoutSpeed: "2–4 days", payoutSpeedDays: 4 },
   "Funded Futures Network": { drawdownType: "EOD", dailyLoss: "None", trailingStop: "$2,000", minDays: "1 day", payoutSpeed: "Weekly", payoutSpeedDays: 7 },
   "Lucid Trading": { drawdownType: "Trailing", dailyLoss: "None", trailingStop: "$2,500", minDays: "0 days", payoutSpeed: "Same day", payoutSpeedDays: 1 },
   "Legends Trading": { drawdownType: "Static", dailyLoss: "3%", trailingStop: "$3,000", minDays: "5 days", payoutSpeed: "Weekly", payoutSpeedDays: 7 },
-  "DayTraders.com": { drawdownType: "EOD", dailyLoss: "4%", trailingStop: "$3,500", minDays: "10 days", payoutSpeed: "Bi-weekly", payoutSpeedDays: 14 },
-  "Earn2Trade": { drawdownType: "Trailing", dailyLoss: "5%", trailingStop: "$2,000", minDays: "10 days", payoutSpeed: "1–2 days", payoutSpeedDays: 2 },
 };
 
 export const compareFirms: CompareFirm[] = reviewFirms.map((f) => ({

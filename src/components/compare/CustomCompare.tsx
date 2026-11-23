@@ -3,12 +3,13 @@ import { Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { Star, ExternalLink, Loader2 } from "lucide-react";
+import { TrustpilotScore } from "@/components/shared/TrustpilotScore";
 import { listCompareFirms, getFirmsByIds, type CompareFirmRow } from "@/lib/compare.functions";
 
 const slots = [0, 1, 2, 3, 4] as const;
 
 const statRows: { label: string; get: (f: CompareFirmRow) => string; positive?: boolean }[] = [
-  { label: "Our Rating", get: (f) => `${f.rating.toFixed(1)} / 5` },
+  { label: "Trustpilot", get: (f) => (f.trustpilotScore == null ? "N/A" : `${f.trustpilotScore.toFixed(1)} on Trustpilot`) },
   { label: "Max Funding", get: (f) => f.maxAccount },
   { label: "Profit Split", get: (f) => f.profitSplit, positive: true },
   { label: "Monthly Fee", get: (f) => f.monthlyFee },
@@ -42,7 +43,7 @@ export function CustomCompare() {
     .filter(Boolean) as CompareFirmRow[];
 
   const rows = results.data ?? [];
-  const maxRating = useMemo(() => Math.max(...rows.map((r) => r.rating), 0), [rows]);
+  const maxRating = useMemo(() => Math.max(...rows.map((r) => r.trustpilotScore ?? 0), 0), [rows]);
 
   function updateSlot(i: number, id: string) {
     setSelected((prev) => prev.map((v, idx) => (idx === i ? id : v)));
@@ -155,7 +156,7 @@ export function CustomCompare() {
             className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 animate-fade-in scroll-mt-24"
           >
             {rows.map((firm) => {
-              const isBest = firm.rating === maxRating;
+              const isBest = maxRating > 0 && firm.trustpilotScore === maxRating;
               return (
                 <div
                   key={firm.id}
@@ -171,9 +172,8 @@ export function CustomCompare() {
                     {firm.name}
                   </Link>
                   <div className="flex items-center gap-1.5 mt-1.5">
-                    <Star size={14} className="fill-[#facc15] text-[#facc15]" />
-                    <span className="text-sm font-semibold">{firm.rating.toFixed(1)} / 5</span>
-                    {isBest && <span className="text-[9px] uppercase tracking-wider text-[#c4a8ff]">Top rated</span>}
+                    <TrustpilotScore score={firm.trustpilotScore} url={firm.trustpilotUrl} updatedAt={firm.trustpilotUpdatedAt} />
+                    {isBest && <span className="text-[9px] uppercase tracking-wider text-[#c4a8ff]">Highest score</span>}
                   </div>
 
                   <dl className="mt-4 space-y-2 text-sm">

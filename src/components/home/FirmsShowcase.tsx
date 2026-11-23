@@ -16,6 +16,9 @@ import {
   SlidersHorizontal,
 } from "lucide-react";
 import { reviewFirms, type ReviewFirm } from "@/lib/home-data";
+import { useLiveFirms } from "@/hooks/use-trustpilot-scores";
+import { compareTrustpilot } from "@/lib/promo-codes";
+import { TrustpilotScore } from "@/components/shared/TrustpilotScore";
 import { useReveal } from "@/hooks/use-reveal";
 
 const slugify = (name: string) =>
@@ -23,18 +26,15 @@ const slugify = (name: string) =>
 
 type Promo = { off: string; code: string };
 const promos: Record<string, Promo> = {
-  "Apex Trader Funding": { off: "80% OFF", code: "" },
-  MyFundedFutures: { off: "50% OFF", code: "MATCH" },
-  TradeDay: { off: "40% OFF", code: "" },
-  "Take Profit Trader": { off: "35% OFF", code: "TPT35" },
-  "FundedNext Futures": { off: "45% OFF", code: "FNF45" },
-  Tradeify: { off: "30% OFF", code: "TDY30" },
-  Bluenox: { off: "25% OFF", code: "BLX25" },
-  "Funded Futures Network": { off: "20% OFF", code: "FFN20" },
-  "Lucid Trading": { off: "30% OFF", code: "LUCID30" },
-  "Legends Trading": { off: "25% OFF", code: "LEG25" },
-  "DayTraders.com": { off: "15% OFF", code: "DAY15" },
-  Earn2Trade: { off: "20% OFF", code: "E2T20" },
+  "Apex Trader Funding": { off: "90% OFF", code: "SAVENOW" },
+  MyFundedFutures: { off: "40% OFF", code: "CLUB" },
+  TradeDay: { off: "60% OFF", code: "SALE60" },
+  "Take Profit Trader": { off: "40% OFF", code: "NOFEE40" },
+  "FundedNext Futures": { off: "47% OFF", code: "FNDIRECT" },
+  Tradeify: { off: "30% OFF", code: "NOV" },
+  "Funded Futures Network": { off: "70% OFF", code: "Nexus" },
+  "Lucid Trading": { off: "BEST DEALS", code: "VAULT" },
+  "Legends Trading": { off: "30% OFF", code: "LTG" },
 };
 
 const countries: Record<string, { iso: string; code: string }> = {
@@ -44,26 +44,18 @@ const countries: Record<string, { iso: string; code: string }> = {
   "Take Profit Trader": { iso: "us", code: "US" },
   "FundedNext Futures": { iso: "ae", code: "AE" },
   Tradeify: { iso: "us", code: "US" },
-  Bluenox: { iso: "cz", code: "CZ" },
   "Funded Futures Network": { iso: "us", code: "US" },
   "Lucid Trading": { iso: "us", code: "US" },
   "Legends Trading": { iso: "ca", code: "CA" },
-  "DayTraders.com": { iso: "us", code: "US" },
-  Earn2Trade: { iso: "hu", code: "HU" },
 };
 
-const promoOf = (name: string): Promo => promos[name] ?? { off: "20% OFF", code: "" };
+const promoOf = (name: string): Promo => promos[name] ?? { off: "", code: "" };
 
-function Stars({ rating, size = 12 }: { rating: number; size?: number }) {
+function Score({ score }: { score: number | null }) {
   return (
-    <span className="flex items-center gap-0.5">
-      {[1, 2, 3, 4, 5].map((i) => (
-        <Star
-          key={i}
-          size={size}
-          className={i <= Math.round(rating) ? "fill-[#facc15] text-[#facc15]" : "text-[#333]"}
-        />
-      ))}
+    <span className="flex items-center gap-1 text-[10px] text-[#aaa]">
+      <Star size={10} className="text-[#888]" aria-hidden />
+      {score == null ? "N/A" : `${score.toFixed(1)} on Trustpilot`}
     </span>
   );
 }
@@ -122,6 +114,7 @@ function Logo({ name, round = false }: { name: string; round?: boolean }) {
 /* ---------- Offers carousel ---------- */
 
 function OffersCarousel() {
+  const live = useLiveFirms();
   const pages = useMemo(() => {
     const chunk: ReviewFirm[][] = [];
     for (let i = 0; i < reviewFirms.length; i += 6) chunk.push(reviewFirms.slice(i, i + 6));
@@ -203,9 +196,8 @@ function OffersCarousel() {
                   <Logo name={f.name} />
                   <div className="min-w-0">
                     <div className="truncate text-sm font-semibold">{f.name}</div>
-                    <div className="mt-0.5 flex items-center gap-1.5">
-                      <Stars rating={f.rating} size={10} />
-                      <span className="text-[10px] text-[#888]">{f.rating.toFixed(1)}</span>
+                    <div className="mt-0.5">
+                      <Score score={live.get(f.name)?.trustpilotScore ?? null} />
                     </div>
                   </div>
                 </div>
@@ -231,7 +223,11 @@ function OffersCarousel() {
 const rankColor = ["text-[#facc15]", "text-[#cbd5e1]", "text-[#d08b52]"];
 
 function MostPopular() {
-  const top = reviewFirms.slice().sort((a, b) => b.rating - a.rating).slice(0, 3);
+  const live = useLiveFirms();
+  const top = reviewFirms
+    .slice()
+    .sort((a, b) => compareTrustpilot(live.get(a.name)?.trustpilotScore ?? null, live.get(b.name)?.trustpilotScore ?? null))
+    .slice(0, 3);
   return (
     <div className="min-w-0 overflow-hidden rounded-2xl border border-[#7c3aed]/35 bg-[#141414] p-5 shadow-[0_0_40px_-22px_rgba(124,58,237,0.9)] sm:p-6">
       <h3 className="font-display text-lg font-bold sm:text-xl">Most Popular Futures Prop Firms 🏆</h3>
@@ -251,9 +247,8 @@ function MostPopular() {
                 </span>
                 <span className="min-w-0">
                   <span className="block truncate text-sm font-semibold">{f.name}</span>
-                  <span className="mt-1 flex items-center gap-1.5">
-                    <Stars rating={f.rating} size={10} />
-                    <span className="text-[10px] text-[#888]">{f.rating.toFixed(1)}</span>
+                  <span className="mt-1 block">
+                    <Score score={live.get(f.name)?.trustpilotScore ?? null} />
                   </span>
                 </span>
                 <span className="flex shrink-0 flex-col items-end gap-1">
@@ -354,6 +349,7 @@ function PreviewTable() {
   const [favs, setFavs] = useState<string[]>([]);
   const [bounce, setBounce] = useState<string | null>(null);
   const [visible, setVisible] = useState(15);
+  const live = useLiveFirms();
   const mounted = useRef(false);
 
   useEffect(() => {
@@ -386,7 +382,7 @@ function PreviewTable() {
       ? base.filter((f) => favs.includes(f.name))
       : tab === "New"
         ? base.sort((a, b) => b.addedOrder - a.addedOrder)
-        : base.sort((a, b) => b.rating - a.rating);
+        : base.sort((a, b) => compareTrustpilot(live.get(a.name)?.trustpilotScore ?? null, live.get(b.name)?.trustpilotScore ?? null));
   const rows = all.slice(0, visible);
   const hasMore = all.length > visible;
 
@@ -450,7 +446,7 @@ function PreviewTable() {
               Firm <ChevronsUpDown size={11} className="text-[#555]" />
             </div>
             <div className="flex items-center gap-1 px-3 text-[10px] font-semibold uppercase tracking-wider text-[#8a8a8a]">
-              Rank <ChevronsUpDown size={11} className="text-[#555]" /> / Reviews
+              Trustpilot <ChevronsUpDown size={11} className="text-[#555]" />
               <ChevronUp size={11} className="text-[#7c3aed]" />
             </div>
             <Th label="Country" />
@@ -504,19 +500,17 @@ function PreviewTable() {
                           size={13}
                           className={isFav ? "fill-[#ec4899] text-[#ec4899]" : "text-[#ec4899]"}
                         />
-                        {120 + Math.round(f.rating * 37) + (isFav ? 1 : 0)}
+                        {isFav ? "Saved" : "Save"}
                       </button>
                     </div>
                   </div>
 
                   <div className="flex flex-col items-center gap-1 border-r border-[#1c1c1c] px-3">
-                    <span className="rounded-full border border-[#7c3aed] px-2.5 py-0.5 text-xs font-bold text-white">
-                      {f.rating.toFixed(1)}
-                    </span>
-                    <Stars rating={f.rating} size={11} />
-                    <span className="text-[11px] font-medium text-[#ec4899]">
-                      {80 + Math.round(f.rating * 51)} reviews
-                    </span>
+                    <TrustpilotScore
+                      score={live.get(f.name)?.trustpilotScore ?? null}
+                      url={live.get(f.name)?.trustpilotUrl}
+                      updatedAt={live.get(f.name)?.trustpilotUpdatedAt}
+                    />
                   </div>
 
                   <div className="flex items-center justify-center gap-2 border-r border-[#1c1c1c] px-3 text-sm font-semibold text-white">

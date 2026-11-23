@@ -1,10 +1,13 @@
 import { Link } from "@tanstack/react-router";
-import { Trophy, Star } from "lucide-react";
+import { Trophy } from "lucide-react";
 import { comparisonRows, reviewFirms } from "@/lib/home-data";
 import { MatchupBuilder } from "@/components/home/MatchupBuilder";
 import { useReveal } from "@/hooks/use-reveal";
+import { useLiveFirms } from "@/hooks/use-trustpilot-scores";
+import { compareTrustpilot } from "@/lib/promo-codes";
+import { TrustpilotScore } from "@/components/shared/TrustpilotScore";
 
-const cols = ["Firm Name", "Max Account", "Profit Split", "Drawdown Type", "Futures Allowed", "Our Rating"];
+const cols = ["Firm Name", "Max Account", "Profit Split", "Drawdown Type", "Futures Allowed", "Trustpilot"];
 
 function slugify(name: string) {
   return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
@@ -22,8 +25,12 @@ function initials(name: string) {
 
 export function ComparisonTable() {
   const ref = useReveal<HTMLDivElement>();
-  const top3 = comparisonRows.slice(0, 3);
-  const rest = comparisonRows.slice(3);
+  const live = useLiveFirms();
+  const sorted = comparisonRows
+    .slice()
+    .sort((a, b) => compareTrustpilot(live.get(a.firm)?.trustpilotScore ?? null, live.get(b.firm)?.trustpilotScore ?? null));
+  const top3 = sorted.slice(0, 3);
+  const rest = sorted.slice(3);
   const firmCount = reviewFirms.length;
 
   return (
@@ -68,9 +75,7 @@ export function ComparisonTable() {
                   >
                     {r.firm}
                   </Link>
-                  <span className="flex items-center gap-1 text-xs text-[#facc15]">
-                    <Star size={11} className="fill-[#facc15]" /> {r.rating}
-                  </span>
+                  <TrustpilotScore score={live.get(r.firm)?.trustpilotScore ?? null} url={live.get(r.firm)?.trustpilotUrl} showUpdated={false} />
                 </div>
               </div>
 
@@ -128,7 +133,7 @@ export function ComparisonTable() {
                   <td className="px-5 py-3.5 font-mono text-white/90">{r.split}</td>
                   <td className="px-5 py-3.5 text-white/90">{r.drawdown}</td>
                   <td className="px-5 py-3.5 text-[#00d97e]">{r.futures}</td>
-                  <td className="px-5 py-3.5 text-gradient font-semibold">{r.rating}</td>
+                  <td className="px-5 py-3.5"><TrustpilotScore score={live.get(r.firm)?.trustpilotScore ?? null} url={live.get(r.firm)?.trustpilotUrl} updatedAt={live.get(r.firm)?.trustpilotUpdatedAt} /></td>
                 </tr>
               ))}
             </tbody>

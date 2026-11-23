@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { Star, ArrowUpDown, Loader2, ExternalLink } from "lucide-react";
+import { TrustpilotScore } from "@/components/shared/TrustpilotScore";
 import { listCompareFirms, type CompareFirmRow } from "@/lib/compare.functions";
 
 const assetPills = ["All", "Futures", "Stocks"] as const;
@@ -10,7 +11,7 @@ const assetPills = ["All", "Futures", "Stocks"] as const;
 type ColKey = "maxFunding" | "profitSplit" | "fee" | "drawdownType" | "payoutSpeed" | "rating";
 
 const columns: { key: ColKey; label: string; sortKey: string; align?: string }[] = [
-  { key: "rating", label: "Our Rating", sortKey: "rating" },
+  { key: "rating", label: "Trustpilot Score", sortKey: "rating" },
   { key: "maxFunding", label: "Max Funding", sortKey: "maxFunding" },
   { key: "profitSplit", label: "Profit Split", sortKey: "profitSplit" },
   { key: "fee", label: "Monthly Fee", sortKey: "fee" },
@@ -31,7 +32,7 @@ function cellValue(firm: CompareFirmRow, key: ColKey) {
     case "payoutSpeed":
       return firm.payoutSpeed;
     default:
-      return firm.rating.toFixed(1);
+      return firm.trustpilotScore == null ? "N/A" : firm.trustpilotScore.toFixed(1);
   }
 }
 
@@ -184,10 +185,7 @@ export function CompareTable() {
                   {shown.map((c) => (
                     <td key={c.key} className="px-5 py-4 whitespace-nowrap">
                       {c.key === "rating" ? (
-                        <span className="flex items-center gap-1.5">
-                          <Star size={14} className="fill-[#facc15] text-[#facc15]" />
-                          <span className="font-display font-bold text-sm">{firm.rating.toFixed(1)}</span>
-                        </span>
+                        <TrustpilotScore score={firm.trustpilotScore} url={firm.trustpilotUrl} updatedAt={firm.trustpilotUpdatedAt} />
                       ) : (
                         <span className={c.key === "profitSplit" ? "text-[#00d97e] font-semibold" : "text-white/90"}>
                           {cellValue(firm, c.key) || "—"}
