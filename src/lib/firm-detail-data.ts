@@ -1,3 +1,4 @@
+import { parsePromoCodes, type PromoCode } from "@/lib/promo-codes";
 // Turns a prop_firms database row into the fully written review page content.
 // The database stores the hard facts (drawdown type, split, payout cadence,
 // allocation ceiling); the trader-facing copy below is derived from them so the
@@ -7,7 +8,8 @@ export type FirmRow = {
   id: string;
   slug: string;
   name: string;
-  rating: number;
+  trustpilot_score: number | null;
+  trustpilot_updated_at: string | null;
   recommended: string;
   verdict: string;
   max_account: string;
@@ -18,7 +20,7 @@ export type FirmRow = {
   evaluation_type: string;
   platforms: string[];
   instrument_list: string[];
-  coupon_code: string;
+  promo_codes: unknown;
   affiliate_url: string;
   trustpilot_url: string | null;
   funding_numeric: number;
@@ -29,7 +31,7 @@ export type FirmRow = {
 export type FirmAlternative = {
   slug: string;
   name: string;
-  rating: number;
+  trustpilotScore: number | null;
   maxFunding: string;
   split: string;
 };
@@ -39,7 +41,8 @@ export type FirmDetail = {
   slug: string;
   name: string;
   tagline: string;
-  rating: number;
+  trustpilotScore: number | null;
+  trustpilotUpdatedAt: string | null;
   lastUpdated: string;
   recommended: string;
   verdict: string;
@@ -70,7 +73,7 @@ export type FirmDetail = {
   ratings: { label: string; score: number }[];
   finalRecommendation: string;
   alternatives: FirmAlternative[];
-  couponCode: string;
+  promoCodes: PromoCode[];
   affiliateUrl: string;
   trustpilotUrl?: string;
 };
@@ -118,7 +121,8 @@ export function buildFirmDetail(row: FirmRow, alternatives: FirmAlternative[] = 
     slug: row.slug,
     name: row.name,
     tagline: `${row.evaluation_type} evaluation · ${dd.toLowerCase()} drawdown · ${row.profit_split} split — reviewed against live order flow`,
-    rating: Number(row.rating),
+    trustpilotScore: row.trustpilot_score == null ? null : Number(row.trustpilot_score),
+    trustpilotUpdatedAt: row.trustpilot_updated_at,
     lastUpdated: monthName(row.updated_at),
     recommended: row.recommended,
     verdict: row.verdict,
@@ -202,16 +206,10 @@ export function buildFirmDetail(row: FirmRow, alternatives: FirmAlternative[] = 
         icon: "target",
       },
     ],
-    ratings: [
-      { label: "Evaluation pricing", score: clamp(row.rating + (fee < 100 ? 0.2 : -0.1)) },
-      { label: "Drawdown rules", score: clamp(row.rating + (dd === "End of day" || dd === "Static" ? 0.2 : -0.2)) },
-      { label: "Payout reliability", score: clamp(row.rating + 0.1) },
-      { label: "Support", score: clamp(row.rating) },
-      { label: "Platform & execution", score: clamp(row.rating + 0.1) },
-    ],
+    ratings: [],
     finalRecommendation: `If you trade intraday futures with a repeatable risk model, ${row.name} earns its ${row.challenge_fee}. Respect the ${dd.toLowerCase()} drawdown, take payouts ${payout} instead of swinging for a hero trade, and it behaves like a funded account rather than a subscription.`,
     alternatives,
-    couponCode: row.coupon_code,
+    promoCodes: parsePromoCodes(row.promo_codes),
     affiliateUrl: row.affiliate_url || "#",
     trustpilotUrl: row.trustpilot_url || undefined,
   };

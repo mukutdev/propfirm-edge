@@ -4,7 +4,7 @@ import { z } from "zod";
 import { buildFirmDetail, type FirmAlternative, type FirmDetail, type FirmRow } from "@/lib/firm-detail-data";
 
 const FIRM_COLUMNS =
-  "id, slug, name, rating, recommended, verdict, max_account, profit_split, challenge_fee, drawdown_type, payout_frequency, evaluation_type, platforms, instrument_list, coupon_code, affiliate_url, trustpilot_url, funding_numeric, fee_numeric, updated_at";
+  "id, slug, name, trustpilot_score, trustpilot_updated_at, recommended, verdict, max_account, profit_split, challenge_fee, drawdown_type, payout_frequency, evaluation_type, platforms, instrument_list, promo_codes, affiliate_url, trustpilot_url, funding_numeric, fee_numeric, updated_at";
 
 function publicClient() {
   return createClient(
@@ -39,6 +39,7 @@ export const getFirmPage = createServerFn({ method: "GET" })
       .from("prop_firms")
       .select(FIRM_COLUMNS)
       .eq("slug", data.slug)
+      .eq("is_active", true)
       .maybeSingle();
 
     if (error) throw new Error(error.message);
@@ -49,9 +50,10 @@ export const getFirmPage = createServerFn({ method: "GET" })
     const [{ data: others }, { data: reviewRows }] = await Promise.all([
       supabase
         .from("prop_firms")
-        .select("slug, name, rating, max_account, profit_split")
+        .select("slug, name, trustpilot_score, max_account, profit_split")
+        .eq("is_active", true)
         .neq("slug", data.slug)
-        .order("rating", { ascending: false })
+        .order("trustpilot_score", { ascending: false, nullsFirst: false })
         .limit(3),
       supabase
         .from("firm_reviews")
@@ -65,7 +67,7 @@ export const getFirmPage = createServerFn({ method: "GET" })
     const alternatives: FirmAlternative[] = (others ?? []).map((o: Record<string, unknown>) => ({
       slug: String(o["slug"]),
       name: String(o["name"]),
-      rating: Number(o["rating"]),
+      trustpilotScore: o["trustpilot_score"] == null ? null : Number(o["trustpilot_score"]),
       maxFunding: String(o["max_account"]),
       split: String(o["profit_split"]),
     }));
@@ -131,6 +133,7 @@ export const listFirmOptions = createServerFn({ method: "GET" }).handler(
     const { data, error } = await supabase
       .from("prop_firms")
       .select("id, slug, name, affiliate_url")
+      .eq("is_active", true)
       .order("name", { ascending: true });
     if (error) throw new Error(error.message);
     return (data ?? []).map((f: Record<string, unknown>) => {

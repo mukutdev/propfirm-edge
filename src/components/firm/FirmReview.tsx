@@ -1,3 +1,5 @@
+import { TrustpilotScore } from "@/components/shared/TrustpilotScore";
+import { PromoCodeList } from "@/components/shared/PromoCodeList";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Star, Check, X, Copy, Clock, Rocket, Zap, Target, ExternalLink,
@@ -77,11 +79,7 @@ function PageHeader({ firm }: { firm: FirmDetail }) {
           <div className="flex-1">
             <h1 className="font-display font-bold text-4xl md:text-5xl">{firm.name}</h1>
             <div className="flex items-center gap-3 mt-3 flex-wrap">
-              <GradientStars rating={firm.rating} size={20} />
-              <span className="font-display font-bold text-xl">
-                <span className="text-gradient">{firm.rating.toFixed(1)}</span>
-                <span className="text-[#666] text-base"> / 5</span>
-              </span>
+              <TrustpilotScore score={firm.trustpilotScore} url={firm.trustpilotUrl} updatedAt={firm.trustpilotUpdatedAt} />
             </div>
             <p className="text-sm text-[#888] mt-3 max-w-xl">{firm.tagline}</p>
 
@@ -388,7 +386,7 @@ function VerdictRatings({ firm }: { firm: FirmDetail }) {
 
   return (
     <section ref={ref} className="space-y-6">
-      <SectionHeading id="verdict">Verdict & Final Rating</SectionHeading>
+      <SectionHeading id="verdict">Verdict</SectionHeading>
       <div className="card-surface p-7 md:p-9">
         <div className="grid md:grid-cols-[1fr_auto] gap-8 items-center">
           <div className="space-y-4 flex-1">
@@ -403,9 +401,8 @@ function VerdictRatings({ firm }: { firm: FirmDetail }) {
             ))}
           </div>
           <div className="text-center md:border-l md:border-[#222] md:pl-8">
-            <div className="text-xs uppercase tracking-wider text-[#888]">Overall Score</div>
-            <div className="font-display font-bold text-6xl text-gradient mt-2">{firm.rating.toFixed(1)}</div>
-            <div className="text-sm text-[#888]">out of 5</div>
+            <div className="text-xs uppercase tracking-wider text-[#888] mb-2">Trader Score</div>
+            <TrustpilotScore score={firm.trustpilotScore} url={firm.trustpilotUrl} updatedAt={firm.trustpilotUpdatedAt} />
           </div>
         </div>
 
@@ -433,7 +430,7 @@ function Alternatives({ firm }: { firm: FirmDetail }) {
           <div key={a.slug} className="card-surface p-5">
             <FirmLogoBlock name={a.name} size="md" />
             <div className="font-display font-bold text-lg mt-4">{a.name}</div>
-            <GradientStars rating={a.rating} size={14} />
+            <TrustpilotScore score={a.trustpilotScore} showUpdated={false} />
             <div className="grid grid-cols-2 gap-3 mt-4 py-3 border-y border-[#222]">
               <div>
                 <div className="text-[10px] uppercase tracking-wider text-[#888]">Funding</div>
@@ -456,7 +453,6 @@ function Alternatives({ firm }: { firm: FirmDetail }) {
 }
 
 function Sidebar({ firm }: { firm: FirmDetail }) {
-  const [copied, setCopied] = useState(false);
   const [activeId, setActiveId] = useState("overview");
 
   useEffect(() => {
@@ -477,12 +473,6 @@ function Sidebar({ firm }: { firm: FirmDetail }) {
     return () => observers.forEach((o) => o.disconnect());
   }, []);
 
-  const copy = () => {
-    navigator.clipboard?.writeText(firm.couponCode);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1500);
-  };
-
   const compactStats = [
     { label: "Max Account", value: firm.stats.maxAccount },
     { label: "Profit Split", value: firm.stats.profitSplit },
@@ -497,7 +487,7 @@ function Sidebar({ firm }: { firm: FirmDetail }) {
           <FirmLogoBlock name={firm.name} size="md" />
           <div>
             <div className="font-display font-bold text-base">{firm.name}</div>
-            <GradientStars rating={firm.rating} size={14} />
+            <TrustpilotScore score={firm.trustpilotScore} url={firm.trustpilotUrl} showUpdated={false} />
           </div>
         </div>
         <div className="grid grid-cols-2 gap-3 mt-5 py-4 border-y border-[#222]">
@@ -512,33 +502,13 @@ function Sidebar({ firm }: { firm: FirmDetail }) {
         <a href="#reviews" className="btn-ghost w-full mt-2 text-sm py-2.5">Read Trader Reviews</a>
 
         <div className="mt-5 pt-5 border-t border-[#222]">
-          {firm.couponCode && (<>
-          <div className="text-[10px] uppercase tracking-wider text-[#888] mb-2">Exclusive Code</div>
-          <div className="flex items-center gap-2">
-            <code className="flex-1 bg-[#0a0a0a] border border-dashed border-[#7c3aed] rounded-md px-3 py-2 text-center font-mono text-sm">{firm.couponCode}</code>
-            <button onClick={copy} aria-label="Copy code" className="h-9 w-9 rounded-md border border-[#2a2a2a] flex items-center justify-center text-[#888] hover:text-white hover:border-[#7c3aed]">
-              {copied ? <Check size={14} className="text-[#00d97e]" /> : <Copy size={14} />}
-            </button>
-          </div>
+          {firm.promoCodes.length > 0 && (<>
+          <div className="text-[10px] uppercase tracking-wider text-[#888] mb-2">Promo {firm.promoCodes.length > 1 ? "Codes" : "Code"}</div>
+          <PromoCodeList codes={firm.promoCodes} compact />
           </>)}
           <div className="flex items-center gap-1.5 text-xs text-[#888] mt-3">
             <Clock size={12} /> Data checked <span className="text-white/90 font-semibold">{firm.lastUpdated}</span>
           </div>
-        </div>
-      </div>
-
-      <div className="card-surface p-6">
-        <div className="text-xs uppercase tracking-wider text-[#888] font-semibold mb-4">Rating Breakdown</div>
-        <div className="space-y-3">
-          {firm.ratings.map((r) => (
-            <div key={r.label}>
-              <div className="flex justify-between text-xs mb-1">
-                <span className="text-white/90">{r.label}</span>
-                <span className="text-gradient font-semibold">{r.score.toFixed(1)}</span>
-              </div>
-              <ProgressBar score={r.score} animate />
-            </div>
-          ))}
         </div>
       </div>
 
@@ -578,8 +548,7 @@ function MobileStickyCTA({ firm }: { firm: FirmDetail }) {
         <div className="flex-1 min-w-0">
           <div className="font-display font-semibold text-sm truncate">{firm.name}</div>
           <div className="flex items-center gap-1">
-            <GradientStars rating={firm.rating} size={11} />
-            <span className="text-[11px] text-[#888] ml-1">{firm.rating.toFixed(1)}</span>
+            <TrustpilotScore score={firm.trustpilotScore} showUpdated={false} />
           </div>
         </div>
         <a href={firm.affiliateUrl} target="_blank" rel="noopener noreferrer sponsored" className="btn-gradient text-sm py-2.5">Visit Firm</a>

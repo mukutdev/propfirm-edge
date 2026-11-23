@@ -120,16 +120,20 @@ export type Database = {
           funding_numeric: number
           id: string
           instrument_list: string[]
+          is_active: boolean
           max_account: string
           name: string
           payout_frequency: string
           platforms: string[]
           profit_split: string
+          promo_codes: Json
           promo_discount: number
           promo_expiry: string | null
           rating: number
           recommended: string
           slug: string
+          trustpilot_score: number | null
+          trustpilot_updated_at: string | null
           trustpilot_url: string | null
           updated_at: string
           verdict: string
@@ -147,16 +151,20 @@ export type Database = {
           funding_numeric?: number
           id?: string
           instrument_list?: string[]
+          is_active?: boolean
           max_account?: string
           name: string
           payout_frequency?: string
           platforms?: string[]
           profit_split?: string
+          promo_codes?: Json
           promo_discount?: number
           promo_expiry?: string | null
           rating?: number
           recommended?: string
           slug: string
+          trustpilot_score?: number | null
+          trustpilot_updated_at?: string | null
           trustpilot_url?: string | null
           updated_at?: string
           verdict?: string
@@ -174,16 +182,20 @@ export type Database = {
           funding_numeric?: number
           id?: string
           instrument_list?: string[]
+          is_active?: boolean
           max_account?: string
           name?: string
           payout_frequency?: string
           platforms?: string[]
           profit_split?: string
+          promo_codes?: Json
           promo_discount?: number
           promo_expiry?: string | null
           rating?: number
           recommended?: string
           slug?: string
+          trustpilot_score?: number | null
+          trustpilot_updated_at?: string | null
           trustpilot_url?: string | null
           updated_at?: string
           verdict?: string

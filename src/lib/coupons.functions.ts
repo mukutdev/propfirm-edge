@@ -1,12 +1,13 @@
 import { createServerFn } from "@tanstack/react-start";
 import { createClient } from "@supabase/supabase-js";
+import { parsePromoCodes, type PromoCode } from "@/lib/promo-codes";
 
 export type CouponRow = {
   id: string;
   slug: string;
   name: string;
-  rating: number;
   code: string;
+  codes: PromoCode[];
   discount: number;
   dealType: "percentage" | "free_trial" | "special";
   expiry: string | null;
@@ -29,8 +30,9 @@ export const listCoupons = createServerFn({ method: "GET" }).handler(async (): P
   const { data, error } = await supabase
     .from("prop_firms")
     .select(
-      "id, slug, name, rating, coupon_code, promo_discount, deal_type, promo_expiry, challenge_fee, assets, affiliate_url",
+      "id, slug, name, promo_codes, promo_discount, deal_type, promo_expiry, challenge_fee, assets, affiliate_url",
     )
+    .eq("is_active", true)
     .order("promo_discount", { ascending: false });
 
   if (error) throw new Error(error.message);
@@ -48,8 +50,8 @@ export const listCoupons = createServerFn({ method: "GET" }).handler(async (): P
       id: String(row["id"]),
       slug: String(row["slug"]),
       name: String(row["name"]),
-      rating: Number(row["rating"] ?? 0),
-      code: String(row["coupon_code"] ?? ""),
+      codes: parsePromoCodes(row["promo_codes"]),
+      code: parsePromoCodes(row["promo_codes"])[0]?.code ?? "",
       discount: Number(row["promo_discount"] ?? 0),
       dealType: (dealType === "free_trial" || dealType === "special" ? dealType : "percentage") as CouponRow["dealType"],
       expiry: row["promo_expiry"] ? String(row["promo_expiry"]) : null,

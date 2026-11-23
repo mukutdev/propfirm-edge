@@ -8,6 +8,13 @@
       "when": 1791011391121,
       "tag": "0000_add_prop_firm_trustpilot_url",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1795447201942,
+      "tag": "0001_trustpilot_score_promo_codes_active",
+      "breakpoints": true
     }
   ]
 }
