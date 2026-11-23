@@ -58,7 +58,7 @@ export const listCoupons = createServerFn({ method: "GET" }).handler(async (): P
       challengeFee: String(row["challenge_fee"] ?? ""),
       assets: (row["assets"] as string[] | null) ?? [],
       affiliateUrl: String(row["affiliate_url"] ?? ""),
-      logo: host ? `https://www.google.com/s2/favicons?sz=64&domain=${host}` : "",
+      logo: host ? `https://www.google.com/s2/favicons?sz=128&domain=${host}` : "",
     };
   });
 });

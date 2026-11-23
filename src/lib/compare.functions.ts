@@ -73,7 +73,7 @@ function mapRow(f: Record<string, unknown>): CompareFirmRow {
     promoCodes: parsePromoCodes(f["promo_codes"]),
     affiliateUrl: String(f["affiliate_url"] ?? ""),
     trustpilotUrl: f["trustpilot_url"] ? String(f["trustpilot_url"]) : undefined,
-    logo: host ? `https://www.google.com/s2/favicons?sz=64&domain=${host}` : "",
+    logo: host ? `https://www.google.com/s2/favicons?sz=128&domain=${host}` : "",
   };
 }
 

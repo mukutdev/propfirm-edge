@@ -102,7 +102,7 @@ function CodeCell({ codes }: { codes: PromoCode[] }) {
 function FirmLogo({ firm }: { firm: CompareFirmRow }) {
   return (
     <span className="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-border bg-card">
-      {firm.logo ? <img src={firm.logo} alt="" className="h-5 w-5 object-contain" /> : <span className="text-[10px] font-semibold">{firm.name[0]}</span>}
+      {firm.logo ? <img src={firm.logo} alt={`${firm.name} logo`} className="h-7 w-7 rounded-md object-contain" /> : <span className="text-[10px] font-semibold">{firm.name[0]}</span>}
     </span>
   );
 }

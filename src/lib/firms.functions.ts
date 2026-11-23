@@ -147,7 +147,7 @@ export const listFirmOptions = createServerFn({ method: "GET" }).handler(
         id: String(f["id"]),
         slug: String(f["slug"]),
         name: String(f["name"]),
-        logo: host ? `https://www.google.com/s2/favicons?sz=64&domain=${host}` : "",
+        logo: host ? `https://www.google.com/s2/favicons?sz=128&domain=${host}` : "",
       };
     });
   },
