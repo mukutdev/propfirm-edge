@@ -12,7 +12,7 @@ function RatingStars({ firm }: { firm: CompareFirmRow }) {
   const score = firm.trustpilotScore;
   const date = formatTrustpilotDate(firm.trustpilotUpdatedAt);
   const inner = (
-    <span className="inline-flex items-center gap-2">
+    <span className="inline-flex items-center gap-2 whitespace-nowrap">
       <span className="inline-flex items-center gap-0.5" aria-hidden>
         {[0, 1, 2, 3, 4].map((i) => {
           const fill = score == null ? 0 : Math.max(0, Math.min(1, score - i));
@@ -49,7 +49,7 @@ function CopyPill({ code, compact = false }: { code: string; compact?: boolean }
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
       }}
-      className={`inline-flex items-center gap-1.5 rounded-full border border-border bg-background px-3 ${compact ? "py-1 text-[11px]" : "py-1.5 text-xs"} font-mono transition hover:border-primary`}
+      className={`inline-flex items-center gap-1.5 rounded-full border border-foreground/10 bg-muted px-3 ${compact ? "py-1 text-[11px]" : "py-1.5 text-xs"} font-mono transition hover:border-primary`}
     >
       {copied ? <Check size={12} className="text-primary" /> : <Copy size={12} className="text-muted-foreground" />}
       {copied ? "Copied!" : compact ? code : `Copy code: ${code}`}
@@ -100,10 +100,10 @@ function CodeCell({ codes }: { codes: PromoCode[] }) {
 }
 
 function FirmLogo({ firm }: { firm: CompareFirmRow }) {
-  return (
-    <span className="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-border bg-card">
-      {firm.logo ? <img src={firm.logo} alt={`${firm.name} logo`} className="h-7 w-7 rounded-md object-contain" /> : <span className="text-[10px] font-semibold">{firm.name[0]}</span>}
-    </span>
+  return firm.logo ? (
+    <img src={firm.logo} alt={`${firm.name} logo`} className="h-9 w-9 shrink-0 rounded-md object-contain" />
+  ) : (
+    <span className="flex h-9 w-9 shrink-0 items-center justify-center text-xs font-semibold">{firm.name[0]}</span>
   );
 }
 
@@ -122,7 +122,7 @@ function VisitButton({ firm }: { firm: CompareFirmRow }) {
 
 const discountOf = (f: CompareFirmRow) => f.promoCodes[0]?.discountLabel || "—";
 
-export function CompareTable() {
+export function CompareTable({ embedded = false }: { embedded?: boolean } = {}) {
   const fetchFirms = useServerFn(listCompareFirms);
   const [sortKey, setSortKey] = useState<SortKey>("rating");
   const [dir, setDir] = useState<"asc" | "desc">("desc");
@@ -157,7 +157,7 @@ export function CompareTable() {
   ) : null;
 
   return (
-    <section id="compare-table" className="mx-auto max-w-7xl scroll-mt-24 px-6 py-14">
+    <section id={embedded ? "firms-table" : "compare-table"} className={embedded ? "mt-14" : "mx-auto max-w-7xl scroll-mt-24 px-6 py-14"}>
       <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
         <h2 className="font-display text-2xl font-bold md:text-3xl">The Best Prop Firms In The Industry</h2>
         <Link to="/reviews" className="btn-gradient text-sm py-2 px-5">View All Firms</Link>
@@ -167,11 +167,11 @@ export function CompareTable() {
       <div className="hidden md:block">
         <table className="w-full table-fixed text-sm">
           <thead>
-            <tr className="border-b border-border text-left text-[10px] font-semibold tracking-wider text-muted-foreground">
+            <tr className="border-b border-foreground/[0.08] text-left whitespace-nowrap text-[11px] font-semibold tracking-wider text-foreground/55 [&>th]:px-3 [&>th:first-child]:pl-0 [&>th:not(:last-child)]:border-r [&>th:not(:last-child)]:border-foreground/10">
               <th className="w-[22%] pb-3 pr-3"><SortHead k="name" label="Firm Name" /></th>
               <th className="w-[15%] pb-3 pr-3"><SortHead k="rating" label="Rating" /></th>
-              <th className="w-[10%] pb-3 pr-3"><SortHead k="maxAccounts" label="Max Accounts" /></th>
-              <th className="w-[17%] pb-3 pr-3 uppercase">Trading Platforms</th>
+              <th className="w-[10%] pb-3 pr-3 text-center"><SortHead k="maxAccounts" label="Max Accounts" /></th>
+              <th className="w-[17%] pb-3 pr-3 text-center uppercase">Trading Platforms</th>
               <th className="w-[9%] pb-3 pr-3 uppercase">Discount</th>
               <th className="w-[19%] pb-3 pr-3 uppercase">Discount Code</th>
               <th className="w-[8%] pb-3 text-right uppercase">Website</th>
@@ -179,18 +179,18 @@ export function CompareTable() {
           </thead>
           <tbody>
             {rows.map((firm) => (
-              <tr key={firm.id} className="border-b border-border/60 align-middle">
+              <tr key={firm.id} className="h-20 border-b border-foreground/[0.08] align-middle [&>td]:px-3 [&>td:first-child]:pl-0">
                 <td className="py-5 pr-3">
                   <div className="flex items-center gap-3">
                     <FirmLogo firm={firm} />
-                    <Link to="/reviews/$slug" params={{ slug: firm.slug }} className="font-display font-semibold hover:text-primary">
+                    <Link to="/reviews/$slug" params={{ slug: firm.slug }} className="whitespace-nowrap font-display font-semibold hover:text-primary">
                       {firm.name}
                     </Link>
                   </div>
                 </td>
                 <td className="py-5 pr-3"><RatingStars firm={firm} /></td>
-                <td className="py-5 pr-3 font-semibold">{firm.maxAccounts ?? "-"}</td>
-                <td className="py-5 pr-3 text-muted-foreground"><span className="line-clamp-2">{firm.platforms.join(", ") || "—"}</span></td>
+                <td className="py-5 pr-3 text-center font-semibold">{firm.maxAccounts ?? "-"}</td>
+                <td className="py-5 pr-3 text-center text-muted-foreground"><span className="line-clamp-2">{firm.platforms.join(", ") || "—"}</span></td>
                 <td className="py-5 pr-3 font-semibold">{discountOf(firm)}</td>
                 <td className="py-5 pr-3"><CodeCell codes={firm.promoCodes} /></td>
                 <td className="py-5 text-right"><VisitButton firm={firm} /></td>
