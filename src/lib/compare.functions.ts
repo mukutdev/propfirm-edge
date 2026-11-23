@@ -19,6 +19,10 @@ export type CompareFirmRow = {
   evaluationType: string;
   platforms: string[];
   assets: string[];
+  instrumentList: string[];
+  feeNumeric: number;
+  fundingNumeric: number;
+  isFeaturedDeal: boolean;
   promoCodes: PromoCode[];
   affiliateUrl: string;
   trustpilotUrl?: string;
@@ -26,7 +30,7 @@ export type CompareFirmRow = {
 };
 
 const COLUMNS =
-  "id, slug, name, trustpilot_score, trustpilot_updated_at, max_accounts, sort_order, max_account, profit_split, challenge_fee, drawdown_type, payout_frequency, evaluation_type, platforms, assets, promo_codes, affiliate_url, trustpilot_url, funding_numeric, fee_numeric";
+  "id, slug, name, trustpilot_score, trustpilot_updated_at, max_accounts, sort_order, max_account, profit_split, challenge_fee, drawdown_type, payout_frequency, evaluation_type, platforms, assets, instrument_list, is_featured_deal, promo_codes, affiliate_url, trustpilot_url, funding_numeric, fee_numeric";
 
 const SORT_COLUMNS: Record<string, string> = {
   rating: "trustpilot_score",
@@ -70,6 +74,10 @@ function mapRow(f: Record<string, unknown>): CompareFirmRow {
     evaluationType: String(f["evaluation_type"] ?? ""),
     platforms: (f["platforms"] as string[] | null) ?? [],
     assets: (f["assets"] as string[] | null) ?? [],
+    instrumentList: (f["instrument_list"] as string[] | null) ?? [],
+    feeNumeric: Number(f["fee_numeric"] ?? 0),
+    fundingNumeric: Number(f["funding_numeric"] ?? 0),
+    isFeaturedDeal: Boolean(f["is_featured_deal"]),
     promoCodes: parsePromoCodes(f["promo_codes"]),
     affiliateUrl: String(f["affiliate_url"] ?? ""),
     trustpilotUrl: f["trustpilot_url"] ? String(f["trustpilot_url"]) : undefined,

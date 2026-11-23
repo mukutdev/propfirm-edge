@@ -121,6 +121,7 @@ export type Database = {
           id: string
           instrument_list: string[]
           is_active: boolean
+          is_featured_deal: boolean
           max_account: string
           max_accounts: number | null
           name: string
@@ -154,6 +155,7 @@ export type Database = {
           id?: string
           instrument_list?: string[]
           is_active?: boolean
+          is_featured_deal?: boolean
           max_account?: string
           max_accounts?: number | null
           name: string
@@ -187,6 +189,7 @@ export type Database = {
           id?: string
           instrument_list?: string[]
           is_active?: boolean
+          is_featured_deal?: boolean
           max_account?: string
           max_accounts?: number | null
           name?: string

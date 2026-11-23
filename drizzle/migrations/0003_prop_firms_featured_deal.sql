@@ -1,0 +1,1 @@
+ALTER TABLE public.prop_firms ADD COLUMN IF NOT EXISTS is_featured_deal boolean NOT NULL DEFAULT false;

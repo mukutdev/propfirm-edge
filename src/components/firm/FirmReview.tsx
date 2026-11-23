@@ -1,5 +1,5 @@
+import { CodeCell, FirmLogo, RatingStars, discountOf } from "@/components/shared/FirmBits";
 import { TrustpilotScore } from "@/components/shared/TrustpilotScore";
-import { PromoCodeList } from "@/components/shared/PromoCodeList";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Star, Check, X, Copy, Clock, Rocket, Zap, Target, ExternalLink,
@@ -43,6 +43,15 @@ function FirmLogoBlock({ name, size = "lg" }: { name: string; size?: "lg" | "sm"
   );
 }
 
+function logoFor(url: string) {
+  try {
+    const host = new URL(url).hostname;
+    return `https://www.google.com/s2/favicons?sz=128&domain=${host}`;
+  } catch {
+    return "";
+  }
+}
+
 function PageHeader({ firm }: { firm: FirmDetail }) {
   return (
     <section className="relative pt-28 pb-12 overflow-hidden border-b border-[#222]">
@@ -58,27 +67,23 @@ function PageHeader({ firm }: { firm: FirmDetail }) {
         </nav>
 
         <div className="flex flex-col md:flex-row md:items-center gap-8">
-          <FirmLogoBlock name={firm.name} />
+          <FirmLogo firm={{ name: firm.name, logo: logoFor(firm.affiliateUrl) }} size={80} />
           <div className="flex-1">
             <h1 className="font-display font-bold text-4xl md:text-5xl">{firm.name}</h1>
             <div className="flex items-center gap-3 mt-3 flex-wrap">
-              <TrustpilotScore score={firm.trustpilotScore} url={firm.trustpilotUrl} updatedAt={firm.trustpilotUpdatedAt} />
+              <RatingStars firm={firm} />
             </div>
             <p className="text-sm text-[#888] mt-3 max-w-xl">{firm.tagline}</p>
+            {firm.promoCodes.length > 0 && (
+              <div className="mt-4 flex items-center gap-3 flex-wrap">
+                <span className="text-sm font-semibold">{discountOf(firm.promoCodes)}</span>
+                <CodeCell codes={firm.promoCodes} />
+              </div>
+            )}
 
             <div className="flex flex-wrap gap-3 mt-6">
-              <a href={firm.affiliateUrl} target="_blank" rel="noopener noreferrer sponsored" className="btn-gradient">
+              <a href={firm.affiliateUrl} target="_blank" rel="sponsored noopener" className="btn-gradient">
                 Visit {firm.name} <ExternalLink size={14} />
-              </a>
-              <a
-                href="#"
-                className="btn-ghost border-2"
-                style={{
-                  borderImage: "linear-gradient(135deg, #7c3aed, #ec4899) 1",
-                  borderColor: "#7c3aed",
-                }}
-              >
-                Get Exclusive Discount
               </a>
               {firm.trustpilotUrl && (
                 <a
@@ -467,10 +472,10 @@ function Sidebar({ firm }: { firm: FirmDetail }) {
     <aside className="hidden lg:flex flex-col gap-6 w-[320px] shrink-0 sticky top-24 self-start max-h-[calc(100vh-6rem)] overflow-y-auto pr-1">
       <div className="card-surface p-6">
         <div className="flex items-center gap-4">
-          <FirmLogoBlock name={firm.name} size="md" />
+          <FirmLogo firm={{ name: firm.name, logo: logoFor(firm.affiliateUrl) }} size={48} />
           <div>
             <div className="font-display font-bold text-base">{firm.name}</div>
-            <TrustpilotScore score={firm.trustpilotScore} url={firm.trustpilotUrl} showUpdated={false} />
+            <RatingStars firm={firm} />
           </div>
         </div>
         <div className="grid grid-cols-2 gap-3 mt-5 py-4 border-y border-[#222]">
@@ -487,7 +492,7 @@ function Sidebar({ firm }: { firm: FirmDetail }) {
         <div className="mt-5 pt-5 border-t border-[#222]">
           {firm.promoCodes.length > 0 && (<>
           <div className="text-[10px] uppercase tracking-wider text-[#888] mb-2">Promo {firm.promoCodes.length > 1 ? "Codes" : "Code"}</div>
-          <PromoCodeList codes={firm.promoCodes} compact />
+          <CodeCell codes={firm.promoCodes} />
           </>)}
           <div className="flex items-center gap-1.5 text-xs text-[#888] mt-3">
             <Clock size={12} /> Data checked <span className="text-white/90 font-semibold">{firm.lastUpdated}</span>

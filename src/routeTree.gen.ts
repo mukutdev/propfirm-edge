@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AffiliateDisclaimerRouteImport } from './routes/affiliate-disclaimer'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as ComingSoonRouteImport } from './routes/coming-soon'
 import { Route as CompareRouteImport } from './routes/compare'
@@ -18,8 +19,11 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CouponsRouteImport } from './routes/coupons'
 import { Route as MarketHoursRouteImport } from './routes/market-hours'
 import { Route as NewsRouteImport } from './routes/news'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ReviewsRouteImport } from './routes/reviews'
+import { Route as RiskDisclosureRouteImport } from './routes/risk-disclosure'
 import { Route as SubmitReviewRouteImport } from './routes/submit-review'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as NewsIndexRouteImport } from './routes/news.index'
@@ -36,6 +40,11 @@ const IndexRoute = IndexRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AffiliateDisclaimerRoute = AffiliateDisclaimerRouteImport.update({
+  id: '/affiliate-disclaimer',
+  path: '/affiliate-disclaimer',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogRoute = BlogRouteImport.update({
@@ -73,14 +82,29 @@ const NewsRoute = NewsRouteImport.update({
   path: '/news',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReviewsRoute = ReviewsRouteImport.update({
   id: '/reviews',
   path: '/reviews',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RiskDisclosureRoute = RiskDisclosureRouteImport.update({
+  id: '/risk-disclosure',
+  path: '/risk-disclosure',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SubmitReviewRoute = SubmitReviewRouteImport.update({
   id: '/submit-review',
   path: '/submit-review',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
@@ -122,6 +146,7 @@ const ToolsPositionCalculatorRoute = ToolsPositionCalculatorRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/affiliate-disclaimer': typeof AffiliateDisclaimerRoute
   '/blog': typeof BlogRouteWithChildren
   '/coming-soon': typeof ComingSoonRoute
   '/compare': typeof CompareRoute
@@ -129,8 +154,11 @@ export interface FileRoutesByFullPath {
   '/coupons': typeof CouponsRoute
   '/market-hours': typeof MarketHoursRoute
   '/news': typeof NewsRouteWithChildren
+  '/privacy': typeof PrivacyRoute
   '/reviews': typeof ReviewsRouteWithChildren
+  '/risk-disclosure': typeof RiskDisclosureRoute
   '/submit-review': typeof SubmitReviewRoute
+  '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/news/$slug': typeof NewsSlugRoute
   '/reviews/$slug': typeof ReviewsSlugRoute
@@ -142,12 +170,16 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/affiliate-disclaimer': typeof AffiliateDisclaimerRoute
   '/coming-soon': typeof ComingSoonRoute
   '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
   '/coupons': typeof CouponsRoute
   '/market-hours': typeof MarketHoursRoute
+  '/privacy': typeof PrivacyRoute
+  '/risk-disclosure': typeof RiskDisclosureRoute
   '/submit-review': typeof SubmitReviewRoute
+  '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/news/$slug': typeof NewsSlugRoute
   '/reviews/$slug': typeof ReviewsSlugRoute
@@ -160,6 +192,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/affiliate-disclaimer': typeof AffiliateDisclaimerRoute
   '/blog': typeof BlogRouteWithChildren
   '/coming-soon': typeof ComingSoonRoute
   '/compare': typeof CompareRoute
@@ -167,8 +200,11 @@ export interface FileRoutesById {
   '/coupons': typeof CouponsRoute
   '/market-hours': typeof MarketHoursRoute
   '/news': typeof NewsRouteWithChildren
+  '/privacy': typeof PrivacyRoute
   '/reviews': typeof ReviewsRouteWithChildren
+  '/risk-disclosure': typeof RiskDisclosureRoute
   '/submit-review': typeof SubmitReviewRoute
+  '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/news/$slug': typeof NewsSlugRoute
   '/reviews/$slug': typeof ReviewsSlugRoute
@@ -182,6 +218,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/affiliate-disclaimer'
     | '/blog'
     | '/coming-soon'
     | '/compare'
@@ -189,8 +226,11 @@ export interface FileRouteTypes {
     | '/coupons'
     | '/market-hours'
     | '/news'
+    | '/privacy'
     | '/reviews'
+    | '/risk-disclosure'
     | '/submit-review'
+    | '/terms'
     | '/blog/$slug'
     | '/news/$slug'
     | '/reviews/$slug'
@@ -202,12 +242,16 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/affiliate-disclaimer'
     | '/coming-soon'
     | '/compare'
     | '/contact'
     | '/coupons'
     | '/market-hours'
+    | '/privacy'
+    | '/risk-disclosure'
     | '/submit-review'
+    | '/terms'
     | '/blog/$slug'
     | '/news/$slug'
     | '/reviews/$slug'
@@ -219,6 +263,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/about'
+    | '/affiliate-disclaimer'
     | '/blog'
     | '/coming-soon'
     | '/compare'
@@ -226,8 +271,11 @@ export interface FileRouteTypes {
     | '/coupons'
     | '/market-hours'
     | '/news'
+    | '/privacy'
     | '/reviews'
+    | '/risk-disclosure'
     | '/submit-review'
+    | '/terms'
     | '/blog/$slug'
     | '/news/$slug'
     | '/reviews/$slug'
@@ -240,6 +288,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AffiliateDisclaimerRoute: typeof AffiliateDisclaimerRoute
   BlogRoute: typeof BlogRouteWithChildren
   ComingSoonRoute: typeof ComingSoonRoute
   CompareRoute: typeof CompareRoute
@@ -247,8 +296,11 @@ export interface RootRouteChildren {
   CouponsRoute: typeof CouponsRoute
   MarketHoursRoute: typeof MarketHoursRoute
   NewsRoute: typeof NewsRouteWithChildren
+  PrivacyRoute: typeof PrivacyRoute
   ReviewsRoute: typeof ReviewsRouteWithChildren
+  RiskDisclosureRoute: typeof RiskDisclosureRoute
   SubmitReviewRoute: typeof SubmitReviewRoute
+  TermsRoute: typeof TermsRoute
   ToolsPositionCalculatorRoute: typeof ToolsPositionCalculatorRoute
 }
 
@@ -266,6 +318,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/affiliate-disclaimer': {
+      id: '/affiliate-disclaimer'
+      path: '/affiliate-disclaimer'
+      fullPath: '/affiliate-disclaimer'
+      preLoaderRoute: typeof AffiliateDisclaimerRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blog': {
@@ -317,6 +376,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NewsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/reviews': {
       id: '/reviews'
       path: '/reviews'
@@ -324,11 +390,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReviewsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/risk-disclosure': {
+      id: '/risk-disclosure'
+      path: '/risk-disclosure'
+      fullPath: '/risk-disclosure'
+      preLoaderRoute: typeof RiskDisclosureRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/submit-review': {
       id: '/submit-review'
       path: '/submit-review'
       fullPath: '/submit-review'
       preLoaderRoute: typeof SubmitReviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blog/': {
@@ -423,6 +503,7 @@ const ReviewsRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AffiliateDisclaimerRoute: AffiliateDisclaimerRoute,
   BlogRoute: BlogRouteWithChildren,
   ComingSoonRoute: ComingSoonRoute,
   CompareRoute: CompareRoute,
@@ -430,8 +511,11 @@ const rootRouteChildren: RootRouteChildren = {
   CouponsRoute: CouponsRoute,
   MarketHoursRoute: MarketHoursRoute,
   NewsRoute: NewsRouteWithChildren,
+  PrivacyRoute: PrivacyRoute,
   ReviewsRoute: ReviewsRouteWithChildren,
+  RiskDisclosureRoute: RiskDisclosureRoute,
   SubmitReviewRoute: SubmitReviewRoute,
+  TermsRoute: TermsRoute,
   ToolsPositionCalculatorRoute: ToolsPositionCalculatorRoute,
 }
 export const routeTree = rootRouteImport

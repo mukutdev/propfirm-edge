@@ -8,9 +8,9 @@ export const Route = createFileRoute("/reviews/")({
   head: () => ({
     meta: [
       { title: "Prop Firm Reviews — Trading With Prop Firms" },
-      { name: "description", content: "Browse honest reviews of every major prop firm. Filter by market, sort by rating, fee or funding, and find your edge." },
+      { name: "description", content: "Compare prop firms by Trustpilot rating, account limits and the latest discount codes, all in one place." },
       { property: "og:title", content: "Prop Firm Reviews — Trading With Prop Firms" },
-      { property: "og:description", content: "Browse honest reviews of every major prop firm. Filter, compare and get exclusive discounts." },
+      { property: "og:description", content: "Compare prop firms by Trustpilot rating, account limits and the latest discount codes." },
       { property: "og:type", content: "website" },
     ],
   }),

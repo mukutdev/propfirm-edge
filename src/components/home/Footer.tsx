@@ -24,17 +24,17 @@ const cols: { title: string; items: { label: string; to: string }[] }[] = [
     items: [
       { label: "About", to: "/about" },
       { label: "Contact", to: "/contact" },
-      { label: "Submit a Review", to: "/contact" },
+      { label: "Submit a Review", to: "/submit-review" },
       { label: "Advertise", to: "/contact" },
     ],
   },
   {
     title: "Legal",
     items: [
-      { label: "Affiliate Disclaimer", to: "/about" },
-      { label: "Privacy Policy", to: "/about" },
-      { label: "Terms", to: "/about" },
-      { label: "Risk Disclosure", to: "/about" },
+      { label: "Affiliate Disclaimer", to: "/affiliate-disclaimer" },
+      { label: "Privacy Policy", to: "/privacy" },
+      { label: "Terms", to: "/terms" },
+      { label: "Risk Disclosure", to: "/risk-disclosure" },
     ],
   },
 ];
@@ -72,11 +72,12 @@ export function Footer() {
             drawdown rules.
           </p>
           <div className="flex items-center gap-3 mt-4">
-            {socials.map(({ Icon, label }) => (
+            {socials.filter(({ label }) => socialHref[label]).map(({ Icon, label }) => (
               <a
                 key={label}
-                href={socialHref[label] ?? "#"}
-                {...(socialHref[label] ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                href={socialHref[label]}
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label={label}
                 className="group h-9 w-9 rounded-full border border-[#222] flex items-center justify-center text-white/70 transition-all hover:border-transparent hover:bg-gradient-brand hover:text-white"
               >

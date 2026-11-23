@@ -13,8 +13,7 @@ export function ReviewsHero() {
           Prop Firm <span className="text-gradient">Reviews</span>
         </h1>
         <p className="mt-4 text-[#888] text-base md:text-lg max-w-2xl">
-          We test and review every major prop firm so you don't have to.
-          Real accounts. Honest ratings. No bias.
+          Compare prop firms by Trustpilot rating, account limits and the latest discount codes, all in one place.
         </p>
       </div>
     </section>
